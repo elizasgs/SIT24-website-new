@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="sv" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRIVE LOGIC // FAQ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Archivo:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0A0A0A; color: #e5e7eb; overflow-x: hidden; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .font-display { font-family: 'Archivo', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .terminal-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #0054A6; margin-left: 2px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .video-overlay { background: linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.95) 100%); }
+
+        .faq-item { border-bottom: 1px solid rgba(63, 63, 70, 0.4); }
+        .faq-question { cursor: pointer; transition: all 0.3s ease; }
+        .faq-question:hover { color: #0054A6; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.5s ease; }
+        .faq-answer.open { max-height: 500px; }
+        .faq-toggle { transition: transform 0.3s ease; }
+        .faq-toggle.open { transform: rotate(45deg); }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="fixed top-0 w-full z-[100] px-8 py-8 flex justify-between items-center mix-blend-difference">
+        <a href="index.html" class="font-mono text-[10px] tracking-[0.5em] uppercase font-bold text-white hover:text-white/60 transition">Drive_Logic // STHLM</a>
+        <nav class="hidden md:flex items-center space-x-10 text-[10px] font-mono uppercase tracking-[0.3em]">
+            <a href="about.html" class="hover:text-white/60 transition">Om Oss</a>
+            <a href="personal.html" class="hover:text-white/60 transition">Personal</a>
+            <a href="tjanster.html" class="hover:text-white/60 transition">Tjänster</a>
+            <a href="blogg.html" class="hover:text-white/60 transition">Blogg</a>
+            <a href="faq.html" class="hover:text-white/60 transition">FAQ</a>
+            <a href="index.html#booking-section" class="px-5 py-2.5 bg-[#E30613] text-white hover:bg-[#c7050f] transition-all tracking-[0.3em]">Boka Tid</a>
+        </nav>
+        <div class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-[#0054A6] rounded-full animate-pulse shadow-[0_0_10px_#0054A6]"></div>
+            <span class="text-[9px] font-mono uppercase tracking-widest text-white/50">System_Online</span>
+        </div>
+    </header>
+
+    <!-- HERO BANNER -->
+    <section class="relative h-[50vh] flex items-end pb-20 px-8 overflow-hidden">
+        <div class="absolute inset-0 z-0 bg-gradient-to-b from-zinc-900/50 to-[#0A0A0A]"></div>
+        <div class="relative z-10 max-w-6xl mx-auto w-full">
+            <h2 class="font-mono text-[#0054A6] text-[10px] tracking-[0.5em] uppercase mb-4 opacity-0" id="page-label">// FAQ</h2>
+            <h1 class="font-display font-black text-6xl md:text-[7rem] text-white uppercase leading-[0.9] tracking-tight opacity-0" id="page-title">
+                Vanliga frågor.
+            </h1>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="bg-[#0A0A0A] py-32 px-8 border-t border-zinc-900">
+        <div class="max-w-3xl mx-auto">
+
+            <!-- Garanti -->
+            <div class="reveal mb-16">
+                <h2 class="text-[#0054A6] font-mono text-[10px] tracking-[0.5em] uppercase mb-2">// Garanti & Returer</h2>
+                <h3 class="font-display font-black text-3xl text-white uppercase mb-8">Garanti</h3>
+            </div>
+
+            <div class="space-y-0 mb-20">
+                <div class="faq-item py-6">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Hur lång garanti har ni på reservdelar?</h4>
+                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="pt-4 pb-2">
+                            <p class="text-zinc-400 text-sm leading-relaxed">Vi erbjuder 3 års garanti på alla reservdelar via Autoexperten. Garantin gäller för både nuvarande och kommande fordonsägare. Om fel uppstår byts produkten ut mot en ny eller så reparerar vi den kostnadsfritt. Spara alltid ditt kvitto som garantibevis. Garantin gäller vid normal användning.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item py-6">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Vad är er returpolicy?</h4>
+                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="pt-4 pb-2">
+                            <p class="text-zinc-400 text-sm leading-relaxed">Du har 30 dagars returrätt från det att du har tagit emot din beställning. Kontakta oss så hjälper vi dig med returprocessen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assistans -->
+            <div class="reveal mb-16">
+                <h2 class="text-[#0054A6] font-mono text-[10px] tracking-[0.5em] uppercase mb-2">// Vägassistans</h2>
+                <h3 class="font-display font-black text-3xl text-white uppercase mb-8">Assistans</h3>
+            </div>
+
+            <div class="space-y-0 mb-20">
+                <div class="faq-item py-6">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Vad ingår i vägassistansen?</h4>
+                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="pt-4 pb-2">
+                            <p class="text-zinc-400 text-sm leading-relaxed">Vid service hos oss ingår 12 månaders vägassistans via Solid Försäkringar. Assistansen täcker tekniska fel och punktering (olyckor och bränslebrist undantaget). Vid behov bärgas ditt fordon till närmaste Autoexperten-verkstad inom 100 km.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item py-6">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Hur kontaktar jag vägassistans vid nödsituation?</h4>
+                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="pt-4 pb-2">
+                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">Ring jourenumret direkt för snabb hjälp:</p>
+                            <div class="glass p-4 flex items-center gap-4 mb-3">
+                                <span class="text-[#E30613] text-lg">&#9742;</span>
+                                <div>
+                                    <span class="font-mono text-[9px] text-zinc-500 uppercase tracking-widest block">Journummer (dygnet runt)</span>
+                                    <span class="font-display font-bold text-white">0771-61 83 00</span>
+                                </div>
+                            </div>
+                            <div class="glass p-4 flex items-center gap-4">
+                                <span class="text-[#0054A6] text-lg">&#9993;</span>
+                                <div>
+                                    <span class="font-mono text-[9px] text-zinc-500 uppercase tracking-widest block">Kundservice (mån–fre 08–18)</span>
+                                    <span class="font-display font-bold text-white">013-13 13 13</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service & Bokning -->
+            <div class="reveal mb-16">
+                <h2 class="text-[#0054A6] font-mono text-[10px] tracking-[0.5em] uppercase mb-2">// Service & Bokning</h2>
+                <h3 class="font-display font-black text-3xl text-white uppercase mb-8">Bokning</h3>
+            </div>
+
+            <div class="space-y-0 mb-20">
+                <div class="faq-item py-6">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Hur bokar jag en tid?</h4>
+                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="pt-4 pb-2">
+                            <p class="text-zinc-400 text-sm leading-relaxed">Du kan boka direkt via vår <a href="index.html#booking-section" class="text-[#0054A6] hover:underline">digitala bokningssida</a>, ringa oss på 08-257 221 eller maila service@sit24.se. Vårt digitala system är öppet dygnet runt.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item py-6">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Vilka öppettider har ni?</h4>
+                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="pt-4 pb-2">
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-zinc-400">Måndag – Torsdag</span>
+                                    <span class="font-mono text-white">07:00 – 17:00</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-zinc-400">Fredag</span>
+                                    <span class="font-mono text-white">07:00 – 13:00</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-zinc-400">Övrig tid</span>
+                                    <span class="font-mono text-zinc-500">Kontakta oss per telefon</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item py-6">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Kan jag få en offert innan service?</h4>
+                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="pt-4 pb-2">
+                            <p class="text-zinc-400 text-sm leading-relaxed">Absolut. Vi ger alltid en transparent offert innan vi påbörjar arbete. Du kan begära en offert via vår <a href="offert.html" class="text-[#0054A6] hover:underline">offertförfrågan</a> eller kontakta oss direkt. Vi startar aldrig arbete utan ditt godkännande.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Betalning -->
+            <div class="reveal mb-16">
+                <h2 class="text-[#0054A6] font-mono text-[10px] tracking-[0.5em] uppercase mb-2">// Betalning</h2>
+                <h3 class="font-display font-black text-3xl text-white uppercase mb-8">Betalning</h3>
+            </div>
+
+            <div class="space-y-0 mb-12">
+                <div class="faq-item py-6">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Erbjuder ni delbetalning?</h4>
+                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="pt-4 pb-2">
+                            <p class="text-zinc-400 text-sm leading-relaxed">Ja, via Autoexperten-kortet kan du dela upp kostnaden för service, reparationer och tillbehör i upp till 24 månader räntefritt. Fråga oss för mer information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-zinc-800/60">
+                <p class="font-mono text-[10px] text-zinc-600 tracking-[0.3em] uppercase text-center terminal-cursor">SIT24 // FAQ_DATABASE — 7 poster indexerade</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-[#0A0A0A] py-32 px-8 border-t border-zinc-900/50">
+        <div class="max-w-3xl mx-auto text-center reveal">
+            <h3 class="font-display font-black text-4xl md:text-5xl text-white uppercase mb-6">Fler frågor?</h3>
+            <p class="text-zinc-500 text-sm mb-10 max-w-md mx-auto">Hittar du inte svaret du söker? Kontakta oss direkt.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="tel:08257221" class="inline-block bg-[#0054A6] hover:bg-[#003d7a] text-white font-display font-bold py-5 px-14 transition-all uppercase tracking-[0.3em] text-[11px]">
+                    Ring Oss
+                </a>
+                <a href="mailto:service@sit24.se" class="inline-block border border-zinc-700 hover:bg-white hover:text-black text-white font-display font-bold py-5 px-14 transition-all uppercase tracking-[0.3em] text-[11px]">
+                    Maila Oss
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#050505] py-24 px-8 border-t border-zinc-900">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-2">
+                <a href="index.html" class="font-display font-black text-xl tracking-tight text-white mb-6 uppercase block hover:text-white/60 transition">Drive_Logic</a>
+                <p class="text-zinc-600 text-[11px] leading-relaxed">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p>
+            </div>
+            <div>
+                <h5 class="text-white font-display font-bold text-[11px] uppercase tracking-widest mb-6">Kontakt</h5>
+                <ul class="text-zinc-500 text-[11px] space-y-2">
+                    <li>08-123 45 67</li>
+                    <li>info@drivelogic.se</li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-display font-bold text-[11px] uppercase tracking-widest mb-6">Socialt</h5>
+                <ul class="text-zinc-500 text-[11px] space-y-2">
+                    <li><a href="#" class="hover:text-white transition">Instagram</a></li>
+                    <li><a href="#" class="hover:text-white transition">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to("#page-label", { opacity: 1, y: -10, duration: 1, ease: "expo.out" })
+              .to("#page-title", { opacity: 1, y: -20, duration: 1.5, ease: "expo.out" }, "-=0.6");
+        });
+
+        gsap.utils.toArray(".reveal").forEach(el => {
+            gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } });
+        });
+
+        function toggleFaq(el) {
+            const answer = el.nextElementSibling;
+            const toggle = el.querySelector('.faq-toggle');
+            const isOpen = answer.classList.contains('open');
+
+            // Close all others
+            document.querySelectorAll('.faq-answer.open').forEach(a => {
+                a.classList.remove('open');
+                a.previousElementSibling.querySelector('.faq-toggle').classList.remove('open');
+            });
+
+            // Toggle current
+            if (!isOpen) {
+                answer.classList.add('open');
+                toggle.classList.add('open');
+            }
+        }
+    </script>
+</body>
+</html>
