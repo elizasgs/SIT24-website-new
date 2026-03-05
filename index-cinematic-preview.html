@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRIVE LOGIC // Cinematic Technical</title>
+    <title>SIT24 // Cinematic Technical</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -33,11 +33,18 @@
             background-size: 256px 256px;
         }
 
-        /* ── Glass for cinematic ── */
+        /* ── Glass for cinematic — now Liquid Glass ── */
         .glass-cin {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px) saturate(180%) brightness(110%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 28px;
+            position: relative;
+            overflow: hidden;
         }
 
         /* ── Hero video styling ── */
@@ -51,14 +58,14 @@
             clip-path: inset(100% 0 0 0);
         }
 
-        /* ── Menu overlay ── */
+        /* ── Menu overlay — Liquid Glass fullscreen ── */
         .menu-overlay {
             position: fixed;
             inset: 0;
             z-index: 500;
-            background: rgba(26, 28, 30, 0.85);
-            backdrop-filter: blur(48px);
-            -webkit-backdrop-filter: blur(48px);
+            background: rgba(26, 28, 30, 0.7);
+            backdrop-filter: blur(60px) saturate(200%) brightness(105%);
+            -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(105%);
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.5s ease;
@@ -108,17 +115,95 @@
         .terminal-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #007AFF; margin-left: 2px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* ── NEJ prefix ── */
-        .nej-line { position: relative; padding-left: 2rem; }
-        .nej-line::before {
-            content: 'NEJ'; position: absolute; left: 0; top: 0.15em;
-            font-family: 'Archivo', sans-serif; font-weight: 900; font-size: 0.6rem;
-            letter-spacing: 0.15em; color: #E30613;
+        /* ── NEJ glow pulse ── */
+        .nej-glow {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 10px;
+            transition: box-shadow 0.8s ease;
+            background: rgba(227, 6, 19, 0.08);
+        }
+        .nej-glow.active {
+            box-shadow: 0 0 20px rgba(227, 6, 19, 0.5), 0 0 40px rgba(227, 6, 19, 0.15);
         }
 
-        /* ── Module glow — Cobalt Blue ── */
-        .module-glow { box-shadow: 0 0 0px rgba(0,122,255,0); transition: box-shadow 0.8s ease; }
-        .module-glow.active { box-shadow: 0 0 30px rgba(0,122,255,0.2), 0 0 60px rgba(0,122,255,0.06); }
+        /* ── Limit item — Liquid Glass ── */
+        .limit-glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px) saturate(180%) brightness(110%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ── Liquid Glass — iOS 26 inspired ── */
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px) saturate(180%) brightness(110%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                        backdrop-filter 0.5s ease;
+        }
+        /* Specular highlight — follows cursor via GSAP */
+        .liquid-glass .specular-highlight {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            background: radial-gradient(circle 200px at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transition: opacity 0.3s ease;
+        }
+        .liquid-glass:hover .specular-highlight {
+            opacity: 1;
+        }
+
+        /* Ghost button — AKTIVERA */
+        .ghost-btn {
+            border: 1px solid rgba(0, 122, 255, 0.3);
+            border-radius: 12px;
+            padding: 10px 24px;
+            background: transparent;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .ghost-btn:hover {
+            border-color: #007AFF;
+            box-shadow: 0 0 20px rgba(0, 122, 255, 0.2), 0 0 40px rgba(0, 122, 255, 0.06);
+            background: rgba(0, 122, 255, 0.08);
+        }
+
+        /* REC dot blink */
+        .rec-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #E30613;
+            border-radius: 50%;
+            animation: recBlink 1.5s ease-in-out infinite;
+            box-shadow: 0 0 6px rgba(227, 6, 19, 0.6);
+        }
+        @keyframes recBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+        /* Status tag pulse */
+        .status-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 122, 255, 0.2);
+            background: rgba(0, 122, 255, 0.06);
+        }
 
         /* ── Booking glow ── */
         .booking-glow { box-shadow: 0 0 80px rgba(0,122,255,0.06), 0 0 160px rgba(0,122,255,0.03); }
@@ -142,30 +227,71 @@
     <!-- ═══════════════════════════════════════════════════════ -->
     <!-- HEADER — Logo left, Menu button right                  -->
     <!-- ═══════════════════════════════════════════════════════ -->
-    <header class="fixed top-0 w-full z-[400] px-8 md:px-12 py-8 flex justify-between items-center">
-        <a href="#" class="font-mono text-[10px] tracking-[0.5em] uppercase font-bold text-[#E2E8F0] hover:text-[#007AFF] transition">Drive_Logic</a>
-        <button id="menu-btn" onclick="toggleMenu()" class="font-mono text-[11px] tracking-[0.4em] uppercase text-[#E2E8F0] hover:text-[#007AFF] transition cursor-pointer">
-            Menu
-        </button>
+    <header class="fixed top-0 w-full z-[400] px-6 md:px-12 py-4 md:py-6" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-bottom: 1px solid rgba(255,255,255,0.06);">
+        <div class="flex justify-between items-start">
+            <!-- LEFT: SIT24 logo + hamburger menu -->
+            <div class="flex flex-col items-start gap-3">
+                <a href="#">
+                    <img src="sit24_logo.png" alt="SIT24" class="h-14 md:h-16 w-auto">
+                </a>
+                <button id="menu-btn" onclick="toggleMenu()" class="flex flex-col gap-[5px] group cursor-pointer" aria-label="Öppna meny">
+                    <span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span>
+                    <span class="block w-5 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300 group-hover:w-7"></span>
+                    <span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span>
+                </button>
+            </div>
+
+            <!-- CENTER: ISO badges + Godkänd Bilverkstad -->
+            <div class="hidden md:flex items-center gap-4">
+                <img src="iso-9001-certifiering-logo.webp" alt="ISO 9001" class="h-14 w-auto">
+                <img src="iso-14001-certifiering-logo.webp" alt="ISO 14001" class="h-14 w-auto">
+                <img src="godkand-bilverkstad.svg" alt="Godkänd Bilverkstad" class="h-14 w-auto">
+            </div>
+
+            <!-- RIGHT: Autoexperten logo + social media -->
+            <div class="flex flex-col items-end gap-3">
+                <img src="autoexperten_logo.png" alt="Autoexperten" class="h-12 md:h-14 w-auto">
+                <div class="flex items-center gap-3">
+                    <!-- Instagram -->
+                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Instagram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+                        </svg>
+                    </a>
+                    <!-- Facebook -->
+                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Facebook">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                        </svg>
+                    </a>
+                    <!-- TikTok -->
+                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="TikTok">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52V6.8a4.84 4.84 0 01-1-.11z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
     </header>
 
     <!-- ═══════════════════════════════════════════════════════ -->
     <!-- MENU OVERLAY — "EMSilk" full-screen navigation         -->
     <!-- ═══════════════════════════════════════════════════════ -->
     <div id="menu-overlay" class="menu-overlay">
-        <button onclick="toggleMenu()" class="absolute top-8 right-8 md:right-12 font-mono text-[11px] tracking-[0.4em] uppercase text-[#E2E8F0] hover:text-[#007AFF] transition cursor-pointer z-[510]">
+        <button onclick="toggleMenu()" class="absolute top-8 right-8 md:right-12 font-display-black text-2xl uppercase text-[#E2E8F0] hover:text-[#007AFF] transition cursor-pointer z-[510]">
             Stäng
         </button>
 
         <div class="h-full flex items-center justify-between px-8 md:px-20">
             <!-- Left: Large italic nav links -->
             <nav class="flex flex-col gap-6">
-                <a href="#" onclick="toggleMenu()" class="menu-link font-display italic font-bold text-4xl md:text-6xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Om Oss</a>
-                <a href="#" onclick="toggleMenu()" class="menu-link font-display italic font-bold text-4xl md:text-6xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Personal</a>
-                <a href="#" onclick="toggleMenu()" class="menu-link font-display italic font-bold text-4xl md:text-6xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Tjänster</a>
-                <a href="#" onclick="toggleMenu()" class="menu-link font-display italic font-bold text-4xl md:text-6xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Blogg</a>
-                <a href="#" onclick="toggleMenu()" class="menu-link font-display italic font-bold text-4xl md:text-6xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">FAQ</a>
-                <a href="#booking-section" onclick="toggleMenu()" class="menu-link font-display italic font-bold text-4xl md:text-6xl text-[#007AFF] tracking-tight leading-none">Boka Tid</a>
+                <a href="about.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Om Oss</a>
+                <a href="personal.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Personal</a>
+                <a href="tjanster.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Tjänster</a>
+                <a href="blogg.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Blogg</a>
+                <a href="faq.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">FAQ</a>
+                <a href="#booking-section" onclick="toggleMenu()" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#007AFF] tracking-tight leading-none">Boka Tid</a>
             </nav>
 
             <!-- Right: Technical status block -->
@@ -181,7 +307,7 @@
                 <div class="text-right space-y-3">
                     <div class="text-[#E2E8F0]/20 text-[9px]">// Kontakt</div>
                     <div>08-123 45 67</div>
-                    <div>info@drivelogic.se</div>
+                    <div>info@sit24.se</div>
                 </div>
             </div>
         </div>
@@ -202,11 +328,11 @@
 
         <!-- Centered headline -->
         <div class="relative z-10 text-center">
-            <h1 id="hero-headline" class="font-display-black text-[15vw] md:text-[12vw] leading-[0.85] tracking-tight text-[#E2E8F0] uppercase opacity-0" style="letter-spacing: -0.02em;">
-                DRIVE<br>LOGIC
+            <h1 id="hero-headline" class="font-display-black text-[10vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" style="letter-spacing: 0.02em;">
+                Där precision<br>möter passion.
             </h1>
             <p id="hero-tagline" class="font-mono text-[10px] md:text-[11px] tracking-[0.5em] uppercase text-[#E2E8F0]/30 mt-8 opacity-0">
-                Precision & Performance // Stockholm
+                SIT24 // Stockholm
             </p>
         </div>
 
@@ -227,7 +353,7 @@
                     <h2 class="text-[#007AFF] font-mono text-[10px] tracking-[0.5em] uppercase">// Om Oss</h2>
                     <h3 class="font-display font-black text-5xl text-[#E2E8F0] leading-tight uppercase">Mekanisk estetik<br>utan kompromisser.</h3>
                     <p class="text-[#E2E8F0]/50 text-[15px] leading-relaxed border-l-2 border-[#E2E8F0]/10 pl-6">
-                        Vi ser fordonet som en teknisk symfoni. Varje ingrepp, från lackens tjocklek till motorns mappning, utförs med kirurgisk precision. Drive Logic är inte bara en verkstad — det är ett labb för fordonsperfektion.
+                        Vi ser fordonet som en teknisk symfoni. Varje ingrepp, från lackens tjocklek till motorns mappning, utförs med kirurgisk precision. SIT24 är inte bara en verkstad — det är ett labb för fordonsperfektion.
                     </p>
                 </div>
                 <div class="glass-cin aspect-video overflow-hidden group">
@@ -243,20 +369,29 @@
                 <h3 class="font-display font-black text-4xl text-[#E2E8F0] uppercase">Våra grundvärden</h3>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="pillar-card glass-cin module-glow p-10 border-l-4 border-l-[#007AFF] relative overflow-hidden">
-                    <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase block mb-4">01 // TRYGGHET</span>
-                    <h4 class="font-display font-bold text-xl text-[#E2E8F0] uppercase tracking-wide mb-4">Trygghet</h4>
-                    <p class="text-[#E2E8F0]/40 text-sm leading-relaxed">Trygghet även när oväntade behov uppstår.</p>
+                <div class="pillar-card liquid-glass p-10">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase block mb-4">01 // TRYGGHET</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase tracking-wide mb-4">Trygghet</h4>
+                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed">Trygghet även när oväntade behov uppstår.</p>
+                    </div>
                 </div>
-                <div class="pillar-card glass-cin module-glow p-10 border-l-4 border-l-[#007AFF] relative overflow-hidden">
-                    <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase block mb-4">02 // TILLTRO</span>
-                    <h4 class="font-display font-bold text-xl text-[#E2E8F0] uppercase tracking-wide mb-4">Tilltro</h4>
-                    <p class="text-[#E2E8F0]/40 text-sm leading-relaxed">Tilltro till att rekommendationer är ärliga och relevanta.</p>
+                <div class="pillar-card liquid-glass p-10">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase block mb-4">02 // TILLTRO</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase tracking-wide mb-4">Tilltro</h4>
+                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed">Tilltro till att rekommendationer är ärliga och relevanta.</p>
+                    </div>
                 </div>
-                <div class="pillar-card glass-cin module-glow p-10 border-l-4 border-l-[#007AFF] relative overflow-hidden">
-                    <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase block mb-4">03 // KVALITET</span>
-                    <h4 class="font-display font-bold text-xl text-[#E2E8F0] uppercase tracking-wide mb-4">Kvalitet</h4>
-                    <p class="text-[#E2E8F0]/40 text-sm leading-relaxed">Säkerhet i att kvaliteten håller, både idag och över tid.</p>
+                <div class="pillar-card liquid-glass p-10">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase block mb-4">03 // KVALITET</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase tracking-wide mb-4">Kvalitet</h4>
+                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed">Säkerhet i att kvaliteten håller, både idag och över tid.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -270,36 +405,41 @@
                 <h3 class="font-display font-black text-5xl md:text-6xl text-[#E2E8F0] uppercase tracking-tight">Absolute Limits</h3>
             </div>
 
-            <div class="space-y-0">
-                <div class="limit-item py-8 border-b border-[#E2E8F0]/8">
-                    <div class="flex items-start gap-6">
-                        <span class="font-display font-black text-[#E30613] text-xs tracking-[0.2em] uppercase mt-1 shrink-0 w-20">NEJ 01</span>
-                        <p class="text-[#E2E8F0] text-lg font-light leading-relaxed">Vi startar aldrig arbete utan ditt godkännande.</p>
+            <div class="space-y-4">
+                <div class="limit-item limit-glass p-8 md:p-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
+                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 01]</span>
                     </div>
+                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
                 </div>
-                <div class="limit-item py-8 border-b border-[#E2E8F0]/8">
-                    <div class="flex items-start gap-6">
-                        <span class="font-display font-black text-[#E30613] text-xs tracking-[0.2em] uppercase mt-1 shrink-0 w-20">NEJ 02</span>
-                        <p class="text-[#E2E8F0] text-lg font-light leading-relaxed">Vi rekommenderar aldrig arbete som kan vänta utan att säga det.</p>
+                <div class="limit-item limit-glass p-8 md:p-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
+                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 02]</span>
                     </div>
+                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
                 </div>
-                <div class="limit-item py-8 border-b border-[#E2E8F0]/8">
-                    <div class="flex items-start gap-6">
-                        <span class="font-display font-black text-[#E30613] text-xs tracking-[0.2em] uppercase mt-1 shrink-0 w-20">NEJ 03</span>
-                        <p class="text-[#E2E8F0] text-lg font-light leading-relaxed">Vi kompromissar aldrig med kvalitet för lägre pris.</p>
+                <div class="limit-item limit-glass p-8 md:p-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
+                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 03]</span>
                     </div>
+                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
                 </div>
-                <div class="limit-item py-8 border-b border-[#E2E8F0]/8">
-                    <div class="flex items-start gap-6">
-                        <span class="font-display font-black text-[#E30613] text-xs tracking-[0.2em] uppercase mt-1 shrink-0 w-20">NEJ 04</span>
-                        <p class="text-[#E2E8F0] text-lg font-light leading-relaxed">Vi skyller aldrig på andra.</p>
+                <div class="limit-item limit-glass p-8 md:p-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
+                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 04]</span>
                     </div>
+                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
                 </div>
-                <div class="limit-item py-8 border-b border-[#E2E8F0]/8">
-                    <div class="flex items-start gap-6">
-                        <span class="font-display font-black text-[#E30613] text-xs tracking-[0.2em] uppercase mt-1 shrink-0 w-20">NEJ 05</span>
-                        <p class="text-[#E2E8F0] text-lg font-light leading-relaxed">Vi använder aldrig teknisk jargong för att förvirra.</p>
+                <div class="limit-item limit-glass p-8 md:p-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
+                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 05]</span>
                     </div>
+                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
                 </div>
             </div>
 
@@ -309,99 +449,241 @@
         </div>
     </section>
 
+    <!-- SPECIAL OFFERS — Liquid Glass Service Modules -->
+    <section id="offers-section" class="bg-[#1A1C1E] py-40 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-24 reveal">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <span class="rec-dot"></span>
+                    <h2 class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">// Aktiva Moduler</h2>
+                </div>
+                <h3 class="font-display font-black text-5xl md:text-6xl text-[#E2E8F0] uppercase tracking-tight">Aktuella Erbjudanden</h3>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- MODUL_01: Vårcheck -->
+                <div class="offer-card liquid-glass p-8 md:p-10">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">MODUL_01</span>
+                            <span class="status-tag font-mono text-[8px] text-[#007AFF]/70 tracking-[0.2em] uppercase">[SYSTEM_READY]</span>
+                        </div>
+                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-3">Vårcheck</h4>
+                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-8">Systemoptimering inför säsongen. Kontroll av vätskor, däck och belysning.</p>
+                        <div class="mb-8">
+                            <span class="offer-price font-mono font-bold text-xl text-[#E2E8F0] tracking-wider">995 SEK</span>
+                        </div>
+                        <button onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth',block:'start'})" class="ghost-btn w-full font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] cursor-pointer">Aktivera &rarr;</button>
+                        <div class="flex items-center justify-between mt-6">
+                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">SECURE_TRANSITION</span>
+                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">[VALID: 25-05-30]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODUL_02: Performance Detail -->
+                <div class="offer-card liquid-glass p-8 md:p-10">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">MODUL_02</span>
+                            <span class="status-tag font-mono text-[8px] text-[#007AFF]/70 tracking-[0.2em] uppercase">[OPTIMIZING]</span>
+                        </div>
+                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-3">Performance Detail</h4>
+                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-8">Deep Clean & Ceramic Protection. Återställ fordonets yttre till fabriksnytt skick.</p>
+                        <div class="mb-8">
+                            <span class="offer-price font-mono font-bold text-xl text-[#E30613] tracking-wider">-15% RABATT</span>
+                        </div>
+                        <button onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth',block:'start'})" class="ghost-btn w-full font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] cursor-pointer">Aktivera &rarr;</button>
+                        <div class="flex items-center justify-between mt-6">
+                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">VERIFIED_MODULE</span>
+                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">[VALID: 25-06-15]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODUL_03: Bromsservice -->
+                <div class="offer-card liquid-glass p-8 md:p-10">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">MODUL_03</span>
+                            <span class="status-tag font-mono text-[8px] text-[#E30613]/70 tracking-[0.2em] uppercase border-[#E30613]/20 bg-[#E30613]/6">[SAFETY_CRITICAL]</span>
+                        </div>
+                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-3">Bromsservice</h4>
+                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-8">Säkerhetskritisk översyn. Byte av belägg och skivor med originaldelar.</p>
+                        <div class="mb-8">
+                            <span class="offer-price font-mono font-bold text-xl text-[#E2E8F0] tracking-wider">FAST PRIS</span>
+                        </div>
+                        <button onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth',block:'start'})" class="ghost-btn w-full font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] cursor-pointer">Aktivera &rarr;</button>
+                        <div class="flex items-center justify-between mt-6">
+                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">PRIORITY_ACCESS</span>
+                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">[VALID: 25-07-01]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- BOOKING TERMINAL -->
     <section id="booking-section" class="bg-[#1A1C1E] py-40 px-8 md:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-4xl mx-auto booking-glow">
             <div class="text-center mb-24 reveal">
-                <h2 class="text-[#007AFF] font-mono text-[10px] tracking-[0.5em] uppercase mb-4">// Booking Terminal</h2>
+                <h2 class="text-[#007AFF] font-mono text-[10px] tracking-[0.5em] uppercase mb-4">// SIT24 / LOGIC_CORE</h2>
                 <h3 class="font-display font-black text-5xl md:text-6xl text-[#E2E8F0] uppercase tracking-tight">Boka Din Tid</h3>
             </div>
 
             <div class="space-y-6">
                 <!-- Step 1: Vehicle ID -->
-                <div id="step-1" class="glass-cin p-12 transition-all duration-500 border-l-4 border-l-[#007AFF]">
-                    <h4 class="font-mono text-[10px] text-[#E2E8F0]/30 uppercase tracking-widest mb-6">Step_01 // Fordon</h4>
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="relative flex-1">
-                            <input type="text" id="reg-input" placeholder="REGNR (T.EX. XYZ 123)" class="w-full bg-black/30 border border-[#E2E8F0]/10 p-6 font-mono text-2xl uppercase focus:border-[#007AFF] outline-none text-[#E2E8F0] transition-all">
-                            <div id="scan-line" class="scan-line hidden"></div>
+                <div id="step-1" class="liquid-glass p-12 transition-all duration-500">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <h4 class="font-mono text-[10px] text-[#E2E8F0]/30 uppercase tracking-widest mb-6">Step_01 // Fordon</h4>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="relative flex-1">
+                                <input type="text" id="reg-input" placeholder="REGNR (T.EX. XYZ 123)" class="w-full bg-black/20 border border-[#E2E8F0]/10 rounded-2xl p-6 font-mono text-2xl uppercase focus:border-[#007AFF] outline-none text-[#E2E8F0] transition-all">
+                                <div id="scan-line" class="scan-line hidden"></div>
+                            </div>
+                            <button id="scan-btn" onclick="startScan()" class="ghost-btn bg-[#E2E8F0] !border-transparent text-[#1A1C1E] px-12 font-display font-bold text-[11px] uppercase tracking-widest hover:bg-[#007AFF] hover:text-white transition-all cursor-pointer !rounded-2xl">Identifiera</button>
                         </div>
-                        <button id="scan-btn" onclick="startScan()" class="bg-[#E2E8F0] text-[#1A1C1E] px-12 font-display font-bold text-[11px] uppercase tracking-widest hover:bg-[#007AFF] hover:text-white transition-all cursor-pointer">Identifiera</button>
+                        <div id="scan-result" class="hidden mt-6 p-4 rounded-xl border border-[#007AFF]/30 bg-[#007AFF]/5 font-mono text-sm text-[#007AFF] tracking-wider"></div>
                     </div>
-                    <div id="scan-result" class="hidden mt-6 p-4 border border-[#007AFF]/30 bg-[#007AFF]/5 font-mono text-sm text-[#007AFF] tracking-wider"></div>
                 </div>
 
                 <!-- Step 2: Services -->
-                <div id="step-2" class="glass-cin p-12 step-inactive border-l-4 border-l-[#E2E8F0]/10">
-                    <h4 class="font-mono text-[10px] text-[#E2E8F0]/30 uppercase tracking-widest mb-6">Step_02 // Tjänster</h4>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div onclick="selectService(this)" class="p-8 border border-[#E2E8F0]/10 hover:border-[#007AFF] cursor-pointer transition-all bg-[#E2E8F0]/2 group">
-                            <span class="block text-[#E2E8F0] font-display font-bold text-sm mb-2 uppercase tracking-widest">The Studio</span>
-                            <span class="text-[10px] text-[#E2E8F0]/30 font-mono uppercase group-hover:text-[#007AFF]">Estetisk korrigering</span>
-                            <p class="text-[11px] text-[#E2E8F0]/20 mt-3 leading-relaxed">Lackskydd, keramisk coating, detailing & ytrestaurering</p>
-                        </div>
-                        <div onclick="selectService(this)" class="p-8 border border-[#E2E8F0]/10 hover:border-[#E30613] cursor-pointer transition-all bg-[#E2E8F0]/2 group">
-                            <span class="block text-[#E2E8F0] font-display font-bold text-sm mb-2 uppercase tracking-widest">The Lab</span>
-                            <span class="text-[10px] text-[#E2E8F0]/30 font-mono uppercase group-hover:text-[#E30613]">Mekanisk optimering</span>
-                            <p class="text-[11px] text-[#E2E8F0]/20 mt-3 leading-relaxed">Service, diagnostik, prestanda & motoroptimering</p>
-                            <div class="flex gap-3 mt-4">
-                                <span class="text-[9px] font-mono text-[#007AFF] bg-[#007AFF]/10 px-2 py-1 border border-[#007AFF]/20">&#10003; Certifierad</span>
-                                <span class="text-[9px] font-mono text-[#007AFF] bg-[#007AFF]/10 px-2 py-1 border border-[#007AFF]/20">&#10003; Garantibevarande</span>
+                <div id="step-2" class="liquid-glass p-12 step-inactive">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <h4 class="font-mono text-[10px] text-[#E2E8F0]/30 uppercase tracking-widest mb-6">Step_02 // Tjänster</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div onclick="selectService(this)" class="p-8 rounded-2xl border border-[#E2E8F0]/8 hover:border-[#007AFF]/40 cursor-pointer transition-all bg-white/[0.02] group">
+                                <span class="block text-[#E2E8F0] font-display-black text-sm mb-2 uppercase tracking-widest">The Studio</span>
+                                <span class="text-[10px] text-[#E2E8F0]/30 font-mono uppercase group-hover:text-[#007AFF]">Estetisk korrigering</span>
+                                <p class="text-[11px] text-[#E2E8F0]/20 mt-3 leading-relaxed">Lackskydd, keramisk coating, detailing & ytrestaurering</p>
+                            </div>
+                            <div onclick="selectService(this)" class="p-8 rounded-2xl border border-[#E2E8F0]/8 hover:border-[#E30613]/40 cursor-pointer transition-all bg-white/[0.02] group">
+                                <span class="block text-[#E2E8F0] font-display-black text-sm mb-2 uppercase tracking-widest">The Lab</span>
+                                <span class="text-[10px] text-[#E2E8F0]/30 font-mono uppercase group-hover:text-[#E30613]">Mekanisk optimering</span>
+                                <p class="text-[11px] text-[#E2E8F0]/20 mt-3 leading-relaxed">Service, diagnostik, prestanda & motoroptimering</p>
+                                <div class="flex gap-3 mt-4">
+                                    <span class="status-tag text-[9px] font-mono text-[#007AFF]">&#10003; Certifierad</span>
+                                    <span class="status-tag text-[9px] font-mono text-[#007AFF]">&#10003; Garantibevarande</span>
+                                </div>
                             </div>
                         </div>
+                        <button onclick="nextStep(3)" class="ghost-btn mt-8 w-full py-4 font-display font-bold text-[11px] uppercase tracking-[0.3em] text-[#E2E8F0]/60 hover:text-[#E2E8F0] cursor-pointer">Gå vidare</button>
                     </div>
-                    <button onclick="nextStep(3)" class="mt-8 w-full py-4 border border-[#E2E8F0]/15 font-display font-bold text-[11px] uppercase tracking-[0.3em] hover:bg-[#E2E8F0] hover:text-[#1A1C1E] transition-all cursor-pointer">Gå vidare</button>
                 </div>
 
                 <!-- Step 3: Info + Submit -->
-                <div id="step-3" class="glass-cin p-12 step-inactive border-l-4 border-l-[#E2E8F0]/10">
-                    <h4 class="font-mono text-[10px] text-[#E2E8F0]/30 uppercase tracking-widest mb-6">Step_03 // Information</h4>
+                <div id="step-3" class="liquid-glass p-12 step-inactive">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <h4 class="font-mono text-[10px] text-[#E2E8F0]/30 uppercase tracking-widest mb-6">Step_03 // Information</h4>
 
-                    <div class="mb-8 p-4 border border-[#007AFF]/20 bg-[#007AFF]/5 flex items-center gap-3">
-                        <span class="text-[#007AFF] text-lg">&#9432;</span>
-                        <p class="text-sm text-[#E2E8F0]/60 font-light">Fullständig digital dokumentation ingår i varje service.</p>
-                    </div>
+                        <div class="mb-8 p-4 rounded-xl border border-[#007AFF]/20 bg-[#007AFF]/5 flex items-center gap-3">
+                            <span class="text-[#007AFF] text-lg">&#9432;</span>
+                            <p class="text-sm text-[#E2E8F0]/60 font-light">Fullständig digital dokumentation ingår i varje service.</p>
+                        </div>
 
-                    <div class="grid md:grid-cols-2 gap-6 mb-8">
-                        <input type="text" placeholder="NAMN" class="bg-transparent border-b border-[#E2E8F0]/10 py-4 font-mono text-xs outline-none focus:border-[#007AFF] text-[#E2E8F0] transition-colors">
-                        <input type="email" placeholder="E-POST" class="bg-transparent border-b border-[#E2E8F0]/10 py-4 font-mono text-xs outline-none focus:border-[#007AFF] text-[#E2E8F0] transition-colors">
+                        <div class="grid md:grid-cols-2 gap-6 mb-8">
+                            <input type="text" placeholder="NAMN" class="bg-transparent border-b border-[#E2E8F0]/10 py-4 font-mono text-xs outline-none focus:border-[#007AFF] text-[#E2E8F0] transition-colors">
+                            <input type="email" placeholder="E-POST" class="bg-transparent border-b border-[#E2E8F0]/10 py-4 font-mono text-xs outline-none focus:border-[#007AFF] text-[#E2E8F0] transition-colors">
+                        </div>
+                        <button id="submit-btn" onclick="finishBooking()" class="w-full py-6 bg-[#E30613] text-white font-display font-bold text-[11px] uppercase tracking-[0.4em] hover:bg-[#c7050f] shadow-2xl transition-all border-2 border-transparent cursor-pointer rounded-2xl">
+                            Slutför Bokning
+                        </button>
+                        <div id="booking-success" class="hidden mt-6 p-6 rounded-xl border border-[#007AFF]/30 bg-[#007AFF]/5 text-center font-mono text-sm text-[#007AFF] tracking-wider"></div>
                     </div>
-                    <button id="submit-btn" onclick="finishBooking()" class="w-full py-6 bg-[#E30613] text-white font-display font-bold text-[11px] uppercase tracking-[0.4em] hover:bg-[#c7050f] shadow-2xl transition-all border-2 border-transparent cursor-pointer">
-                        Slutför Bokning
-                    </button>
-                    <div id="booking-success" class="hidden mt-6 p-6 border border-[#007AFF]/30 bg-[#007AFF]/5 text-center font-mono text-sm text-[#007AFF] tracking-wider"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATIONS — Two workshops -->
+    <section id="locations-section" class="bg-[#1A1C1E] py-40 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-24 reveal">
+                <h2 class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase mb-4">// Våra Anläggningar</h2>
+                <h3 class="font-display font-black text-5xl md:text-6xl text-[#E2E8F0] uppercase tracking-tight">Hitta Oss</h3>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Location 1: Bromma -->
+                <div class="liquid-glass p-0 overflow-hidden">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <div class="h-[300px] w-full">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2033.5!2d17.9444!3d59.3444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d000b7e9b93%3A0x0!2sRanhammarsv%C3%A4gen%2018E%2C%20168%2067%20Bromma!5e0!3m2!1ssv!2sse!4v1" width="100%" height="100%" style="border:0; filter: grayscale(0.3) brightness(0.85) contrast(1.05);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">NODE_01</span>
+                                <span class="status-tag font-mono text-[8px] text-[#007AFF]/70 tracking-[0.2em] uppercase">[ACTIVE]</span>
+                            </div>
+                            <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-2">SIT24 Bromma</h4>
+                            <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-4">Ranhammarsv. 18E<br>168 67 Bromma</p>
+                            <a href="https://www.google.com/maps/dir//Ranhammarsv%C3%A4gen+18E,+168+67+Bromma" target="_blank" class="ghost-btn inline-block font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] no-underline">Vägbeskrivning &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location 2: Skärholmen -->
+                <div class="liquid-glass p-0 overflow-hidden">
+                    <div class="specular-highlight"></div>
+                    <div class="relative z-10">
+                        <div class="h-[300px] w-full">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2037.5!2d17.9233!3d59.2767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f7600b0b0b0b1%3A0x0!2sOxholmsgr%C3%A4nd%204%2C%20127%2048%20Sk%C3%A4rholmen!5e0!3m2!1ssv!2sse!4v1" width="100%" height="100%" style="border:0; filter: grayscale(0.3) brightness(0.85) contrast(1.05);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">NODE_02</span>
+                                <span class="status-tag font-mono text-[8px] text-[#007AFF]/70 tracking-[0.2em] uppercase">[ACTIVE]</span>
+                            </div>
+                            <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-2">SIT24 Skärholmen</h4>
+                            <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-4">Oxholmsgränd 4<br>127 48 Skärholmen</p>
+                            <a href="https://www.google.com/maps/dir//Oxholmsgr%C3%A4nd+4,+127+48+Sk%C3%A4rholmen" target="_blank" class="ghost-btn inline-block font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] no-underline">Vägbeskrivning &rarr;</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-[#131416] py-24 px-8 md:px-20 border-t border-[#E2E8F0]/5">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12">
-            <div class="col-span-1 md:col-span-2">
-                <div class="font-display-black text-xl tracking-tight text-[#E2E8F0] mb-6 uppercase">Drive_Logic</div>
-                <p class="text-[#E2E8F0]/20 text-[11px] leading-relaxed">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p>
+    <footer class="relative py-24 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="liquid-glass p-12 md:p-16 mb-16">
+                <div class="specular-highlight"></div>
+                <div class="relative z-10 grid md:grid-cols-4 gap-12">
+                    <div class="col-span-1 md:col-span-2">
+                        <div class="font-display-black text-xl tracking-tight text-[#E2E8F0] mb-6 uppercase">SIT24</div>
+                        <p class="text-[#E2E8F0]/20 text-[11px] leading-relaxed">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p>
+                    </div>
+                    <div>
+                        <h5 class="text-[#E2E8F0] font-display-black text-[11px] uppercase tracking-widest mb-6">Kontakt</h5>
+                        <ul class="text-[#E2E8F0]/30 text-[11px] space-y-2">
+                            <li>08-123 45 67</li>
+                            <li>info@sit24.se</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-[#E2E8F0] font-display-black text-[11px] uppercase tracking-widest mb-6">Socialt</h5>
+                        <ul class="text-[#E2E8F0]/30 text-[11px] space-y-2">
+                            <li><a href="#" class="hover:text-[#007AFF] transition">Instagram</a></li>
+                            <li><a href="#" class="hover:text-[#007AFF] transition">YouTube</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h5 class="text-[#E2E8F0] font-display font-bold text-[11px] uppercase tracking-widest mb-6">Kontakt</h5>
-                <ul class="text-[#E2E8F0]/30 text-[11px] space-y-2">
-                    <li>08-123 45 67</li>
-                    <li>info@drivelogic.se</li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="text-[#E2E8F0] font-display font-bold text-[11px] uppercase tracking-widest mb-6">Socialt</h5>
-                <ul class="text-[#E2E8F0]/30 text-[11px] space-y-2">
-                    <li><a href="#" class="hover:text-[#007AFF] transition">Instagram</a></li>
-                    <li><a href="#" class="hover:text-[#007AFF] transition">YouTube</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="max-w-6xl mx-auto mt-16 pt-8 border-t border-[#E2E8F0]/5 flex justify-between items-center">
-            <p class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">&copy; 2026 Drive Logic // SIT24</p>
-            <div class="flex items-center gap-3">
-                <div class="w-1.5 h-1.5 bg-[#007AFF] rounded-full animate-pulse shadow-[0_0_10px_#007AFF]"></div>
-                <span class="font-mono text-[9px] tracking-widest text-[#E2E8F0]/20 uppercase">System_Online</span>
+            <div class="flex justify-between items-center">
+                <p class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">&copy; 2026 SIT24 // LOGIC_CORE</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-1.5 h-1.5 bg-[#007AFF] rounded-full animate-pulse shadow-[0_0_10px_#007AFF]"></div>
+                    <span class="font-mono text-[9px] tracking-widest text-[#E2E8F0]/20 uppercase">System_Online</span>
+                </div>
             </div>
         </div>
     </footer>
@@ -417,10 +699,10 @@
         window.addEventListener('load', () => {
             const tl = gsap.timeline({ delay: 0.3 });
 
-            // Headline: scale down + letter-spacing expand
+            // Headline: scale down + subtle letter-spacing expand
             tl.fromTo("#hero-headline",
-                { scale: 1.1, letterSpacing: "-0.04em", opacity: 0 },
-                { scale: 1.0, letterSpacing: "0.02em", opacity: 1, duration: 2, ease: "expo.out" }
+                { scale: 1.08, letterSpacing: "-0.01em", opacity: 0 },
+                { scale: 1.0, letterSpacing: "0.04em", opacity: 1, duration: 2.2, ease: "expo.out" }
             )
             // Tagline fades in
             .to("#hero-tagline",
@@ -472,11 +754,11 @@
                     opacity: 0, x: -20, duration: 0.3, stagger: 0.04, ease: "power2.in",
                     onComplete: () => overlay.classList.remove('active')
                 });
-                btn.textContent = 'Menu';
+                btn.style.opacity = '1';
             } else {
                 // Open: show overlay, then stagger links in
                 overlay.classList.add('active');
-                btn.textContent = 'Stäng';
+                btn.style.opacity = '0.3';
                 gsap.fromTo('.menu-link',
                     { opacity: 0, x: -40 },
                     { opacity: 1, x: 0, duration: 0.6, stagger: 0.08, ease: "expo.out", delay: 0.2 }
@@ -492,35 +774,64 @@
             });
         });
 
-        // ── 6. PILLAR CARDS — glow on scroll ──
+        // ── 6. PILLAR CARDS — liquid glass scroll reveal ──
         gsap.utils.toArray(".pillar-card").forEach((card, i) => {
             gsap.from(card, {
                 opacity: 0, y: 30, duration: 1, delay: i * 0.2, ease: "expo.out",
                 scrollTrigger: { trigger: card, start: "top 85%" }
             });
-            ScrollTrigger.create({
-                trigger: card, start: "top 80%",
-                onEnter: () => card.classList.add('active'),
-                onLeaveBack: () => card.classList.remove('active')
-            });
         });
 
-        // ── 7. ABSOLUTE LIMITS — stagger reveal ──
+        // ── 7. ABSOLUTE LIMITS — TextPlugin typewriter + red glow ──
+        const limitTexts = [
+            "till dolda kostnader.",
+            "till halvdana lösningar.",
+            "till väntetider utan besked.",
+            "till kompromisser med din säkerhet.",
+            "till standard – vi levererar precision."
+        ];
+
         gsap.utils.toArray(".limit-item").forEach((item, i) => {
-            gsap.from(item, {
-                opacity: 0, x: -30, duration: 0.8, delay: i * 0.1, ease: "expo.out",
-                scrollTrigger: { trigger: item, start: "top 90%" }
+            const nejBadge = item.querySelector('.nej-glow');
+            const textEl = item.querySelector('.limit-text');
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 85%",
+                    once: true
+                }
+            });
+
+            // Fade in the card
+            tl.from(item, {
+                opacity: 0, y: 30, duration: 0.6, ease: "expo.out"
+            })
+            // Activate red glow on NEJ badge
+            .call(() => nejBadge.classList.add('active'))
+            // Type out the text using TextPlugin
+            .to(textEl, {
+                text: { value: limitTexts[i], delimiter: "" },
+                duration: 1.2,
+                ease: "none"
+            }, "-=0.2");
+        });
+
+        // ── 8. OFFER MODULES — stagger reveal ──
+        gsap.utils.toArray(".offer-card").forEach((card, i) => {
+            gsap.from(card, {
+                opacity: 0, y: 40, rotationX: 8, duration: 1, delay: i * 0.2,
+                ease: "power2.out",
+                transformOrigin: "bottom center",
+                scrollTrigger: { trigger: card, start: "top 88%", once: true }
             });
         });
 
-        // ── 8. BOOKING LOGIC ──
+        // ── 9. BOOKING LOGIC ──
         function nextStep(step) {
             const currentStep = document.getElementById(`step-${step}`);
-            const prevStep = document.getElementById(`step-${step - 1}`);
-            if (prevStep) prevStep.style.borderLeftColor = "rgba(226,232,240,0.06)";
             currentStep.classList.remove('step-inactive');
             currentStep.classList.add('step-active');
-            currentStep.style.borderLeftColor = "#007AFF";
             gsap.from(currentStep, { y: 20, duration: 0.8, ease: "expo.out" });
             currentStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -582,6 +893,30 @@
                 }, 1000);
             }, 2000);
         }
+
+        // ── 10. GLOBAL SPECULAR HIGHLIGHT — all liquid-glass elements ──
+        document.querySelectorAll('.liquid-glass').forEach(card => {
+            const highlight = card.querySelector('.specular-highlight');
+            if (!highlight) return;
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                gsap.to(highlight, {
+                    background: `radial-gradient(circle 200px at ${x}px ${y}px, rgba(255,255,255,0.1) 0%, transparent 70%)`,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card, { scale: 1.01, duration: 0.5, ease: "power2.out" });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, { scale: 1, duration: 0.5, ease: "power2.out" });
+            });
+        });
     </script>
 </body>
 </html>
