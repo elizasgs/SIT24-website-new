@@ -8,18 +8,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Archivo+Black&family=Archivo:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Outfit:wght@100;300;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
             background-color: #1A1C1E;
             color: #E2E8F0;
             overflow-x: hidden;
         }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .font-display { font-family: 'Archivo', sans-serif; }
-        .font-display-black { font-family: 'Archivo Black', sans-serif; }
+        /* Archivo 900 — Headlines & brand marks */
+        .font-display,
+        .font-display-black { font-family: 'Archivo', sans-serif; font-weight: 900; letter-spacing: -0.06em; }
+        /* Outfit — System labels, tags, prices */
+        .font-system { font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 0.25em; }
+        .font-system-light { font-family: 'Outfit', sans-serif; font-weight: 100; text-transform: uppercase; letter-spacing: 0.25em; }
+        .font-system-book { font-family: 'Outfit', sans-serif; font-weight: 300; text-transform: uppercase; letter-spacing: 0.25em; }
+        .font-system-semi { font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.25em; }
+        /* Plus Jakarta Sans — Body (inherited from body) */
+        .font-body { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 300; line-height: 1.8; }
+        /* Legacy compat — redirect font-mono to Outfit */
+        .font-mono { font-family: 'Outfit', sans-serif; font-weight: 300; }
 
         /* ── Film Grain SVG overlay ── */
         .film-grain {
@@ -170,18 +181,50 @@
             opacity: 1;
         }
 
-        /* Ghost button — AKTIVERA */
+        /* Ghost button — AKTIVERA (Outfit 600, border-draw) */
         .ghost-btn {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
             border: 1px solid rgba(0, 122, 255, 0.3);
             border-radius: 12px;
             padding: 10px 24px;
             background: transparent;
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                        box-shadow 0.4s ease,
+                        color 0.3s ease,
+                        background 0.4s ease;
         }
         .ghost-btn:hover {
             border-color: #007AFF;
             box-shadow: 0 0 20px rgba(0, 122, 255, 0.2), 0 0 40px rgba(0, 122, 255, 0.06);
-            background: rgba(0, 122, 255, 0.08);
+            background: rgba(0, 122, 255, 0.04);
+            color: #007AFF;
+            text-shadow: 0 0 12px rgba(0, 122, 255, 0.5), 0 0 24px rgba(0, 122, 255, 0.2);
+        }
+
+        /* Specular edge sweep — 1px shine on top border */
+        .liquid-glass .edge-sweep {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .liquid-glass:hover .edge-sweep {
+            opacity: 1;
+        }
+
+        /* Section sub-header accent line */
+        .accent-line {
+            border-left: 1px solid #007AFF;
+            padding-left: 12px;
         }
 
         /* REC dot blink */
@@ -251,23 +294,29 @@
             <!-- RIGHT: Autoexperten logo + social media -->
             <div class="flex flex-col items-end gap-3">
                 <img src="autoexperten_logo.png" alt="Autoexperten" class="h-12 md:h-14 w-auto">
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-4">
                     <!-- Instagram -->
                     <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Instagram">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
                         </svg>
                     </a>
                     <!-- Facebook -->
                     <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Facebook">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
                         </svg>
                     </a>
                     <!-- TikTok -->
                     <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="TikTok">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52V6.8a4.84 4.84 0 01-1-.11z"/>
+                        </svg>
+                    </a>
+                    <!-- Personal login -->
+                    <a href="login.html" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Personalinloggning">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/>
                         </svg>
                     </a>
                 </div>
@@ -279,37 +328,23 @@
     <!-- MENU OVERLAY — "EMSilk" full-screen navigation         -->
     <!-- ═══════════════════════════════════════════════════════ -->
     <div id="menu-overlay" class="menu-overlay">
-        <button onclick="toggleMenu()" class="absolute top-8 right-8 md:right-12 font-display-black text-2xl uppercase text-[#E2E8F0] hover:text-[#007AFF] transition cursor-pointer z-[510]">
+        <button onclick="toggleMenu()" class="absolute top-8 right-8 md:right-12 font-system-semi text-lg text-[#E2E8F0] hover:text-[#007AFF] transition cursor-pointer z-[510]">
             Stäng
         </button>
 
         <div class="h-full flex items-center justify-between px-8 md:px-20">
             <!-- Left: Large italic nav links -->
             <nav class="flex flex-col gap-6">
-                <a href="about.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Om Oss</a>
-                <a href="personal.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Personal</a>
-                <a href="tjanster.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Tjänster</a>
-                <a href="blogg.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">Blogg</a>
-                <a href="faq.html" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] tracking-tight leading-none">FAQ</a>
-                <a href="#booking-section" onclick="toggleMenu()" class="menu-link font-display italic font-bold text-2xl md:text-4xl text-[#007AFF] tracking-tight leading-none">Boka Tid</a>
+                <a href="about.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Om Oss</a>
+                <a href="personal.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Personal</a>
+                <a href="tjanster.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Tjänster</a>
+                <a href="blogg.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Blogg</a>
+                <a href="faq.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">FAQ</a>
+                <a href="erbjudanden.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Erbjudanden</a>
+                <a href="kontakt.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Kontakta Oss</a>
+                <a href="#booking-section" onclick="toggleMenu()" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Boka Tid</a>
             </nav>
 
-            <!-- Right: Technical status block -->
-            <div class="hidden md:flex flex-col items-end gap-8 font-mono text-[10px] tracking-[0.3em] uppercase text-[#E2E8F0]/40">
-                <div class="text-right space-y-3">
-                    <div class="text-[#E2E8F0]/20 text-[9px]">// System</div>
-                    <div>LOC <span class="text-[#007AFF]">//</span> 59.32° N</div>
-                    <div>SYS_STATUS <span class="text-[#007AFF]">//</span> <span class="text-[#007AFF]">OPTIMAL</span></div>
-                    <div>UPTIME <span class="text-[#007AFF]">//</span> 99.97%</div>
-                    <div>NODE <span class="text-[#007AFF]">//</span> STHLM_01</div>
-                </div>
-                <div class="w-px h-16 bg-[#E2E8F0]/10"></div>
-                <div class="text-right space-y-3">
-                    <div class="text-[#E2E8F0]/20 text-[9px]">// Kontakt</div>
-                    <div>08-123 45 67</div>
-                    <div>info@sit24.se</div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -328,17 +363,17 @@
 
         <!-- Centered headline -->
         <div class="relative z-10 text-center">
-            <h1 id="hero-headline" class="font-display-black text-[10vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" style="letter-spacing: 0.02em;">
+            <h1 id="hero-headline" class="font-display-black text-[10vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" style="letter-spacing: -0.06em; transform: skewX(-3deg);">
                 Där precision<br>möter passion.
             </h1>
-            <p id="hero-tagline" class="font-mono text-[10px] md:text-[11px] tracking-[0.5em] uppercase text-[#E2E8F0]/30 mt-8 opacity-0">
+            <p id="hero-tagline" class="font-system-light text-[10px] md:text-[11px] text-[#94A3B8]/50 mt-8 opacity-0">
                 SIT24 // Stockholm
             </p>
         </div>
 
         <!-- Scroll indicator -->
         <div id="scroll-hint" class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 opacity-0">
-            <span class="font-mono text-[9px] tracking-[0.4em] uppercase text-[#E2E8F0]/25">Scrolla</span>
+            <span class="font-system-light text-[9px] text-[#94A3B8]/40">Scrolla</span>
             <div class="w-px h-10 bg-gradient-to-b from-[#007AFF]/60 to-transparent"></div>
         </div>
     </section>
@@ -350,10 +385,10 @@
         <div class="max-w-6xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-20 items-center mb-32">
                 <div class="reveal space-y-8">
-                    <h2 class="text-[#007AFF] font-mono text-[10px] tracking-[0.5em] uppercase">// Om Oss</h2>
-                    <h3 class="font-display font-black text-5xl text-[#E2E8F0] leading-tight uppercase">Mekanisk estetik<br>utan kompromisser.</h3>
-                    <p class="text-[#E2E8F0]/50 text-[15px] leading-relaxed border-l-2 border-[#E2E8F0]/10 pl-6">
-                        Vi ser fordonet som en teknisk symfoni. Varje ingrepp, från lackens tjocklek till motorns mappning, utförs med kirurgisk precision. SIT24 är inte bara en verkstad — det är ett labb för fordonsperfektion.
+                    <h2 class="accent-line text-[#007AFF] font-system-light text-[10px]">// Om Oss</h2>
+                    <h3 class="font-display-black text-5xl text-[#E2E8F0] leading-tight uppercase" style="transform: skewX(-3deg);">Din bil.<br>Vårt ansvar.</h3>
+                    <p class="text-[#94A3B8] text-[15px] leading-relaxed border-l-2 border-[#E2E8F0]/10 pl-6">
+                        SIT24 är en auktoriserad verkstad med två anläggningar i Stockholm. Vi utför allt från service och reparationer till besiktningsförberedelser och detailing — alltid med certifierade tekniker och originaldelar.
                     </p>
                 </div>
                 <div class="glass-cin aspect-video overflow-hidden group">
@@ -365,86 +400,37 @@
 
             <!-- Brand Pillars -->
             <div class="reveal mb-16">
-                <h2 class="text-[#007AFF] font-mono text-[10px] tracking-[0.5em] uppercase mb-2">// Brandgrund</h2>
-                <h3 class="font-display font-black text-4xl text-[#E2E8F0] uppercase">Våra grundvärden</h3>
+                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-2">// Brandgrund</h2>
+                <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Vad vi står för</h3>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="pillar-card liquid-glass p-10">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
-                        <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase block mb-4">01 // TRYGGHET</span>
-                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase tracking-wide mb-4">Trygghet</h4>
-                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed">Trygghet även när oväntade behov uppstår.</p>
+                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">01 // TRYGGHET</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-4" style="transform: skewX(-3deg);">Trygghet</h4>
+                        <p class="text-[#94A3B8] text-sm">Trygghet även när oväntade behov uppstår.</p>
                     </div>
                 </div>
                 <div class="pillar-card liquid-glass p-10">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
-                        <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase block mb-4">02 // TILLTRO</span>
-                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase tracking-wide mb-4">Tilltro</h4>
-                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed">Tilltro till att rekommendationer är ärliga och relevanta.</p>
+                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">02 // TILLTRO</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-4" style="transform: skewX(-3deg);">Tilltro</h4>
+                        <p class="text-[#94A3B8] text-sm">Tilltro till att rekommendationer är ärliga och relevanta.</p>
                     </div>
                 </div>
                 <div class="pillar-card liquid-glass p-10">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
-                        <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase block mb-4">03 // KVALITET</span>
-                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase tracking-wide mb-4">Kvalitet</h4>
-                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed">Säkerhet i att kvaliteten håller, både idag och över tid.</p>
+                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">03 // KVALITET</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-4" style="transform: skewX(-3deg);">Kvalitet</h4>
+                        <p class="text-[#94A3B8] text-sm">Säkerhet i att kvaliteten håller, både idag och över tid.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ABSOLUTE LIMITS — The Five NEJs -->
-    <section id="absolute-limits" class="bg-[#1A1C1E] py-40 px-8 md:px-20 border-t border-[#E2E8F0]/5">
-        <div class="max-w-3xl mx-auto">
-            <div class="text-center mb-24 reveal">
-                <h2 class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase mb-4">// Serviceprotokoll</h2>
-                <h3 class="font-display font-black text-5xl md:text-6xl text-[#E2E8F0] uppercase tracking-tight">Absolute Limits</h3>
-            </div>
-
-            <div class="space-y-4">
-                <div class="limit-item limit-glass p-8 md:p-10">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
-                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 01]</span>
-                    </div>
-                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
-                </div>
-                <div class="limit-item limit-glass p-8 md:p-10">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
-                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 02]</span>
-                    </div>
-                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
-                </div>
-                <div class="limit-item limit-glass p-8 md:p-10">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
-                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 03]</span>
-                    </div>
-                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
-                </div>
-                <div class="limit-item limit-glass p-8 md:p-10">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
-                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 04]</span>
-                    </div>
-                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
-                </div>
-                <div class="limit-item limit-glass p-8 md:p-10">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="nej-glow font-mono font-bold text-sm text-[#E30613] tracking-[0.2em] uppercase">NEJ</span>
-                        <span class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">[LOGIC_GATE: 05]</span>
-                    </div>
-                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
-                </div>
-            </div>
-
-            <div class="mt-12 pt-8 border-t border-[#E2E8F0]/8">
-                <p class="font-mono text-[10px] text-[#E2E8F0]/20 tracking-[0.3em] uppercase text-center terminal-cursor">SIT24 // ABSOLUTE_LIMITS — Alla protokoll aktiva</p>
             </div>
         </div>
     </section>
@@ -455,29 +441,30 @@
             <div class="text-center mb-24 reveal">
                 <div class="flex items-center justify-center gap-3 mb-4">
                     <span class="rec-dot"></span>
-                    <h2 class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">// Aktiva Moduler</h2>
+                    <h2 class="accent-line text-[#007AFF] font-system-light text-[10px]">// Aktiva Moduler</h2>
                 </div>
-                <h3 class="font-display font-black text-5xl md:text-6xl text-[#E2E8F0] uppercase tracking-tight">Aktuella Erbjudanden</h3>
+                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Aktuella Erbjudanden</h3>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- MODUL_01: Vårcheck -->
                 <div class="offer-card liquid-glass p-8 md:p-10">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
                         <div class="flex items-center justify-between mb-6">
-                            <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">MODUL_01</span>
-                            <span class="status-tag font-mono text-[8px] text-[#007AFF]/70 tracking-[0.2em] uppercase">[SYSTEM_READY]</span>
+                            <span class="font-system-light text-[#007AFF] text-[10px]">MODUL_01</span>
+                            <span class="status-tag font-system-light text-[8px] text-[#007AFF]/70">[SYSTEM_READY]</span>
                         </div>
-                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-3">Vårcheck</h4>
-                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-8">Systemoptimering inför säsongen. Kontroll av vätskor, däck och belysning.</p>
+                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Vårcheck</h4>
+                        <p class="text-[#94A3B8] text-sm mb-8">Systemoptimering inför säsongen. Kontroll av vätskor, däck och belysning.</p>
                         <div class="mb-8">
-                            <span class="offer-price font-mono font-bold text-xl text-[#E2E8F0] tracking-wider">995 SEK</span>
+                            <span class="offer-price font-system-semi text-xl text-[#E2E8F0] tracking-wider">995 SEK</span>
                         </div>
-                        <button onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth',block:'start'})" class="ghost-btn w-full font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] cursor-pointer">Aktivera &rarr;</button>
+                        <button onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth',block:'start'})" class="ghost-btn w-full font-system-semi text-[10px] text-[#007AFF] cursor-pointer">Aktivera &rarr;</button>
                         <div class="flex items-center justify-between mt-6">
-                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">SECURE_TRANSITION</span>
-                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">[VALID: 25-05-30]</span>
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">SECURE_TRANSITION</span>
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">[VALID: 25-05-30]</span>
                         </div>
                     </div>
                 </div>
@@ -485,20 +472,21 @@
                 <!-- MODUL_02: Performance Detail -->
                 <div class="offer-card liquid-glass p-8 md:p-10">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
                         <div class="flex items-center justify-between mb-6">
-                            <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">MODUL_02</span>
-                            <span class="status-tag font-mono text-[8px] text-[#007AFF]/70 tracking-[0.2em] uppercase">[OPTIMIZING]</span>
+                            <span class="font-system-light text-[#007AFF] text-[10px]">MODUL_02</span>
+                            <span class="status-tag font-system-light text-[8px] text-[#007AFF]/70">[OPTIMIZING]</span>
                         </div>
-                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-3">Performance Detail</h4>
-                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-8">Deep Clean & Ceramic Protection. Återställ fordonets yttre till fabriksnytt skick.</p>
+                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Performance Detail</h4>
+                        <p class="text-[#94A3B8] text-sm mb-8">Deep Clean & Ceramic Protection. Återställ fordonets yttre till fabriksnytt skick.</p>
                         <div class="mb-8">
-                            <span class="offer-price font-mono font-bold text-xl text-[#E30613] tracking-wider">-15% RABATT</span>
+                            <span class="offer-price font-system-semi text-xl text-[#E30613] tracking-wider">-15% RABATT</span>
                         </div>
-                        <button onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth',block:'start'})" class="ghost-btn w-full font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] cursor-pointer">Aktivera &rarr;</button>
+                        <button onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth',block:'start'})" class="ghost-btn w-full font-system-semi text-[10px] text-[#007AFF] cursor-pointer">Aktivera &rarr;</button>
                         <div class="flex items-center justify-between mt-6">
-                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">VERIFIED_MODULE</span>
-                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">[VALID: 25-06-15]</span>
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">VERIFIED_MODULE</span>
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">[VALID: 25-06-15]</span>
                         </div>
                     </div>
                 </div>
@@ -506,23 +494,69 @@
                 <!-- MODUL_03: Bromsservice -->
                 <div class="offer-card liquid-glass p-8 md:p-10">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
                         <div class="flex items-center justify-between mb-6">
-                            <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">MODUL_03</span>
-                            <span class="status-tag font-mono text-[8px] text-[#E30613]/70 tracking-[0.2em] uppercase border-[#E30613]/20 bg-[#E30613]/6">[SAFETY_CRITICAL]</span>
+                            <span class="font-system-light text-[#007AFF] text-[10px]">MODUL_03</span>
+                            <span class="status-tag font-system-light text-[8px] text-[#E30613]/70 border-[#E30613]/20 bg-[#E30613]/6">[SAFETY_CRITICAL]</span>
                         </div>
-                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-3">Bromsservice</h4>
-                        <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-8">Säkerhetskritisk översyn. Byte av belägg och skivor med originaldelar.</p>
+                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bromsservice</h4>
+                        <p class="text-[#94A3B8] text-sm mb-8">Säkerhetskritisk översyn. Byte av belägg och skivor med originaldelar.</p>
                         <div class="mb-8">
-                            <span class="offer-price font-mono font-bold text-xl text-[#E2E8F0] tracking-wider">FAST PRIS</span>
+                            <span class="offer-price font-system-semi text-xl text-[#E2E8F0] tracking-wider">FAST PRIS</span>
                         </div>
-                        <button onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth',block:'start'})" class="ghost-btn w-full font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] cursor-pointer">Aktivera &rarr;</button>
+                        <button onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth',block:'start'})" class="ghost-btn w-full font-system-semi text-[10px] text-[#007AFF] cursor-pointer">Aktivera &rarr;</button>
                         <div class="flex items-center justify-between mt-6">
-                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">PRIORITY_ACCESS</span>
-                            <span class="font-mono text-[7px] text-[#E2E8F0]/12 tracking-[0.2em] uppercase">[VALID: 25-07-01]</span>
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">PRIORITY_ACCESS</span>
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">[VALID: 25-07-01]</span>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABSOLUTE LIMITS — The Four NEJs -->
+    <section id="absolute-limits" class="bg-[#1A1C1E] py-40 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-24 reveal">
+                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-4">// Serviceprotokoll</h2>
+                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Våra löften</h3>
+            </div>
+
+            <div class="space-y-4">
+                <div class="limit-item limit-glass p-8 md:p-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="nej-glow font-system-semi text-sm text-[#E30613]">NEJ</span>
+                        <span class="font-system-light text-[9px] text-[#94A3B8]/30">[LOGIC_GATE: 01]</span>
+                    </div>
+                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
+                </div>
+                <div class="limit-item limit-glass p-8 md:p-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="nej-glow font-system-semi text-sm text-[#E30613]">NEJ</span>
+                        <span class="font-system-light text-[9px] text-[#94A3B8]/30">[LOGIC_GATE: 02]</span>
+                    </div>
+                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
+                </div>
+                <div class="limit-item limit-glass p-8 md:p-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="nej-glow font-system-semi text-sm text-[#E30613]">NEJ</span>
+                        <span class="font-system-light text-[9px] text-[#94A3B8]/30">[LOGIC_GATE: 03]</span>
+                    </div>
+                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
+                </div>
+                <div class="limit-item limit-glass p-8 md:p-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="nej-glow font-system-semi text-sm text-[#E30613]">NEJ</span>
+                        <span class="font-system-light text-[9px] text-[#94A3B8]/30">[LOGIC_GATE: 04]</span>
+                    </div>
+                    <p class="limit-text text-[#E2E8F0] text-lg md:text-xl font-light leading-relaxed font-display"></p>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-[#E2E8F0]/8">
+                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // ABSOLUTE_LIMITS — Alla protokoll aktiva</p>
             </div>
         </div>
     </section>
@@ -531,16 +565,17 @@
     <section id="booking-section" class="bg-[#1A1C1E] py-40 px-8 md:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-4xl mx-auto booking-glow">
             <div class="text-center mb-24 reveal">
-                <h2 class="text-[#007AFF] font-mono text-[10px] tracking-[0.5em] uppercase mb-4">// SIT24 / LOGIC_CORE</h2>
-                <h3 class="font-display font-black text-5xl md:text-6xl text-[#E2E8F0] uppercase tracking-tight">Boka Din Tid</h3>
+                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-4">// SIT24 / LOGIC_CORE</h2>
+                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Boka Tid</h3>
             </div>
 
             <div class="space-y-6">
                 <!-- Step 1: Vehicle ID -->
                 <div id="step-1" class="liquid-glass p-12 transition-all duration-500">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
-                        <h4 class="font-mono text-[10px] text-[#E2E8F0]/30 uppercase tracking-widest mb-6">Step_01 // Fordon</h4>
+                        <h4 class="font-system-light text-[10px] text-[#94A3B8]/50 mb-6">Step_01 // Fordon</h4>
                         <div class="flex flex-col md:flex-row gap-4">
                             <div class="relative flex-1">
                                 <input type="text" id="reg-input" placeholder="REGNR (T.EX. XYZ 123)" class="w-full bg-black/20 border border-[#E2E8F0]/10 rounded-2xl p-6 font-mono text-2xl uppercase focus:border-[#007AFF] outline-none text-[#E2E8F0] transition-all">
@@ -555,18 +590,19 @@
                 <!-- Step 2: Services -->
                 <div id="step-2" class="liquid-glass p-12 step-inactive">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
-                        <h4 class="font-mono text-[10px] text-[#E2E8F0]/30 uppercase tracking-widest mb-6">Step_02 // Tjänster</h4>
+                        <h4 class="font-system-light text-[10px] text-[#94A3B8]/50 mb-6">Step_02 // Tjänster</h4>
                         <div class="grid md:grid-cols-2 gap-4">
                             <div onclick="selectService(this)" class="p-8 rounded-2xl border border-[#E2E8F0]/8 hover:border-[#007AFF]/40 cursor-pointer transition-all bg-white/[0.02] group">
-                                <span class="block text-[#E2E8F0] font-display-black text-sm mb-2 uppercase tracking-widest">The Studio</span>
+                                <span class="block text-[#E2E8F0] font-display-black text-sm mb-2 uppercase">The Studio</span>
                                 <span class="text-[10px] text-[#E2E8F0]/30 font-mono uppercase group-hover:text-[#007AFF]">Estetisk korrigering</span>
-                                <p class="text-[11px] text-[#E2E8F0]/20 mt-3 leading-relaxed">Lackskydd, keramisk coating, detailing & ytrestaurering</p>
+                                <p class="text-[11px] text-[#94A3B8]/50 mt-3">Lackskydd, keramisk coating, detailing & ytrestaurering</p>
                             </div>
                             <div onclick="selectService(this)" class="p-8 rounded-2xl border border-[#E2E8F0]/8 hover:border-[#E30613]/40 cursor-pointer transition-all bg-white/[0.02] group">
-                                <span class="block text-[#E2E8F0] font-display-black text-sm mb-2 uppercase tracking-widest">The Lab</span>
+                                <span class="block text-[#E2E8F0] font-display-black text-sm mb-2 uppercase">The Lab</span>
                                 <span class="text-[10px] text-[#E2E8F0]/30 font-mono uppercase group-hover:text-[#E30613]">Mekanisk optimering</span>
-                                <p class="text-[11px] text-[#E2E8F0]/20 mt-3 leading-relaxed">Service, diagnostik, prestanda & motoroptimering</p>
+                                <p class="text-[11px] text-[#94A3B8]/50 mt-3">Service, diagnostik, prestanda & motoroptimering</p>
                                 <div class="flex gap-3 mt-4">
                                     <span class="status-tag text-[9px] font-mono text-[#007AFF]">&#10003; Certifierad</span>
                                     <span class="status-tag text-[9px] font-mono text-[#007AFF]">&#10003; Garantibevarande</span>
@@ -580,12 +616,13 @@
                 <!-- Step 3: Info + Submit -->
                 <div id="step-3" class="liquid-glass p-12 step-inactive">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
-                        <h4 class="font-mono text-[10px] text-[#E2E8F0]/30 uppercase tracking-widest mb-6">Step_03 // Information</h4>
+                        <h4 class="font-system-light text-[10px] text-[#94A3B8]/50 mb-6">Step_03 // Information</h4>
 
                         <div class="mb-8 p-4 rounded-xl border border-[#007AFF]/20 bg-[#007AFF]/5 flex items-center gap-3">
                             <span class="text-[#007AFF] text-lg">&#9432;</span>
-                            <p class="text-sm text-[#E2E8F0]/60 font-light">Fullständig digital dokumentation ingår i varje service.</p>
+                            <p class="text-sm text-[#94A3B8]">Fullständig digital dokumentation ingår i varje service.</p>
                         </div>
 
                         <div class="grid md:grid-cols-2 gap-6 mb-8">
@@ -606,26 +643,27 @@
     <section id="locations-section" class="bg-[#1A1C1E] py-40 px-8 md:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-24 reveal">
-                <h2 class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase mb-4">// Våra Anläggningar</h2>
-                <h3 class="font-display font-black text-5xl md:text-6xl text-[#E2E8F0] uppercase tracking-tight">Hitta Oss</h3>
+                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-4">// Våra Anläggningar</h2>
+                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Hitta Till Oss</h3>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Location 1: Bromma -->
                 <div class="liquid-glass p-0 overflow-hidden">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
                         <div class="h-[300px] w-full">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2033.5!2d17.9444!3d59.3444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d000b7e9b93%3A0x0!2sRanhammarsv%C3%A4gen%2018E%2C%20168%2067%20Bromma!5e0!3m2!1ssv!2sse!4v1" width="100%" height="100%" style="border:0; filter: grayscale(0.3) brightness(0.85) contrast(1.05);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         <div class="p-8">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">NODE_01</span>
-                                <span class="status-tag font-mono text-[8px] text-[#007AFF]/70 tracking-[0.2em] uppercase">[ACTIVE]</span>
+                                <span class="font-system-light text-[#007AFF] text-[10px]">NODE_01</span>
+                                <span class="status-tag font-system-light text-[8px] text-[#007AFF]/70">[ACTIVE]</span>
                             </div>
-                            <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-2">SIT24 Bromma</h4>
-                            <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-4">Ranhammarsv. 18E<br>168 67 Bromma</p>
-                            <a href="https://www.google.com/maps/dir//Ranhammarsv%C3%A4gen+18E,+168+67+Bromma" target="_blank" class="ghost-btn inline-block font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] no-underline">Vägbeskrivning &rarr;</a>
+                            <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-2" style="transform: skewX(-3deg);">SIT24 Bromma</h4>
+                            <p class="text-[#94A3B8] text-sm mb-4">Ranhammarsv. 18E<br>168 67 Bromma</p>
+                            <a href="https://www.google.com/maps/dir//Ranhammarsv%C3%A4gen+18E,+168+67+Bromma" target="_blank" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Vägbeskrivning &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -633,18 +671,19 @@
                 <!-- Location 2: Skärholmen -->
                 <div class="liquid-glass p-0 overflow-hidden">
                     <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                     <div class="relative z-10">
                         <div class="h-[300px] w-full">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2037.5!2d17.9233!3d59.2767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f7600b0b0b0b1%3A0x0!2sOxholmsgr%C3%A4nd%204%2C%20127%2048%20Sk%C3%A4rholmen!5e0!3m2!1ssv!2sse!4v1" width="100%" height="100%" style="border:0; filter: grayscale(0.3) brightness(0.85) contrast(1.05);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         <div class="p-8">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="font-mono text-[#007AFF] text-[10px] tracking-[0.5em] uppercase">NODE_02</span>
-                                <span class="status-tag font-mono text-[8px] text-[#007AFF]/70 tracking-[0.2em] uppercase">[ACTIVE]</span>
+                                <span class="font-system-light text-[#007AFF] text-[10px]">NODE_02</span>
+                                <span class="status-tag font-system-light text-[8px] text-[#007AFF]/70">[ACTIVE]</span>
                             </div>
-                            <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase tracking-wide mb-2">SIT24 Skärholmen</h4>
-                            <p class="text-[#E2E8F0]/40 text-sm leading-relaxed mb-4">Oxholmsgränd 4<br>127 48 Skärholmen</p>
-                            <a href="https://www.google.com/maps/dir//Oxholmsgr%C3%A4nd+4,+127+48+Sk%C3%A4rholmen" target="_blank" class="ghost-btn inline-block font-mono text-[10px] tracking-[0.4em] uppercase text-[#007AFF] no-underline">Vägbeskrivning &rarr;</a>
+                            <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-2" style="transform: skewX(-3deg);">SIT24 Skärholmen</h4>
+                            <p class="text-[#94A3B8] text-sm mb-4">Oxholmsgränd 4<br>127 48 Skärholmen</p>
+                            <a href="https://www.google.com/maps/dir//Oxholmsgr%C3%A4nd+4,+127+48+Sk%C3%A4rholmen" target="_blank" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Vägbeskrivning &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -657,21 +696,22 @@
         <div class="max-w-6xl mx-auto">
             <div class="liquid-glass p-12 md:p-16 mb-16">
                 <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
                 <div class="relative z-10 grid md:grid-cols-4 gap-12">
                     <div class="col-span-1 md:col-span-2">
-                        <div class="font-display-black text-xl tracking-tight text-[#E2E8F0] mb-6 uppercase">SIT24</div>
-                        <p class="text-[#E2E8F0]/20 text-[11px] leading-relaxed">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p>
+                        <div class="font-display-black text-xl text-[#E2E8F0] mb-6 uppercase" style="transform: skewX(-3deg);">SIT24</div>
+                        <p class="text-[#94A3B8]/50 text-[11px]">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p>
                     </div>
                     <div>
-                        <h5 class="text-[#E2E8F0] font-display-black text-[11px] uppercase tracking-widest mb-6">Kontakt</h5>
-                        <ul class="text-[#E2E8F0]/30 text-[11px] space-y-2">
+                        <h5 class="text-[#E2E8F0] font-system-semi text-[11px] mb-6">Kontakt</h5>
+                        <ul class="text-[#94A3B8] text-[11px] space-y-2">
                             <li>08-123 45 67</li>
                             <li>info@sit24.se</li>
                         </ul>
                     </div>
                     <div>
-                        <h5 class="text-[#E2E8F0] font-display-black text-[11px] uppercase tracking-widest mb-6">Socialt</h5>
-                        <ul class="text-[#E2E8F0]/30 text-[11px] space-y-2">
+                        <h5 class="text-[#E2E8F0] font-system-semi text-[11px] mb-6">Socialt</h5>
+                        <ul class="text-[#94A3B8] text-[11px] space-y-2">
                             <li><a href="#" class="hover:text-[#007AFF] transition">Instagram</a></li>
                             <li><a href="#" class="hover:text-[#007AFF] transition">YouTube</a></li>
                         </ul>
@@ -679,10 +719,10 @@
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <p class="font-mono text-[9px] text-[#E2E8F0]/15 tracking-[0.3em] uppercase">&copy; 2026 SIT24 // LOGIC_CORE</p>
+                <p class="font-system-light text-[9px] text-[#94A3B8]/30">&copy; 2026 SIT24 // LOGIC_CORE</p>
                 <div class="flex items-center gap-3">
                     <div class="w-1.5 h-1.5 bg-[#007AFF] rounded-full animate-pulse shadow-[0_0_10px_#007AFF]"></div>
-                    <span class="font-mono text-[9px] tracking-widest text-[#E2E8F0]/20 uppercase">System_Online</span>
+                    <span class="font-system-light text-[9px] text-[#94A3B8]/40">System_Online</span>
                 </div>
             </div>
         </div>
@@ -784,11 +824,10 @@
 
         // ── 7. ABSOLUTE LIMITS — TextPlugin typewriter + red glow ──
         const limitTexts = [
-            "till dolda kostnader.",
-            "till halvdana lösningar.",
-            "till väntetider utan besked.",
-            "till kompromisser med din säkerhet.",
-            "till standard – vi levererar precision."
+            "till dolda kostnader — du vet alltid vad det kostar.",
+            "till genvägar — vi gör jobbet ordentligt första gången.",
+            "till väntan utan svar — du får löpande uppdateringar.",
+            "till osäkra lösningar — din säkerhet går alltid först."
         ];
 
         gsap.utils.toArray(".limit-item").forEach((item, i) => {
@@ -894,29 +933,101 @@
             }, 2000);
         }
 
-        // ── 10. GLOBAL SPECULAR HIGHLIGHT — all liquid-glass elements ──
+        // ── 10. RGB REFRACTION — chromatic text-shadow split on card hover ──
+        document.querySelectorAll('.offer-card').forEach(card => {
+            const priceEl = card.querySelector('.offer-price');
+            const modulEl = card.querySelector('.font-system-light');
+            const refractionTargets = [priceEl, modulEl].filter(Boolean);
+
+            card.addEventListener('mouseenter', () => {
+                refractionTargets.forEach(el => {
+                    gsap.to(el, {
+                        textShadow: '1px 0 0 rgba(255,0,0,0.4), -1px 0 0 rgba(0,100,255,0.4)',
+                        skewX: 0.5,
+                        duration: 0.15,
+                        ease: "power2.out"
+                    });
+                });
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const relX = (e.clientX - rect.left) / rect.width - 0.5;
+                refractionTargets.forEach(el => {
+                    gsap.to(el, {
+                        textShadow: `${relX * 2}px 0 0 rgba(255,0,0,0.35), ${relX * -2}px 0 0 rgba(0,100,255,0.35)`,
+                        skewX: relX * 1,
+                        x: relX * 2,
+                        duration: 0.15,
+                        ease: "power2.out"
+                    });
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                refractionTargets.forEach(el => {
+                    gsap.to(el, {
+                        textShadow: '0 0 0 transparent',
+                        skewX: 0, x: 0,
+                        duration: 0.6,
+                        ease: "elastic.out(1, 0.3)"
+                    });
+                });
+            });
+        });
+
+        // ── 11. LENSING EFFECT — scale background video through glass ──
+        document.querySelectorAll('.liquid-glass').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card, {
+                    backdropFilter: 'blur(35px) saturate(200%) brightness(115%)',
+                    webkitBackdropFilter: 'blur(35px) saturate(200%) brightness(115%)',
+                    scale: 1.01,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    backdropFilter: 'blur(30px) saturate(180%) brightness(110%)',
+                    webkitBackdropFilter: 'blur(30px) saturate(180%) brightness(110%)',
+                    scale: 1,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // ── 12. SPECULAR EDGE SWEEP — shine follows mouseX on top border ──
         document.querySelectorAll('.liquid-glass').forEach(card => {
             const highlight = card.querySelector('.specular-highlight');
-            if (!highlight) return;
+            const edgeSweep = card.querySelector('.edge-sweep');
 
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                gsap.to(highlight, {
-                    background: `radial-gradient(circle 200px at ${x}px ${y}px, rgba(255,255,255,0.1) 0%, transparent 70%)`,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            });
 
-            card.addEventListener('mouseenter', () => {
-                gsap.to(card, { scale: 1.01, duration: 0.5, ease: "power2.out" });
-            });
-            card.addEventListener('mouseleave', () => {
-                gsap.to(card, { scale: 1, duration: 0.5, ease: "power2.out" });
+                // Specular highlight (existing)
+                if (highlight) {
+                    gsap.to(highlight, {
+                        background: `radial-gradient(circle 200px at ${x}px ${y}px, rgba(255,255,255,0.1) 0%, transparent 70%)`,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                }
+
+                // Edge sweep — 1px shine tracks horizontal cursor
+                if (edgeSweep) {
+                    gsap.to(edgeSweep, {
+                        left: Math.max(0, Math.min(x - 40, rect.width - 80)),
+                        duration: 0.2,
+                        ease: "power2.out"
+                    });
+                }
             });
         });
+
     </script>
 </body>
 </html>
