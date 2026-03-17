@@ -1,91 +1,111 @@
 <!DOCTYPE html>
-<html lang="sv" class="scroll-smooth">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRIVE LOGIC // Blogg & Journal</title>
+    <title>SIT24 // Blogg</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Archivo:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Outfit:wght@100;300;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0A0A0A; color: #e5e7eb; overflow-x: hidden; }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .font-display { font-family: 'Archivo', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .terminal-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #0054A6; margin-left: 2px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 300; line-height: 1.8; background-color: #1A1C1E; color: #E2E8F0; overflow-x: hidden; }
+        .font-display, .font-display-black { font-family: 'Archivo', sans-serif; font-weight: 900; letter-spacing: -0.03em; }
+        .font-system-light { font-family: 'Outfit', sans-serif; font-weight: 100; text-transform: uppercase; letter-spacing: 0.1em; }
+        .font-system-semi { font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+        .font-mono { font-family: 'Outfit', sans-serif; font-weight: 300; }
+        .film-grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
+        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 28px; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.22,1,0.36,1); }
+        .liquid-glass .specular-highlight { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(circle 200px at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%); transition: opacity 0.3s ease; }
+        .liquid-glass:hover .specular-highlight { opacity: 1; }
+        .liquid-glass .edge-sweep { position: absolute; top: 0; left: 0; width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); z-index: 2; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+        .liquid-glass:hover .edge-sweep { opacity: 1; }
+        .ghost-btn { font-family: 'Outfit', sans-serif; font-weight: 600; border: 1px solid rgba(0,122,255,0.3); border-radius: 12px; padding: 10px 24px; background: transparent; transition: border-color 0.6s, box-shadow 0.4s, color 0.3s, background 0.4s; }
+        .ghost-btn:hover { border-color: #007AFF; box-shadow: 0 0 20px rgba(0,122,255,0.2); background: rgba(0,122,255,0.04); color: #007AFF; }
+        .menu-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(26,28,30,0.7); backdrop-filter: blur(60px) saturate(200%) brightness(105%); -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(105%); opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+        .menu-overlay.active { opacity: 1; pointer-events: all; }
+        .menu-link { position: relative; display: inline-block; transition: color 0.3s ease; }
+        .menu-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: #007AFF; transition: width 0.4s ease; }
+        .menu-link:hover::after { width: 100%; }
+        .terminal-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #007AFF; margin-left: 2px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .video-overlay { background: linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.95) 100%); }
-
+        .accent-line { border-left: 1px solid #007AFF; padding-left: 12px; }
         .blog-card { transition: all 0.5s ease; }
-        .blog-card:hover { border-color: rgba(0, 84, 166, 0.4); box-shadow: 0 0 40px rgba(0, 84, 166, 0.08); transform: translateY(-4px); }
+        .blog-card:hover { transform: translateY(-4px); }
         .blog-card:hover .blog-thumb { opacity: 0.5; }
-        .blog-card:hover .read-more { color: #0054A6; }
-
-        .tag { transition: all 0.3s ease; }
-        .tag:hover { background: rgba(0, 84, 166, 0.15); border-color: rgba(0, 84, 166, 0.4); color: #0054A6; }
-        .tag.active { background: rgba(0, 84, 166, 0.15); border-color: #0054A6; color: #0054A6; }
-
-        .featured-card { position: relative; overflow: hidden; }
-        .featured-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.4) 50%, transparent 100%);
-            z-index: 1;
-        }
+        .blog-card:hover .read-more { color: #007AFF; }
+        .tag { transition: all 0.3s ease; cursor: pointer; }
+        .tag:hover, .tag.active { background: rgba(0,122,255,0.1); border-color: rgba(0,122,255,0.4); color: #007AFF; }
     </style>
 </head>
 <body>
+    <div class="film-grain"></div>
 
     <!-- HEADER -->
-    <header class="fixed top-0 w-full z-[100] px-8 py-8 flex justify-between items-center mix-blend-difference">
-        <a href="index.html" class="font-mono text-[10px] tracking-[0.5em] uppercase font-bold text-white hover:text-white/60 transition">Drive_Logic // STHLM</a>
-        <nav class="hidden md:flex items-center space-x-10 text-[10px] font-mono uppercase tracking-[0.3em]">
-            <a href="about.html" class="hover:text-white/60 transition">Om Oss</a>
-            <a href="personal.html" class="hover:text-white/60 transition">Personal</a>
-            <a href="tjanster.html" class="hover:text-white/60 transition">Tjänster</a>
-            <a href="blogg.html" class="text-white/60 transition">Blogg</a>
-            <a href="faq.html" class="hover:text-white/60 transition">FAQ</a>
-            <a href="index.html#booking-section" class="px-5 py-2.5 bg-[#E30613] text-white hover:bg-[#c7050f] transition-all tracking-[0.3em]">Boka Tid</a>
-        </nav>
-        <div class="flex items-center gap-3">
-            <div class="w-1.5 h-1.5 bg-[#0054A6] rounded-full animate-pulse shadow-[0_0_10px_#0054A6]"></div>
-            <span class="text-[9px] font-mono uppercase tracking-widest text-white/50">System_Online</span>
+    <header class="fixed top-0 w-full z-[400] px-6 md:px-12 py-4 md:py-6" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-bottom: 1px solid rgba(255,255,255,0.06);">
+        <div class="flex justify-between items-start">
+            <div class="flex flex-col items-start gap-3">
+                <a href="index.html"><img src="sit24_logo.png" alt="SIT24" class="h-14 md:h-16 w-auto"></a>
+                <button id="menu-btn" onclick="toggleMenu()" class="flex flex-col gap-[5px] group cursor-pointer" aria-label="Öppna meny"><span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span><span class="block w-5 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300 group-hover:w-7"></span><span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span></button>
+            </div>
+            <div class="hidden md:flex items-center gap-4"><img src="iso-9001-certifiering-logo.webp" alt="ISO 9001" class="h-14 w-auto"><img src="iso-14001-certifiering-logo.webp" alt="ISO 14001" class="h-14 w-auto"><img src="godkand-bilverkstad.svg" alt="Godkänd Bilverkstad" class="h-14 w-auto"></div>
+            <div class="flex flex-col items-end gap-3">
+                <img src="autoexperten_logo.png" alt="Autoexperten" class="h-12 md:h-14 w-auto">
+                <div class="flex items-center gap-4">
+                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="TikTok"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52V6.8a4.84 4.84 0 01-1-.11z"/></svg></a>
+                    <a href="login.html" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Personalinloggning"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg></a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- HERO BANNER -->
-    <section class="relative h-[50vh] flex items-end pb-20 px-8 overflow-hidden">
-        <div class="absolute inset-0 z-0 bg-gradient-to-b from-zinc-900/50 to-[#0A0A0A]"></div>
+    <!-- MENU OVERLAY -->
+    <div id="menu-overlay" class="menu-overlay">
+        <button onclick="toggleMenu()" class="absolute top-8 right-8 md:right-12 font-system-semi text-lg text-[#E2E8F0] hover:text-[#007AFF] transition cursor-pointer z-[510]">Stäng</button>
+        <div class="h-full flex items-center justify-between px-8 md:px-20">
+            <nav class="flex flex-col gap-6">
+                <a href="about.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Om Oss</a>
+                <a href="personal.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Personal</a>
+                <a href="tjanster.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Tjänster</a>
+                <a href="blogg.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Blogg</a>
+                <a href="faq.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">FAQ</a>
+                <a href="erbjudanden.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Erbjudanden</a>
+                <a href="kontakt.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Kontakta Oss</a>
+                <a href="index.html#booking-section" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Boka Tid</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="relative h-[60vh] flex items-end pb-20 px-8 md:px-20 overflow-hidden">
+        <div class="absolute inset-0 z-0" style="background: radial-gradient(ellipse at 30% 50%, rgba(0,122,255,0.03) 0%, transparent 60%), #1A1C1E;"></div>
         <div class="relative z-10 max-w-6xl mx-auto w-full">
-            <h2 class="font-mono text-[#0054A6] text-[10px] tracking-[0.5em] uppercase mb-4 opacity-0" id="page-label">// Blogg & Journal</h2>
-            <h1 class="font-display font-black text-6xl md:text-[7rem] text-white uppercase leading-[0.9] tracking-tight opacity-0" id="page-title">
-                Från labbet.
-            </h1>
+            <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-4 opacity-0" id="page-label">Blogg & Journal</p>
+            <h1 class="font-display-black text-[12vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" id="page-title" style="transform: skewX(-3deg);">Från labbet.</h1>
         </div>
     </section>
 
     <!-- FEATURED POST -->
-    <section class="bg-[#0A0A0A] pt-32 pb-16 px-8 border-t border-zinc-900">
+    <section class="pt-32 pb-16 px-8 md:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
-            <div class="reveal mb-10">
-                <h2 class="text-[#E30613] font-mono text-[10px] tracking-[0.5em] uppercase">// Utvalt Inlägg</h2>
-            </div>
-
-            <a href="#" class="featured-card block glass overflow-hidden group reveal">
-                <div class="grid md:grid-cols-2">
+            <div class="reveal mb-10"><p class="accent-line font-system-light text-[#E30613] text-[10px]">Utvalt Inlägg</p></div>
+            <a href="#" class="blog-card block liquid-glass overflow-hidden group reveal">
+                <div class="specular-highlight"></div><div class="edge-sweep"></div>
+                <div class="relative z-10 grid md:grid-cols-2">
                     <div class="aspect-video md:aspect-auto overflow-hidden">
-                        <video autoplay muted loop playsinline class="blog-thumb w-full h-full object-cover grayscale opacity-30 group-hover:opacity-50 transition-all duration-700">
-                            <source src="6159204-hd_1920_1080_30fps.mp4" type="video/mp4">
-                        </video>
+                        <video autoplay muted loop playsinline class="blog-thumb w-full h-full object-cover grayscale opacity-30 group-hover:opacity-50 transition-all duration-700"><source src="6159204-hd_1920_1080_30fps.mp4" type="video/mp4"></video>
                     </div>
                     <div class="p-10 md:p-14 flex flex-col justify-center">
                         <div class="flex items-center gap-4 mb-6">
-                            <span class="font-mono text-[#E30613] text-[9px] tracking-[0.3em] uppercase border border-[#E30613]/30 px-3 py-1">Utvalt</span>
-                            <span class="font-mono text-zinc-600 text-[9px] tracking-[0.3em] uppercase">Feb 2026</span>
+                            <span class="font-system-light text-[#E30613] text-[9px] border border-[#E30613]/30 px-3 py-1 rounded-lg">Utvalt</span>
+                            <span class="font-system-light text-[#94A3B8]/40 text-[9px]">Feb 2026</span>
                         </div>
-                        <h3 class="font-display font-black text-2xl md:text-3xl text-white uppercase tracking-tight leading-tight mb-4">Keramisk coating: Vad är det egentligen och behöver din bil det?</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6">Vi bryter ner myterna kring keramisk coating, förklarar exakt vad det gör för din bils lack, och hjälper dig avgöra om det är värt investeringen.</p>
-                        <span class="read-more font-mono text-[10px] text-zinc-500 uppercase tracking-[0.3em] transition-colors">Läs mer →</span>
+                        <h3 class="font-display-black text-2xl md:text-3xl text-[#E2E8F0] uppercase leading-tight mb-4" style="transform: skewX(-3deg);">Keramisk coating: Vad är det egentligen och behöver din bil det?</h3>
+                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Vi bryter ner myterna kring keramisk coating, förklarar exakt vad det gör för din bils lack, och hjälper dig avgöra om det är värt investeringen.</p>
+                        <span class="read-more font-system-light text-[10px] text-[#94A3B8]/50 transition-colors">Läs mer &rarr;</span>
                     </div>
                 </div>
             </a>
@@ -93,237 +113,105 @@
     </section>
 
     <!-- FILTER TAGS -->
-    <section class="bg-[#0A0A0A] py-10 px-8">
+    <section class="py-10 px-8 md:px-20">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-wrap gap-3">
-                <button class="tag active glass px-5 py-2 font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-400" onclick="filterPosts('all', this)">Alla</button>
-                <button class="tag glass px-5 py-2 font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-400" onclick="filterPosts('teknik', this)">Teknik</button>
-                <button class="tag glass px-5 py-2 font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-400" onclick="filterPosts('bilvard', this)">Bilvård</button>
-                <button class="tag glass px-5 py-2 font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-400" onclick="filterPosts('nyheter', this)">Nyheter</button>
-                <button class="tag glass px-5 py-2 font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-400" onclick="filterPosts('tips', this)">Tips & Råd</button>
+                <button class="tag active liquid-glass px-5 py-2 font-system-light text-[9px] text-[#94A3B8]" onclick="filterPosts('all', this)">Alla</button>
+                <button class="tag liquid-glass px-5 py-2 font-system-light text-[9px] text-[#94A3B8]" onclick="filterPosts('teknik', this)">Teknik</button>
+                <button class="tag liquid-glass px-5 py-2 font-system-light text-[9px] text-[#94A3B8]" onclick="filterPosts('bilvard', this)">Bilvård</button>
+                <button class="tag liquid-glass px-5 py-2 font-system-light text-[9px] text-[#94A3B8]" onclick="filterPosts('nyheter', this)">Nyheter</button>
+                <button class="tag liquid-glass px-5 py-2 font-system-light text-[9px] text-[#94A3B8]" onclick="filterPosts('tips', this)">Tips & Råd</button>
             </div>
         </div>
     </section>
 
-    <!-- BLOG POSTS GRID -->
-    <section class="bg-[#0A0A0A] py-16 px-8">
+    <!-- BLOG POSTS -->
+    <section class="py-16 px-8 md:px-20">
         <div class="max-w-6xl mx-auto">
             <div id="posts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <a href="#" class="blog-card liquid-glass overflow-hidden block" data-category="teknik"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><div class="aspect-video overflow-hidden"><video autoplay muted loop playsinline class="blog-thumb w-full h-full object-cover grayscale opacity-30 transition-all duration-700"><source src="12698098_4070_2160_24fps.mp4" type="video/mp4"></video></div><div class="p-8"><div class="flex items-center gap-4 mb-4"><span class="font-system-light text-[#007AFF] text-[9px]">Teknik</span><span class="font-system-light text-[#94A3B8]/30 text-[9px]">25 Feb 2026</span></div><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase leading-tight mb-3">OBD-diagnostik: Vad felkoderna faktiskt berättar</h4><p class="text-[#94A3B8]/60 text-sm leading-relaxed mb-4">Modern diagnostik avslöjar mer än du tror. Vi förklarar de vanligaste felkoderna och vad de betyder för din bil.</p><span class="read-more font-system-light text-[10px] text-[#94A3B8]/40 transition-colors">Läs mer &rarr;</span></div></div></a>
 
-                <!-- Post 1 -->
-                <a href="#" class="blog-card glass overflow-hidden block" data-category="teknik">
-                    <div class="aspect-video overflow-hidden bg-zinc-900">
-                        <video autoplay muted loop playsinline class="blog-thumb w-full h-full object-cover grayscale opacity-30 transition-all duration-700">
-                            <source src="12698098_4070_2160_24fps.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center gap-4 mb-4">
-                            <span class="font-mono text-[#0054A6] text-[9px] tracking-[0.3em] uppercase">Teknik</span>
-                            <span class="font-mono text-zinc-700 text-[9px] tracking-[0.3em] uppercase">25 Feb 2026</span>
-                        </div>
-                        <h4 class="font-display font-bold text-lg text-white uppercase tracking-wide leading-tight mb-3">OBD-diagnostik: Vad felkoderna faktiskt berättar</h4>
-                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">Modern diagnostik avslöjar mer än du tror. Vi förklarar de vanligaste felkoderna och vad de betyder för din bil.</p>
-                        <span class="read-more font-mono text-[10px] text-zinc-600 uppercase tracking-[0.3em] transition-colors">Läs mer →</span>
-                    </div>
-                </a>
+                <a href="#" class="blog-card liquid-glass overflow-hidden block" data-category="bilvard"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><div class="aspect-video overflow-hidden"><video autoplay muted loop playsinline class="blog-thumb w-full h-full object-cover grayscale opacity-30 transition-all duration-700"><source src="6157968-hd_1920_1080_30fps.mp4" type="video/mp4"></video></div><div class="p-8"><div class="flex items-center gap-4 mb-4"><span class="font-system-light text-[#007AFF] text-[9px]">Bilvård</span><span class="font-system-light text-[#94A3B8]/30 text-[9px]">20 Feb 2026</span></div><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase leading-tight mb-3">Vintertvättguiden: Så skyddar du lacken under de kalla månaderna</h4><p class="text-[#94A3B8]/60 text-sm leading-relaxed mb-4">Salt, grus och fukt är dina värsta fiender under vintern. Så här håller du lacken fräsch hela säsongen.</p><span class="read-more font-system-light text-[10px] text-[#94A3B8]/40 transition-colors">Läs mer &rarr;</span></div></div></a>
 
-                <!-- Post 2 -->
-                <a href="#" class="blog-card glass overflow-hidden block" data-category="bilvard">
-                    <div class="aspect-video overflow-hidden bg-zinc-900">
-                        <video autoplay muted loop playsinline class="blog-thumb w-full h-full object-cover grayscale opacity-30 transition-all duration-700">
-                            <source src="6157968-hd_1920_1080_30fps.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center gap-4 mb-4">
-                            <span class="font-mono text-[#0054A6] text-[9px] tracking-[0.3em] uppercase">Bilvård</span>
-                            <span class="font-mono text-zinc-700 text-[9px] tracking-[0.3em] uppercase">20 Feb 2026</span>
-                        </div>
-                        <h4 class="font-display font-bold text-lg text-white uppercase tracking-wide leading-tight mb-3">Vintertvättguiden: Så skyddar du lacken under de kalla månaderna</h4>
-                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">Salt, grus och fukt är dina värsta fiender under vintern. Så här håller du lacken fräsch hela säsongen.</p>
-                        <span class="read-more font-mono text-[10px] text-zinc-600 uppercase tracking-[0.3em] transition-colors">Läs mer →</span>
-                    </div>
-                </a>
+                <a href="#" class="blog-card liquid-glass overflow-hidden block" data-category="nyheter"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><div class="aspect-video overflow-hidden bg-[#1A1C1E] flex items-center justify-center"><span class="font-display-black text-4xl text-[#E2E8F0]/10 uppercase">SIT24</span></div><div class="p-8"><div class="flex items-center gap-4 mb-4"><span class="font-system-light text-[#007AFF] text-[9px]">Nyheter</span><span class="font-system-light text-[#94A3B8]/30 text-[9px]">15 Feb 2026</span></div><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase leading-tight mb-3">Vi har uppgraderat vår diagnostikutrustning</h4><p class="text-[#94A3B8]/60 text-sm leading-relaxed mb-4">Nya avancerade diagnostikverktyg ger oss ännu bättre precision vid felsökning av moderna fordon.</p><span class="read-more font-system-light text-[10px] text-[#94A3B8]/40 transition-colors">Läs mer &rarr;</span></div></div></a>
 
-                <!-- Post 3 -->
-                <a href="#" class="blog-card glass overflow-hidden block" data-category="nyheter">
-                    <div class="aspect-video overflow-hidden bg-zinc-900 flex items-center justify-center">
-                        <div class="text-center p-8">
-                            <span class="font-display font-black text-4xl text-zinc-800 uppercase">DL</span>
-                        </div>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center gap-4 mb-4">
-                            <span class="font-mono text-[#0054A6] text-[9px] tracking-[0.3em] uppercase">Nyheter</span>
-                            <span class="font-mono text-zinc-700 text-[9px] tracking-[0.3em] uppercase">15 Feb 2026</span>
-                        </div>
-                        <h4 class="font-display font-bold text-lg text-white uppercase tracking-wide leading-tight mb-3">Vi har uppgraderat vår diagnostikutrustning</h4>
-                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">Nya avancerade diagnostikverktyg ger oss ännu bättre precision vid felsökning av moderna fordon.</p>
-                        <span class="read-more font-mono text-[10px] text-zinc-600 uppercase tracking-[0.3em] transition-colors">Läs mer →</span>
-                    </div>
-                </a>
+                <a href="#" class="blog-card liquid-glass overflow-hidden block" data-category="tips"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><div class="aspect-video overflow-hidden bg-[#1A1C1E] flex items-center justify-center"><span class="font-system-light text-[#E2E8F0]/10 text-[10px]">Tips & Råd</span></div><div class="p-8"><div class="flex items-center gap-4 mb-4"><span class="font-system-light text-[#007AFF] text-[9px]">Tips</span><span class="font-system-light text-[#94A3B8]/30 text-[9px]">10 Feb 2026</span></div><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase leading-tight mb-3">5 tecken på att det är dags att byta bromsar</h4><p class="text-[#94A3B8]/60 text-sm leading-relaxed mb-4">Missljud, vibrerande pedal eller längre bromssträcka? Här är de viktigaste varningssignalerna att hålla koll på.</p><span class="read-more font-system-light text-[10px] text-[#94A3B8]/40 transition-colors">Läs mer &rarr;</span></div></div></a>
 
-                <!-- Post 4 -->
-                <a href="#" class="blog-card glass overflow-hidden block" data-category="tips">
-                    <div class="aspect-video overflow-hidden bg-zinc-900 flex items-center justify-center">
-                        <div class="text-center p-8">
-                            <span class="font-mono text-zinc-800 text-[10px] tracking-[0.5em] uppercase">Tips & Råd</span>
-                        </div>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center gap-4 mb-4">
-                            <span class="font-mono text-[#0054A6] text-[9px] tracking-[0.3em] uppercase">Tips</span>
-                            <span class="font-mono text-zinc-700 text-[9px] tracking-[0.3em] uppercase">10 Feb 2026</span>
-                        </div>
-                        <h4 class="font-display font-bold text-lg text-white uppercase tracking-wide leading-tight mb-3">5 tecken på att det är dags att byta bromsar</h4>
-                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">Missljud, vibrerande pedal eller längre bromssträcka? Här är de viktigaste varningssignalerna att hålla koll på.</p>
-                        <span class="read-more font-mono text-[10px] text-zinc-600 uppercase tracking-[0.3em] transition-colors">Läs mer →</span>
-                    </div>
-                </a>
+                <a href="#" class="blog-card liquid-glass overflow-hidden block" data-category="teknik"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><div class="aspect-video overflow-hidden bg-[#1A1C1E] flex items-center justify-center"><span class="font-display-black text-4xl text-[#E2E8F0]/10 uppercase">M3</span></div><div class="p-8"><div class="flex items-center gap-4 mb-4"><span class="font-system-light text-[#007AFF] text-[9px]">Teknik</span><span class="font-system-light text-[#94A3B8]/30 text-[9px]">05 Feb 2026</span></div><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase leading-tight mb-3">BMW G80 M3: Vanliga servicepunkter och vad du bör veta</h4><p class="text-[#94A3B8]/60 text-sm leading-relaxed mb-4">En djupdykning i G80-plattformen, dess vanligaste servicebehov och hur du håller den i toppform.</p><span class="read-more font-system-light text-[10px] text-[#94A3B8]/40 transition-colors">Läs mer &rarr;</span></div></div></a>
 
-                <!-- Post 5 -->
-                <a href="#" class="blog-card glass overflow-hidden block" data-category="teknik">
-                    <div class="aspect-video overflow-hidden bg-zinc-900 flex items-center justify-center">
-                        <div class="text-center p-8">
-                            <span class="font-display font-black text-4xl text-zinc-800 uppercase">M3</span>
-                        </div>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center gap-4 mb-4">
-                            <span class="font-mono text-[#0054A6] text-[9px] tracking-[0.3em] uppercase">Teknik</span>
-                            <span class="font-mono text-zinc-700 text-[9px] tracking-[0.3em] uppercase">05 Feb 2026</span>
-                        </div>
-                        <h4 class="font-display font-bold text-lg text-white uppercase tracking-wide leading-tight mb-3">BMW G80 M3: Vanliga servicepunkter och vad du bör veta</h4>
-                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">En djupdykning i G80-plattformen, dess vanligaste servicebehov och hur du håller den i toppform.</p>
-                        <span class="read-more font-mono text-[10px] text-zinc-600 uppercase tracking-[0.3em] transition-colors">Läs mer →</span>
-                    </div>
-                </a>
+                <a href="#" class="blog-card liquid-glass overflow-hidden block" data-category="bilvard"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><div class="aspect-video overflow-hidden bg-[#1A1C1E] flex items-center justify-center"><span class="font-system-light text-[#E2E8F0]/10 text-[10px]">Detailing</span></div><div class="p-8"><div class="flex items-center gap-4 mb-4"><span class="font-system-light text-[#007AFF] text-[9px]">Bilvård</span><span class="font-system-light text-[#94A3B8]/30 text-[9px]">01 Feb 2026</span></div><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase leading-tight mb-3">Lackvård steg för steg: Från tvätt till coating</h4><p class="text-[#94A3B8]/60 text-sm leading-relaxed mb-4">Hela processen från grundlig handtvätt via polering till det slutliga skyddslagret. Så gör proffsen.</p><span class="read-more font-system-light text-[10px] text-[#94A3B8]/40 transition-colors">Läs mer &rarr;</span></div></div></a>
 
-                <!-- Post 6 -->
-                <a href="#" class="blog-card glass overflow-hidden block" data-category="bilvard">
-                    <div class="aspect-video overflow-hidden bg-zinc-900 flex items-center justify-center">
-                        <div class="text-center p-8">
-                            <span class="font-mono text-zinc-800 text-[10px] tracking-[0.5em] uppercase">Detailing</span>
-                        </div>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center gap-4 mb-4">
-                            <span class="font-mono text-[#0054A6] text-[9px] tracking-[0.3em] uppercase">Bilvård</span>
-                            <span class="font-mono text-zinc-700 text-[9px] tracking-[0.3em] uppercase">01 Feb 2026</span>
-                        </div>
-                        <h4 class="font-display font-bold text-lg text-white uppercase tracking-wide leading-tight mb-3">Lackvård steg för steg: Från tvätt till coating</h4>
-                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">Hela processen från grundlig handtvätt via polering till det slutliga skyddslagret. Så gör proffsen.</p>
-                        <span class="read-more font-mono text-[10px] text-zinc-600 uppercase tracking-[0.3em] transition-colors">Läs mer →</span>
-                    </div>
-                </a>
+                <a href="#" class="blog-card liquid-glass overflow-hidden block" data-category="tips"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><div class="aspect-video overflow-hidden bg-[#1A1C1E] flex items-center justify-center"><span class="font-system-light text-[#E2E8F0]/10 text-[10px]">Sommar</span></div><div class="p-8"><div class="flex items-center gap-4 mb-4"><span class="font-system-light text-[#007AFF] text-[9px]">Tips</span><span class="font-system-light text-[#94A3B8]/30 text-[9px]">10 Mar 2026</span></div><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase leading-tight mb-3">Så förbereder du bilen inför sommaren</h4><p class="text-[#94A3B8]/60 text-sm leading-relaxed mb-4">Från däckbyte och AC-kontroll till spolarvätska och bromscheck — allt du behöver göra innan sommarsäsongen.</p><span class="read-more font-system-light text-[10px] text-[#94A3B8]/40 transition-colors">Läs mer &rarr;</span></div></div></a>
 
+                <a href="#" class="blog-card liquid-glass overflow-hidden block" data-category="teknik"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><div class="aspect-video overflow-hidden bg-[#1A1C1E] flex items-center justify-center"><span class="font-display-black text-4xl text-[#E2E8F0]/10 uppercase">4W</span></div><div class="p-8"><div class="flex items-center gap-4 mb-4"><span class="font-system-light text-[#007AFF] text-[9px]">Teknik</span><span class="font-system-light text-[#94A3B8]/30 text-[9px]">05 Mar 2026</span></div><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase leading-tight mb-3">Varför är hjulinställning viktigt?</h4><p class="text-[#94A3B8]/60 text-sm leading-relaxed mb-4">Felaktig hjulinställning sliter på däcken och försämrar köregenskaperna. Vi förklarar hur det fungerar och när du bör kontrollera.</p><span class="read-more font-system-light text-[10px] text-[#94A3B8]/40 transition-colors">Läs mer &rarr;</span></div></div></a>
+
+                <a href="#" class="blog-card liquid-glass overflow-hidden block" data-category="tips"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><div class="aspect-video overflow-hidden bg-[#1A1C1E] flex items-center justify-center"><span class="font-system-light text-[#E2E8F0]/10 text-[10px]">Däck</span></div><div class="p-8"><div class="flex items-center gap-4 mb-4"><span class="font-system-light text-[#007AFF] text-[9px]">Tips</span><span class="font-system-light text-[#94A3B8]/30 text-[9px]">01 Mar 2026</span></div><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase leading-tight mb-3">Så väljer du rätt däck för din bil</h4><p class="text-[#94A3B8]/60 text-sm leading-relaxed mb-4">Sommardäck, vinterdäck eller helårsdäck? Vi guidar dig genom storlekar, mönsterdjup och vad som passar just din bil.</p><span class="read-more font-system-light text-[10px] text-[#94A3B8]/40 transition-colors">Läs mer &rarr;</span></div></div></a>
             </div>
-
-            <div class="mt-16 pt-8 border-t border-zinc-800/60">
-                <p class="font-mono text-[10px] text-zinc-600 tracking-[0.3em] uppercase text-center terminal-cursor">SIT24 // JOURNAL_LOG — 6 inlägg publicerade</p>
+            <div class="mt-16 pt-8 border-t border-[#E2E8F0]/5">
+                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // JOURNAL_LOG — 9 inlägg publicerade</p>
             </div>
         </div>
     </section>
 
     <!-- NEWSLETTER -->
-    <section class="bg-[#0A0A0A] py-32 px-8 border-t border-zinc-900/50">
+    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-2xl mx-auto text-center reveal">
-            <h2 class="text-[#0054A6] font-mono text-[10px] tracking-[0.5em] uppercase mb-4">// Prenumerera</h2>
-            <h3 class="font-display font-black text-4xl text-white uppercase mb-4">Missa inget</h3>
-            <p class="text-zinc-500 text-sm mb-10">Få tekniska tips, nyheter och erbjudanden direkt i din inkorg.</p>
+            <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-4 inline-block">Prenumerera</p>
+            <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase mb-4" style="transform: skewX(-3deg);">Missa inget</h3>
+            <p class="text-[#94A3B8]/60 text-sm mb-10">Få tekniska tips, nyheter och erbjudanden direkt i din inkorg.</p>
             <form onsubmit="subscribeNewsletter(event)" class="flex flex-col sm:flex-row gap-4">
-                <input type="email" placeholder="DIN@EMAIL.SE" class="flex-1 bg-black/50 border border-zinc-800 p-5 font-mono text-sm text-white focus:border-[#0054A6] outline-none transition-all">
-                <button type="submit" id="sub-btn" class="bg-[#0054A6] hover:bg-[#003d7a] text-white font-display font-bold py-5 px-10 transition-all uppercase tracking-[0.3em] text-[11px] shrink-0">
-                    Prenumerera
-                </button>
+                <input type="email" placeholder="DIN@EMAIL.SE" class="flex-1 bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-5 font-system-light text-sm text-[#E2E8F0] focus:border-[#007AFF] outline-none transition-all">
+                <button type="submit" id="sub-btn" class="ghost-btn font-system-semi text-[11px] text-[#007AFF] px-10 py-5 shrink-0">Prenumerera</button>
             </form>
-            <div id="sub-success" class="hidden mt-6 font-mono text-sm text-[#0054A6] tracking-wider"></div>
+            <div id="sub-success" class="hidden mt-6 font-system-light text-sm text-[#007AFF]"></div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-[#050505] py-24 px-8 border-t border-zinc-900">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12">
-            <div class="col-span-1 md:col-span-2">
-                <a href="index.html" class="font-display font-black text-xl tracking-tight text-white mb-6 uppercase block hover:text-white/60 transition">Drive_Logic</a>
-                <p class="text-zinc-600 text-[11px] leading-relaxed">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p>
+    <footer class="relative py-24 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="liquid-glass p-12 md:p-16 mb-16"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                <div class="relative z-10 grid md:grid-cols-4 gap-12">
+                    <div class="col-span-1 md:col-span-2"><div class="font-display-black text-xl text-[#E2E8F0] mb-6 uppercase" style="transform: skewX(-3deg);">SIT24</div><p class="text-[#94A3B8]/50 text-[11px]">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p></div>
+                    <div><h5 class="text-[#E2E8F0] font-system-semi text-[11px] mb-6">Kontakt</h5><ul class="text-[#94A3B8] text-[11px] space-y-2"><li>08-123 45 67</li><li>info@sit24.se</li></ul></div>
+                    <div><h5 class="text-[#E2E8F0] font-system-semi text-[11px] mb-6">Socialt</h5><ul class="text-[#94A3B8] text-[11px] space-y-2"><li><a href="#" class="hover:text-[#007AFF] transition">Instagram</a></li><li><a href="#" class="hover:text-[#007AFF] transition">YouTube</a></li></ul></div>
+                </div>
             </div>
-            <div>
-                <h5 class="text-white font-display font-bold text-[11px] uppercase tracking-widest mb-6">Kontakt</h5>
-                <ul class="text-zinc-500 text-[11px] space-y-2">
-                    <li>08-123 45 67</li>
-                    <li>info@drivelogic.se</li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="text-white font-display font-bold text-[11px] uppercase tracking-widest mb-6">Socialt</h5>
-                <ul class="text-zinc-500 text-[11px] space-y-2">
-                    <li><a href="#" class="hover:text-white transition">Instagram</a></li>
-                    <li><a href="#" class="hover:text-white transition">YouTube</a></li>
-                </ul>
-            </div>
+            <div class="flex justify-between items-center"><p class="font-system-light text-[9px] text-[#94A3B8]/30">&copy; 2026 SIT24 // LOGIC_CORE</p><div class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-[#007AFF] rounded-full animate-pulse shadow-[0_0_10px_#007AFF]"></div><span class="font-system-light text-[9px] text-[#94A3B8]/40">System_Online</span></div></div>
         </div>
     </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
-
-        // Page load
         window.addEventListener('load', () => {
-            const tl = gsap.timeline();
-            tl.to("#page-label", { opacity: 1, y: -10, duration: 1, ease: "expo.out" })
-              .to("#page-title", { opacity: 1, y: -20, duration: 1.5, ease: "expo.out" }, "-=0.6");
+            const tl = gsap.timeline({ delay: 0.3 });
+            tl.to("#page-label", { opacity: 1, y: -10, duration: 1, ease: "expo.out" }).to("#page-title", { opacity: 1, y: -20, duration: 1.5, ease: "expo.out" }, "-=0.6");
         });
-
-        // Scroll reveals
-        gsap.utils.toArray(".reveal").forEach(el => {
-            gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } });
-        });
-
-        // Blog cards stagger
-        document.querySelectorAll(".blog-card").forEach((card, i) => {
-            gsap.from(card, {
-                opacity: 0, y: 30, duration: 0.8, delay: i * 0.1, ease: "expo.out",
-                scrollTrigger: { trigger: card, start: "top 92%" }
-            });
-        });
-
-        // Filter posts by category
+        function toggleMenu() {
+            const overlay = document.getElementById('menu-overlay'); const btn = document.getElementById('menu-btn');
+            if (overlay.classList.contains('active')) { gsap.to('.menu-link', { opacity: 0, x: -20, duration: 0.3, stagger: 0.04, ease: "power2.in", onComplete: () => overlay.classList.remove('active') }); btn.style.opacity = '1'; }
+            else { overlay.classList.add('active'); btn.style.opacity = '0.3'; gsap.fromTo('.menu-link', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.08, ease: "expo.out", delay: 0.2 }); }
+        }
+        gsap.utils.toArray(".reveal").forEach(el => { gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } }); });
+        document.querySelectorAll(".blog-card").forEach((card, i) => { gsap.from(card, { opacity: 0, y: 30, duration: 0.8, delay: i * 0.1, ease: "expo.out", scrollTrigger: { trigger: card, start: "top 92%" } }); });
         function filterPosts(category, btn) {
-            // Update active tag
-            document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-
-            const cards = document.querySelectorAll('.blog-card');
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
-                    gsap.from(card, { opacity: 0, y: 20, duration: 0.5, ease: "expo.out" });
-                } else {
-                    card.style.display = 'none';
-                }
+            document.querySelectorAll('.tag').forEach(t => t.classList.remove('active')); btn.classList.add('active');
+            document.querySelectorAll('.blog-card[data-category]').forEach(card => {
+                if (category === 'all' || card.dataset.category === category) { card.style.display = 'block'; gsap.from(card, { opacity: 0, y: 20, duration: 0.5, ease: "expo.out" }); }
+                else { card.style.display = 'none'; }
             });
         }
-
-        // Newsletter subscribe
         function subscribeNewsletter(e) {
-            e.preventDefault();
-            const btn = document.getElementById('sub-btn');
-            const successDiv = document.getElementById('sub-success');
-
-            btn.disabled = true;
-            btn.textContent = 'SKICKAR...';
-
-            setTimeout(() => {
-                btn.textContent = 'PRENUMERERAR ✓';
-                btn.classList.remove('bg-[#0054A6]', 'hover:bg-[#003d7a]');
-                btn.classList.add('bg-zinc-800');
-                successDiv.classList.remove('hidden');
-                successDiv.textContent = '✓ Tack! Du kommer nu få våra senaste inlägg direkt i din inbox.';
-                gsap.from(successDiv, { opacity: 0, y: 10, duration: 0.6 });
-            }, 1500);
+            e.preventDefault(); const btn = document.getElementById('sub-btn'); const successDiv = document.getElementById('sub-success');
+            btn.disabled = true; btn.textContent = 'SKICKAR...';
+            setTimeout(() => { btn.textContent = 'PRENUMERERAR ✓'; btn.style.borderColor = 'rgba(0,122,255,0.5)'; successDiv.classList.remove('hidden'); successDiv.textContent = '✓ Tack! Du kommer nu få våra senaste inlägg direkt i din inbox.'; gsap.from(successDiv, { opacity: 0, y: 10, duration: 0.6 }); }, 1500);
         }
+        document.querySelectorAll('.liquid-glass').forEach(card => {
+            const highlight = card.querySelector('.specular-highlight'); const sweep = card.querySelector('.edge-sweep');
+            if (!highlight) return;
+            card.addEventListener('mousemove', e => { const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top; highlight.style.background = `radial-gradient(circle 200px at ${x}px ${y}px, rgba(255,255,255,0.1) 0%, transparent 70%)`; if (sweep) sweep.style.left = `${x - 40}px`; });
+        });
     </script>
+    <a href="index.html#booking-section" class="fixed bottom-8 right-8 z-[450] ghost-btn font-system-semi text-[11px] text-[#007AFF] no-underline px-6 py-4 shadow-lg">Boka Tjänst</a>
 </body>
 </html>

@@ -1,296 +1,246 @@
 <!DOCTYPE html>
-<html lang="sv" class="scroll-smooth">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRIVE LOGIC // FAQ</title>
+    <title>SIT24 // FAQ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Archivo:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Outfit:wght@100;300;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0A0A0A; color: #e5e7eb; overflow-x: hidden; }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .font-display { font-family: 'Archivo', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .terminal-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #0054A6; margin-left: 2px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 300; line-height: 1.8; background-color: #1A1C1E; color: #E2E8F0; overflow-x: hidden; }
+        .font-display, .font-display-black { font-family: 'Archivo', sans-serif; font-weight: 900; letter-spacing: -0.03em; }
+        .font-system-light { font-family: 'Outfit', sans-serif; font-weight: 100; text-transform: uppercase; letter-spacing: 0.1em; }
+        .font-system-semi { font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+        .font-mono { font-family: 'Outfit', sans-serif; font-weight: 300; }
+        .film-grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
+        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 28px; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.22,1,0.36,1); }
+        .liquid-glass .specular-highlight { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(circle 200px at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%); transition: opacity 0.3s ease; }
+        .liquid-glass:hover .specular-highlight { opacity: 1; }
+        .liquid-glass .edge-sweep { position: absolute; top: 0; left: 0; width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); z-index: 2; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+        .liquid-glass:hover .edge-sweep { opacity: 1; }
+        .ghost-btn { font-family: 'Outfit', sans-serif; font-weight: 600; border: 1px solid rgba(0,122,255,0.3); border-radius: 12px; padding: 10px 24px; background: transparent; transition: border-color 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease, color 0.3s ease, background 0.4s ease; }
+        .ghost-btn:hover { border-color: #007AFF; box-shadow: 0 0 20px rgba(0,122,255,0.2); background: rgba(0,122,255,0.04); color: #007AFF; }
+        .menu-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(26,28,30,0.7); backdrop-filter: blur(60px) saturate(200%) brightness(105%); -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(105%); opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+        .menu-overlay.active { opacity: 1; pointer-events: all; }
+        .menu-link { position: relative; display: inline-block; transition: color 0.3s ease; }
+        .menu-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: #007AFF; transition: width 0.4s ease; }
+        .menu-link:hover::after { width: 100%; }
+        .terminal-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #007AFF; margin-left: 2px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .video-overlay { background: linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.95) 100%); }
-
-        .faq-item { border-bottom: 1px solid rgba(63, 63, 70, 0.4); }
+        .accent-line { border-left: 1px solid #007AFF; padding-left: 12px; }
+        .faq-item { border-bottom: 1px solid rgba(226,232,240,0.05); }
         .faq-question { cursor: pointer; transition: all 0.3s ease; }
-        .faq-question:hover { color: #0054A6; }
+        .faq-question:hover h4 { color: #007AFF; }
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.5s ease; }
         .faq-answer.open { max-height: 500px; }
-        .faq-toggle { transition: transform 0.3s ease; }
+        .faq-toggle { transition: transform 0.3s ease; color: #007AFF; }
         .faq-toggle.open { transform: rotate(45deg); }
     </style>
 </head>
 <body>
+    <div class="film-grain"></div>
 
     <!-- HEADER -->
-    <header class="fixed top-0 w-full z-[100] px-8 py-8 flex justify-between items-center mix-blend-difference">
-        <a href="index.html" class="font-mono text-[10px] tracking-[0.5em] uppercase font-bold text-white hover:text-white/60 transition">Drive_Logic // STHLM</a>
-        <nav class="hidden md:flex items-center space-x-10 text-[10px] font-mono uppercase tracking-[0.3em]">
-            <a href="about.html" class="hover:text-white/60 transition">Om Oss</a>
-            <a href="personal.html" class="hover:text-white/60 transition">Personal</a>
-            <a href="tjanster.html" class="hover:text-white/60 transition">Tjänster</a>
-            <a href="blogg.html" class="hover:text-white/60 transition">Blogg</a>
-            <a href="faq.html" class="hover:text-white/60 transition">FAQ</a>
-            <a href="index.html#booking-section" class="px-5 py-2.5 bg-[#E30613] text-white hover:bg-[#c7050f] transition-all tracking-[0.3em]">Boka Tid</a>
-        </nav>
-        <div class="flex items-center gap-3">
-            <div class="w-1.5 h-1.5 bg-[#0054A6] rounded-full animate-pulse shadow-[0_0_10px_#0054A6]"></div>
-            <span class="text-[9px] font-mono uppercase tracking-widest text-white/50">System_Online</span>
+    <header class="fixed top-0 w-full z-[400] px-6 md:px-12 py-4 md:py-6" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-bottom: 1px solid rgba(255,255,255,0.06);">
+        <div class="flex justify-between items-start">
+            <div class="flex flex-col items-start gap-3">
+                <a href="index.html"><img src="sit24_logo.png" alt="SIT24" class="h-14 md:h-16 w-auto"></a>
+                <button id="menu-btn" onclick="toggleMenu()" class="flex flex-col gap-[5px] group cursor-pointer" aria-label="Öppna meny"><span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span><span class="block w-5 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300 group-hover:w-7"></span><span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span></button>
+            </div>
+            <div class="hidden md:flex items-center gap-4"><img src="iso-9001-certifiering-logo.webp" alt="ISO 9001" class="h-14 w-auto"><img src="iso-14001-certifiering-logo.webp" alt="ISO 14001" class="h-14 w-auto"><img src="godkand-bilverkstad.svg" alt="Godkänd Bilverkstad" class="h-14 w-auto"></div>
+            <div class="flex flex-col items-end gap-3">
+                <img src="autoexperten_logo.png" alt="Autoexperten" class="h-12 md:h-14 w-auto">
+                <div class="flex items-center gap-4">
+                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="TikTok"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52V6.8a4.84 4.84 0 01-1-.11z"/></svg></a>
+                    <a href="login.html" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Personalinloggning"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg></a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- HERO BANNER -->
-    <section class="relative h-[50vh] flex items-end pb-20 px-8 overflow-hidden">
-        <div class="absolute inset-0 z-0 bg-gradient-to-b from-zinc-900/50 to-[#0A0A0A]"></div>
+    <!-- MENU OVERLAY -->
+    <div id="menu-overlay" class="menu-overlay">
+        <button onclick="toggleMenu()" class="absolute top-8 right-8 md:right-12 font-system-semi text-lg text-[#E2E8F0] hover:text-[#007AFF] transition cursor-pointer z-[510]">Stäng</button>
+        <div class="h-full flex items-center justify-between px-8 md:px-20">
+            <nav class="flex flex-col gap-6">
+                <a href="about.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Om Oss</a>
+                <a href="personal.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Personal</a>
+                <a href="tjanster.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Tjänster</a>
+                <a href="blogg.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Blogg</a>
+                <a href="faq.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">FAQ</a>
+                <a href="erbjudanden.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Erbjudanden</a>
+                <a href="kontakt.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Kontakta Oss</a>
+                <a href="index.html#booking-section" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Boka Tid</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="relative h-[60vh] flex items-end pb-20 px-8 md:px-20 overflow-hidden">
+        <div class="absolute inset-0 z-0" style="background: radial-gradient(ellipse at 30% 50%, rgba(0,122,255,0.03) 0%, transparent 60%), #1A1C1E;"></div>
         <div class="relative z-10 max-w-6xl mx-auto w-full">
-            <h2 class="font-mono text-[#0054A6] text-[10px] tracking-[0.5em] uppercase mb-4 opacity-0" id="page-label">// FAQ</h2>
-            <h1 class="font-display font-black text-6xl md:text-[7rem] text-white uppercase leading-[0.9] tracking-tight opacity-0" id="page-title">
-                Vanliga frågor.
-            </h1>
+            <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-4 opacity-0" id="page-label">FAQ</p>
+            <h1 class="font-display-black text-[12vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" id="page-title" style="transform: skewX(-3deg);">Vanliga frågor.</h1>
         </div>
     </section>
 
-    <!-- FAQ SECTION -->
-    <section class="bg-[#0A0A0A] py-32 px-8 border-t border-zinc-900">
+    <!-- FAQ -->
+    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-3xl mx-auto">
 
             <!-- Garanti -->
             <div class="reveal mb-16">
-                <h2 class="text-[#0054A6] font-mono text-[10px] tracking-[0.5em] uppercase mb-2">// Garanti & Returer</h2>
-                <h3 class="font-display font-black text-3xl text-white uppercase mb-8">Garanti</h3>
+                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Garanti & Returer</p>
+                <h3 class="font-display-black text-3xl text-[#E2E8F0] uppercase mb-8" style="transform: skewX(-3deg);">Garanti</h3>
             </div>
-
             <div class="space-y-0 mb-20">
                 <div class="faq-item py-6">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Hur lång garanti har ni på reservdelar?</h4>
-                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                        <h4 class="font-display-black text-base text-[#E2E8F0] uppercase pr-8">Hur lång garanti har ni på reservdelar?</h4>
+                        <span class="faq-toggle text-2xl font-light shrink-0">+</span>
                     </div>
-                    <div class="faq-answer">
-                        <div class="pt-4 pb-2">
-                            <p class="text-zinc-400 text-sm leading-relaxed">Vi erbjuder 3 års garanti på alla reservdelar via Autoexperten. Garantin gäller för både nuvarande och kommande fordonsägare. Om fel uppstår byts produkten ut mot en ny eller så reparerar vi den kostnadsfritt. Spara alltid ditt kvitto som garantibevis. Garantin gäller vid normal användning.</p>
-                        </div>
-                    </div>
+                    <div class="faq-answer"><div class="pt-4 pb-2"><p class="text-[#94A3B8] text-sm leading-relaxed">Vi erbjuder 3 års garanti på alla reservdelar via Autoexperten. Garantin gäller för både nuvarande och kommande fordonsägare. Om fel uppstår byts produkten ut mot en ny eller så reparerar vi den kostnadsfritt. Spara alltid ditt kvitto som garantibevis. Garantin gäller vid normal användning.</p></div></div>
                 </div>
-
                 <div class="faq-item py-6">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Vad är er returpolicy?</h4>
-                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                        <h4 class="font-display-black text-base text-[#E2E8F0] uppercase pr-8">Vad är er returpolicy?</h4>
+                        <span class="faq-toggle text-2xl font-light shrink-0">+</span>
                     </div>
-                    <div class="faq-answer">
-                        <div class="pt-4 pb-2">
-                            <p class="text-zinc-400 text-sm leading-relaxed">Du har 30 dagars returrätt från det att du har tagit emot din beställning. Kontakta oss så hjälper vi dig med returprocessen.</p>
-                        </div>
-                    </div>
+                    <div class="faq-answer"><div class="pt-4 pb-2"><p class="text-[#94A3B8] text-sm leading-relaxed">Du har 30 dagars returrätt från det att du har tagit emot din beställning. Kontakta oss så hjälper vi dig med returprocessen.</p></div></div>
                 </div>
             </div>
 
             <!-- Assistans -->
             <div class="reveal mb-16">
-                <h2 class="text-[#0054A6] font-mono text-[10px] tracking-[0.5em] uppercase mb-2">// Vägassistans</h2>
-                <h3 class="font-display font-black text-3xl text-white uppercase mb-8">Assistans</h3>
+                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Vägassistans</p>
+                <h3 class="font-display-black text-3xl text-[#E2E8F0] uppercase mb-8" style="transform: skewX(-3deg);">Assistans</h3>
             </div>
-
             <div class="space-y-0 mb-20">
                 <div class="faq-item py-6">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Vad ingår i vägassistansen?</h4>
-                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                        <h4 class="font-display-black text-base text-[#E2E8F0] uppercase pr-8">Vad ingår i vägassistansen?</h4>
+                        <span class="faq-toggle text-2xl font-light shrink-0">+</span>
                     </div>
-                    <div class="faq-answer">
-                        <div class="pt-4 pb-2">
-                            <p class="text-zinc-400 text-sm leading-relaxed">Vid service hos oss ingår 12 månaders vägassistans via Solid Försäkringar. Assistansen täcker tekniska fel och punktering (olyckor och bränslebrist undantaget). Vid behov bärgas ditt fordon till närmaste Autoexperten-verkstad inom 100 km.</p>
-                        </div>
-                    </div>
+                    <div class="faq-answer"><div class="pt-4 pb-2"><p class="text-[#94A3B8] text-sm leading-relaxed">Vid service hos oss ingår 12 månaders vägassistans via Solid Försäkringar. Assistansen täcker tekniska fel och punktering (olyckor och bränslebrist undantaget). Vid behov bärgas ditt fordon till närmaste Autoexperten-verkstad inom 100 km.</p></div></div>
                 </div>
-
                 <div class="faq-item py-6">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Hur kontaktar jag vägassistans vid nödsituation?</h4>
-                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                        <h4 class="font-display-black text-base text-[#E2E8F0] uppercase pr-8">Hur kontaktar jag vägassistans vid nödsituation?</h4>
+                        <span class="faq-toggle text-2xl font-light shrink-0">+</span>
                     </div>
-                    <div class="faq-answer">
-                        <div class="pt-4 pb-2">
-                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">Ring jourenumret direkt för snabb hjälp:</p>
-                            <div class="glass p-4 flex items-center gap-4 mb-3">
-                                <span class="text-[#E30613] text-lg">&#9742;</span>
-                                <div>
-                                    <span class="font-mono text-[9px] text-zinc-500 uppercase tracking-widest block">Journummer (dygnet runt)</span>
-                                    <span class="font-display font-bold text-white">0771-61 83 00</span>
-                                </div>
-                            </div>
-                            <div class="glass p-4 flex items-center gap-4">
-                                <span class="text-[#0054A6] text-lg">&#9993;</span>
-                                <div>
-                                    <span class="font-mono text-[9px] text-zinc-500 uppercase tracking-widest block">Kundservice (mån–fre 08–18)</span>
-                                    <span class="font-display font-bold text-white">013-13 13 13</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="faq-answer"><div class="pt-4 pb-2">
+                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-4">Ring jourenumret direkt för snabb hjälp:</p>
+                        <div class="liquid-glass p-4 flex items-center gap-4 mb-3"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#E30613] text-lg">&#9742;</span><div><span class="font-system-light text-[9px] text-[#94A3B8]/50 block">Journummer (dygnet runt)</span><span class="font-display-black text-[#E2E8F0]">0771-61 83 00</span></div></div></div>
+                        <div class="liquid-glass p-4 flex items-center gap-4"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#9993;</span><div><span class="font-system-light text-[9px] text-[#94A3B8]/50 block">Kundservice (mån–fre 08–18)</span><span class="font-display-black text-[#E2E8F0]">013-13 13 13</span></div></div></div>
+                    </div></div>
                 </div>
             </div>
 
             <!-- Service & Bokning -->
             <div class="reveal mb-16">
-                <h2 class="text-[#0054A6] font-mono text-[10px] tracking-[0.5em] uppercase mb-2">// Service & Bokning</h2>
-                <h3 class="font-display font-black text-3xl text-white uppercase mb-8">Bokning</h3>
+                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Service & Bokning</p>
+                <h3 class="font-display-black text-3xl text-[#E2E8F0] uppercase mb-8" style="transform: skewX(-3deg);">Bokning</h3>
             </div>
-
             <div class="space-y-0 mb-20">
                 <div class="faq-item py-6">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Hur bokar jag en tid?</h4>
-                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                        <h4 class="font-display-black text-base text-[#E2E8F0] uppercase pr-8">Hur bokar jag en tid?</h4>
+                        <span class="faq-toggle text-2xl font-light shrink-0">+</span>
                     </div>
-                    <div class="faq-answer">
-                        <div class="pt-4 pb-2">
-                            <p class="text-zinc-400 text-sm leading-relaxed">Du kan boka direkt via vår <a href="index.html#booking-section" class="text-[#0054A6] hover:underline">digitala bokningssida</a>, ringa oss på 08-257 221 eller maila service@sit24.se. Vårt digitala system är öppet dygnet runt.</p>
-                        </div>
-                    </div>
+                    <div class="faq-answer"><div class="pt-4 pb-2"><p class="text-[#94A3B8] text-sm leading-relaxed">Du kan boka direkt via vår <a href="index.html#booking-section" class="text-[#007AFF] hover:underline">digitala bokningssida</a>, ringa oss på 08-257 221 eller maila service@sit24.se. Vårt digitala system är öppet dygnet runt.</p></div></div>
                 </div>
-
                 <div class="faq-item py-6">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Vilka öppettider har ni?</h4>
-                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                        <h4 class="font-display-black text-base text-[#E2E8F0] uppercase pr-8">Vilka öppettider har ni?</h4>
+                        <span class="faq-toggle text-2xl font-light shrink-0">+</span>
                     </div>
-                    <div class="faq-answer">
-                        <div class="pt-4 pb-2">
-                            <div class="space-y-2">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-zinc-400">Måndag – Torsdag</span>
-                                    <span class="font-mono text-white">07:00 – 17:00</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-zinc-400">Fredag</span>
-                                    <span class="font-mono text-white">07:00 – 13:00</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-zinc-400">Övrig tid</span>
-                                    <span class="font-mono text-zinc-500">Kontakta oss per telefon</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="faq-answer"><div class="pt-4 pb-2"><div class="space-y-2"><div class="flex justify-between text-sm"><span class="text-[#94A3B8]">Måndag – Torsdag</span><span class="font-system-light text-[#E2E8F0] text-xs">07:00 – 17:00</span></div><div class="flex justify-between text-sm"><span class="text-[#94A3B8]">Fredag</span><span class="font-system-light text-[#E2E8F0] text-xs">07:00 – 13:00</span></div><div class="flex justify-between text-sm"><span class="text-[#94A3B8]">Övrig tid</span><span class="font-system-light text-[#94A3B8]/50 text-xs">Kontakta oss per telefon</span></div></div></div></div>
                 </div>
-
                 <div class="faq-item py-6">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Kan jag få en offert innan service?</h4>
-                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                        <h4 class="font-display-black text-base text-[#E2E8F0] uppercase pr-8">Kan jag få en offert innan service?</h4>
+                        <span class="faq-toggle text-2xl font-light shrink-0">+</span>
                     </div>
-                    <div class="faq-answer">
-                        <div class="pt-4 pb-2">
-                            <p class="text-zinc-400 text-sm leading-relaxed">Absolut. Vi ger alltid en transparent offert innan vi påbörjar arbete. Du kan begära en offert via vår <a href="offert.html" class="text-[#0054A6] hover:underline">offertförfrågan</a> eller kontakta oss direkt. Vi startar aldrig arbete utan ditt godkännande.</p>
-                        </div>
-                    </div>
+                    <div class="faq-answer"><div class="pt-4 pb-2"><p class="text-[#94A3B8] text-sm leading-relaxed">Absolut. Vi ger alltid en transparent offert innan vi påbörjar arbete. Du kan begära en offert via vår <a href="offert.html" class="text-[#007AFF] hover:underline">offertförfrågan</a> eller kontakta oss direkt. Vi startar aldrig arbete utan ditt godkännande.</p></div></div>
                 </div>
             </div>
 
             <!-- Betalning -->
             <div class="reveal mb-16">
-                <h2 class="text-[#0054A6] font-mono text-[10px] tracking-[0.5em] uppercase mb-2">// Betalning</h2>
-                <h3 class="font-display font-black text-3xl text-white uppercase mb-8">Betalning</h3>
+                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Betalning</p>
+                <h3 class="font-display-black text-3xl text-[#E2E8F0] uppercase mb-8" style="transform: skewX(-3deg);">Betalning</h3>
             </div>
-
             <div class="space-y-0 mb-12">
                 <div class="faq-item py-6">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h4 class="font-display font-bold text-white text-base uppercase tracking-wide pr-8">Erbjuder ni delbetalning?</h4>
-                        <span class="faq-toggle text-[#0054A6] text-2xl font-light shrink-0">+</span>
+                        <h4 class="font-display-black text-base text-[#E2E8F0] uppercase pr-8">Erbjuder ni delbetalning?</h4>
+                        <span class="faq-toggle text-2xl font-light shrink-0">+</span>
                     </div>
-                    <div class="faq-answer">
-                        <div class="pt-4 pb-2">
-                            <p class="text-zinc-400 text-sm leading-relaxed">Ja, via Autoexperten-kortet kan du dela upp kostnaden för service, reparationer och tillbehör i upp till 24 månader räntefritt. Fråga oss för mer information.</p>
-                        </div>
-                    </div>
+                    <div class="faq-answer"><div class="pt-4 pb-2"><p class="text-[#94A3B8] text-sm leading-relaxed">Ja, via Autoexperten-kortet kan du dela upp kostnaden för service, reparationer och tillbehör i upp till 24 månader räntefritt. Fråga oss för mer information.</p></div></div>
                 </div>
             </div>
 
-            <div class="mt-12 pt-8 border-t border-zinc-800/60">
-                <p class="font-mono text-[10px] text-zinc-600 tracking-[0.3em] uppercase text-center terminal-cursor">SIT24 // FAQ_DATABASE — 7 poster indexerade</p>
+            <div class="mt-12 pt-8 border-t border-[#E2E8F0]/5">
+                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // FAQ_DATABASE — 7 poster indexerade</p>
             </div>
         </div>
     </section>
 
     <!-- CTA -->
-    <section class="bg-[#0A0A0A] py-32 px-8 border-t border-zinc-900/50">
+    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-3xl mx-auto text-center reveal">
-            <h3 class="font-display font-black text-4xl md:text-5xl text-white uppercase mb-6">Fler frågor?</h3>
-            <p class="text-zinc-500 text-sm mb-10 max-w-md mx-auto">Hittar du inte svaret du söker? Kontakta oss direkt.</p>
+            <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase mb-6" style="transform: skewX(-3deg);">Fler frågor?</h3>
+            <p class="text-[#94A3B8]/60 text-sm mb-10 max-w-md mx-auto">Hittar du inte svaret du söker? Kontakta oss direkt.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="tel:08257221" class="inline-block bg-[#0054A6] hover:bg-[#003d7a] text-white font-display font-bold py-5 px-14 transition-all uppercase tracking-[0.3em] text-[11px]">
-                    Ring Oss
-                </a>
-                <a href="mailto:service@sit24.se" class="inline-block border border-zinc-700 hover:bg-white hover:text-black text-white font-display font-bold py-5 px-14 transition-all uppercase tracking-[0.3em] text-[11px]">
-                    Maila Oss
-                </a>
+                <a href="tel:08257221" class="ghost-btn inline-block font-system-semi text-[11px] text-[#007AFF] no-underline px-14 py-5">Ring Oss</a>
+                <a href="mailto:service@sit24.se" class="ghost-btn inline-block font-system-semi text-[11px] text-[#E2E8F0] no-underline px-14 py-5" style="border-color: rgba(255,255,255,0.1);">Maila Oss</a>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-[#050505] py-24 px-8 border-t border-zinc-900">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12">
-            <div class="col-span-1 md:col-span-2">
-                <a href="index.html" class="font-display font-black text-xl tracking-tight text-white mb-6 uppercase block hover:text-white/60 transition">Drive_Logic</a>
-                <p class="text-zinc-600 text-[11px] leading-relaxed">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p>
+    <footer class="relative py-24 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="liquid-glass p-12 md:p-16 mb-16"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                <div class="relative z-10 grid md:grid-cols-4 gap-12">
+                    <div class="col-span-1 md:col-span-2"><div class="font-display-black text-xl text-[#E2E8F0] mb-6 uppercase" style="transform: skewX(-3deg);">SIT24</div><p class="text-[#94A3B8]/50 text-[11px]">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p></div>
+                    <div><h5 class="text-[#E2E8F0] font-system-semi text-[11px] mb-6">Kontakt</h5><ul class="text-[#94A3B8] text-[11px] space-y-2"><li>08-123 45 67</li><li>info@sit24.se</li></ul></div>
+                    <div><h5 class="text-[#E2E8F0] font-system-semi text-[11px] mb-6">Socialt</h5><ul class="text-[#94A3B8] text-[11px] space-y-2"><li><a href="#" class="hover:text-[#007AFF] transition">Instagram</a></li><li><a href="#" class="hover:text-[#007AFF] transition">YouTube</a></li></ul></div>
+                </div>
             </div>
-            <div>
-                <h5 class="text-white font-display font-bold text-[11px] uppercase tracking-widest mb-6">Kontakt</h5>
-                <ul class="text-zinc-500 text-[11px] space-y-2">
-                    <li>08-123 45 67</li>
-                    <li>info@drivelogic.se</li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="text-white font-display font-bold text-[11px] uppercase tracking-widest mb-6">Socialt</h5>
-                <ul class="text-zinc-500 text-[11px] space-y-2">
-                    <li><a href="#" class="hover:text-white transition">Instagram</a></li>
-                    <li><a href="#" class="hover:text-white transition">YouTube</a></li>
-                </ul>
-            </div>
+            <div class="flex justify-between items-center"><p class="font-system-light text-[9px] text-[#94A3B8]/30">&copy; 2026 SIT24 // LOGIC_CORE</p><div class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-[#007AFF] rounded-full animate-pulse shadow-[0_0_10px_#007AFF]"></div><span class="font-system-light text-[9px] text-[#94A3B8]/40">System_Online</span></div></div>
         </div>
     </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
-
         window.addEventListener('load', () => {
-            const tl = gsap.timeline();
+            const tl = gsap.timeline({ delay: 0.3 });
             tl.to("#page-label", { opacity: 1, y: -10, duration: 1, ease: "expo.out" })
               .to("#page-title", { opacity: 1, y: -20, duration: 1.5, ease: "expo.out" }, "-=0.6");
         });
-
-        gsap.utils.toArray(".reveal").forEach(el => {
-            gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } });
-        });
-
-        function toggleFaq(el) {
-            const answer = el.nextElementSibling;
-            const toggle = el.querySelector('.faq-toggle');
-            const isOpen = answer.classList.contains('open');
-
-            // Close all others
-            document.querySelectorAll('.faq-answer.open').forEach(a => {
-                a.classList.remove('open');
-                a.previousElementSibling.querySelector('.faq-toggle').classList.remove('open');
-            });
-
-            // Toggle current
-            if (!isOpen) {
-                answer.classList.add('open');
-                toggle.classList.add('open');
-            }
+        function toggleMenu() {
+            const overlay = document.getElementById('menu-overlay'); const btn = document.getElementById('menu-btn');
+            if (overlay.classList.contains('active')) { gsap.to('.menu-link', { opacity: 0, x: -20, duration: 0.3, stagger: 0.04, ease: "power2.in", onComplete: () => overlay.classList.remove('active') }); btn.style.opacity = '1'; }
+            else { overlay.classList.add('active'); btn.style.opacity = '0.3'; gsap.fromTo('.menu-link', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.08, ease: "expo.out", delay: 0.2 }); }
         }
+        gsap.utils.toArray(".reveal").forEach(el => { gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } }); });
+        function toggleFaq(el) {
+            const answer = el.nextElementSibling; const toggle = el.querySelector('.faq-toggle'); const isOpen = answer.classList.contains('open');
+            document.querySelectorAll('.faq-answer.open').forEach(a => { a.classList.remove('open'); a.previousElementSibling.querySelector('.faq-toggle').classList.remove('open'); });
+            if (!isOpen) { answer.classList.add('open'); toggle.classList.add('open'); }
+        }
+        document.querySelectorAll('.liquid-glass').forEach(card => {
+            const highlight = card.querySelector('.specular-highlight'); const sweep = card.querySelector('.edge-sweep');
+            if (!highlight) return;
+            card.addEventListener('mousemove', e => { const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top; highlight.style.background = `radial-gradient(circle 200px at ${x}px ${y}px, rgba(255,255,255,0.1) 0%, transparent 70%)`; if (sweep) sweep.style.left = `${x - 40}px`; });
+        });
     </script>
+    <a href="index.html#booking-section" class="fixed bottom-8 right-8 z-[450] ghost-btn font-system-semi text-[11px] text-[#007AFF] no-underline px-6 py-4 shadow-lg">Boka Tjänst</a>
 </body>
 </html>

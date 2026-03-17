@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIT24 // Verkstadsoffert</title>
+    <title>SIT24 // Kontakta Oss</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -15,7 +15,7 @@
         .font-system-light { font-family: 'Outfit', sans-serif; font-weight: 100; text-transform: uppercase; letter-spacing: 0.1em; }
         .font-system-semi { font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
         .film-grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
-        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 28px; position: relative; overflow: hidden; }
+        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 28px; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.22,1,0.36,1); }
         .liquid-glass .specular-highlight { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(circle 200px at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%); transition: opacity 0.3s ease; }
         .liquid-glass:hover .specular-highlight { opacity: 1; }
         .liquid-glass .edge-sweep { position: absolute; top: 0; left: 0; width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); z-index: 2; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
@@ -30,12 +30,8 @@
         .terminal-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #007AFF; margin-left: 2px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .accent-line { border-left: 1px solid #007AFF; padding-left: 12px; }
-        .video-overlay-cin { background: linear-gradient(to bottom, rgba(26,28,30,0.6) 0%, transparent 35%, transparent 65%, rgba(26,28,30,1) 100%); }
-        .hero-video { filter: grayscale(1) brightness(0.75); object-fit: cover; }
-        .booking-glow { box-shadow: 0 0 80px rgba(0,122,255,0.06), 0 0 160px rgba(0,122,255,0.03); }
-        .secure-pulse { animation: securePulse 1s ease-in-out infinite; }
-        @keyframes securePulse { 0%, 100% { border-color: rgba(0,122,255,0.3); } 50% { border-color: rgba(0,122,255,1); } }
-        input:focus, textarea:focus, select:focus { border-color: #007AFF !important; outline: none; }
+        .status-tag { display: inline-block; padding: 3px 10px; border-radius: 8px; border: 1px solid rgba(0,122,255,0.2); background: rgba(0,122,255,0.06); }
+        input:focus, textarea:focus { border-color: #007AFF !important; outline: none; }
     </style>
 </head>
 <body>
@@ -72,7 +68,7 @@
                 <a href="blogg.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Blogg</a>
                 <a href="faq.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">FAQ</a>
                 <a href="erbjudanden.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Erbjudanden</a>
-                <a href="kontakt.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Kontakta Oss</a>
+                <a href="kontakt.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Kontakta Oss</a>
                 <a href="index.html#booking-section" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Boka Tid</a>
             </nav>
         </div>
@@ -80,73 +76,99 @@
 
     <!-- HERO -->
     <section class="relative h-[60vh] flex items-end pb-20 px-8 md:px-20 overflow-hidden">
-        <div class="absolute inset-0 z-0"><video autoplay muted loop playsinline class="hero-video absolute inset-0 w-full h-full"><source src="12698098_4070_2160_24fps.mp4" type="video/mp4"></video></div>
-        <div class="absolute inset-0 z-[1] video-overlay-cin"></div>
+        <div class="absolute inset-0 z-0" style="background: radial-gradient(ellipse at 30% 50%, rgba(0,122,255,0.03) 0%, transparent 60%), #1A1C1E;"></div>
         <div class="relative z-10 max-w-6xl mx-auto w-full">
-            <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-4 opacity-0" id="page-label">Verkstadsoffert</p>
-            <h1 class="font-display-black text-[12vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" id="page-title" style="transform: skewX(-3deg);">Begär offert.</h1>
+            <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-4 opacity-0" id="page-label">Kontakt</p>
+            <h1 class="font-display-black text-[12vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" id="page-title" style="transform: skewX(-3deg);">Kontakta oss.</h1>
         </div>
     </section>
 
-    <!-- QUOTE FORM -->
+    <!-- CONTACT INFO -->
     <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
-        <div class="max-w-4xl mx-auto booking-glow">
-            <div class="grid md:grid-cols-3 gap-4 mb-16 reveal">
-                <div class="liquid-glass p-6"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#10003;</span><span class="text-[#E2E8F0]/80 text-sm">Utbildade fordonsmekaniker</span></div></div>
-                <div class="liquid-glass p-6"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#10003;</span><span class="text-[#E2E8F0]/80 text-sm">3 års garanti på alla delar</span></div></div>
-                <div class="liquid-glass p-6"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#10003;</span><span class="text-[#E2E8F0]/80 text-sm">Upp till 24 mån räntefritt</span></div></div>
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-6 mb-20 reveal">
+                <div class="liquid-glass p-10 text-center"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10"><span class="font-system-light text-[#007AFF] text-[10px] block mb-4">Telefon</span><span class="font-display-black text-2xl text-[#E2E8F0]">08-257 221</span><p class="text-[#94A3B8]/50 text-xs mt-2">Mån–Fre under öppettider</p></div>
+                </div>
+                <div class="liquid-glass p-10 text-center"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10"><span class="font-system-light text-[#007AFF] text-[10px] block mb-4">E-post</span><span class="font-display-black text-2xl text-[#E2E8F0]">service@sit24.se</span><p class="text-[#94A3B8]/50 text-xs mt-2">Svar inom 24 timmar</p></div>
+                </div>
+                <div class="liquid-glass p-10 text-center"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10"><span class="font-system-light text-[#007AFF] text-[10px] block mb-4">Öppettider</span><div class="space-y-1 mt-2"><div class="flex justify-between text-sm"><span class="text-[#94A3B8]">Mån–Tor</span><span class="text-[#E2E8F0] font-system-light text-xs">07–17</span></div><div class="flex justify-between text-sm"><span class="text-[#94A3B8]">Fre</span><span class="text-[#E2E8F0] font-system-light text-xs">07–13</span></div></div></div>
+                </div>
             </div>
 
-            <div class="liquid-glass p-12 reveal">
-                <div class="specular-highlight"></div><div class="edge-sweep"></div>
-                <div class="relative z-10">
-                    <h4 class="font-system-light text-[10px] text-[#94A3B8]/50 mb-8">Offertförfrågan</h4>
-                    <form id="quote-form" onsubmit="submitQuote(event)">
-                        <div class="mb-10">
-                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Fordonsinformation</h5>
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Registreringsnummer</label><input type="text" placeholder="T.EX. ABC 123" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm uppercase text-[#E2E8F0] transition-all"></div>
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Bilmärke & Modell</label><input type="text" placeholder="T.EX. BMW M3" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Årsmodell</label><input type="text" placeholder="T.EX. 2023" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Miltal</label><input type="text" placeholder="T.EX. 45 000 KM" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                            </div>
+            <!-- CONTACT FORM -->
+            <div class="reveal mb-16">
+                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Meddelande</p>
+                <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Skicka meddelande</h3>
+            </div>
+
+            <div class="max-w-3xl mx-auto mb-20">
+                <div class="liquid-glass p-12 reveal"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <form id="contact-form" onsubmit="submitContact(event)" class="relative z-10">
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Namn</label><input type="text" placeholder="DITT NAMN" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
+                            <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">E-post</label><input type="email" placeholder="DIN@EMAIL.SE" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
                         </div>
-                        <div class="mb-10">
-                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Typ av tjänst</h5>
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Service & Reparation</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Bromsservice</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Plåt & Lackskador</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Däckservice</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Diagnos</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Bilvård & Rekond</span></div></label>
-                            </div>
-                        </div>
-                        <div class="mb-10">
-                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Beskrivning</h5>
-                            <textarea rows="4" placeholder="Beskriv vad du behöver hjälp med..." class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-body text-sm text-[#E2E8F0] transition-all resize-none"></textarea>
-                        </div>
-                        <div class="mb-10">
-                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Kontaktuppgifter</h5>
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Namn</label><input type="text" placeholder="DITT NAMN" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Telefon</label><input type="tel" placeholder="070-XXX XX XX" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                                <div class="md:col-span-2"><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">E-post</label><input type="email" placeholder="DIN@EMAIL.SE" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                            </div>
-                        </div>
-                        <button type="submit" id="submit-btn" class="w-full py-6 ghost-btn font-system-semi text-[11px] text-[#007AFF] border-[#007AFF]/50">Skicka Offertförfrågan</button>
-                        <div id="quote-success" class="hidden mt-6 p-6 liquid-glass text-center font-system-light text-sm text-[#007AFF]"></div>
+                        <div class="mb-6"><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Telefon</label><input type="tel" placeholder="070-XXX XX XX" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
+                        <div class="mb-8"><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Meddelande</label><textarea rows="4" placeholder="Skriv ditt meddelande här..." class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 text-sm text-[#E2E8F0] transition-all resize-none"></textarea></div>
+                        <button type="submit" id="contact-btn" class="w-full py-5 ghost-btn font-system-semi text-[11px] text-[#007AFF] border-[#007AFF]/50">Skicka Meddelande</button>
+                        <div id="contact-success" class="hidden mt-6 text-center font-system-light text-sm text-[#007AFF]"></div>
                     </form>
                 </div>
             </div>
 
-            <div class="mt-12 grid md:grid-cols-2 gap-6 reveal">
-                <div class="liquid-glass p-8 text-center"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#007AFF] text-[10px] block mb-3">Ring oss</span><span class="font-display-black text-xl text-[#E2E8F0]">08-257 221</span></div></div>
-                <div class="liquid-glass p-8 text-center"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#007AFF] text-[10px] block mb-3">Maila oss</span><span class="font-display-black text-xl text-[#E2E8F0]">service@sit24.se</span></div></div>
+            <!-- LOCATIONS -->
+            <div class="reveal mb-16">
+                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Våra anläggningar</p>
+                <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Hitta oss</h3>
             </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-20">
+                <div class="liquid-glass overflow-hidden"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <div class="aspect-video"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2033.8!2d17.9463!3d59.3447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d!2sBromma!5e0!3m2!1ssv!2sse!4v1" width="100%" height="100%" style="border:0; filter: grayscale(1) invert(0.92) contrast(0.9);" allowfullscreen="" loading="lazy"></iframe></div>
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-system-light text-[#007AFF] text-[10px]">NODE_01</span>
+                                <span class="status-tag font-system-light text-[8px] text-[#007AFF]/70">[ACTIVE]</span>
+                            </div>
+                            <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-2" style="transform: skewX(-3deg);">SIT24 Bromma</h4>
+                            <p class="text-[#94A3B8] text-sm mb-4">Ranhammarsvägen 18E<br>168 67 Bromma</p>
+                            <a href="https://www.google.com/maps/dir//Ranhammarsv%C3%A4gen+18E,+168+67+Bromma" target="_blank" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Vägbeskrivning &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="liquid-glass overflow-hidden"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <div class="aspect-video"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2033.8!2d17.9163!3d59.2747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d!2sSkarholmen!5e0!3m2!1ssv!2sse!4v1" width="100%" height="100%" style="border:0; filter: grayscale(1) invert(0.92) contrast(0.9);" allowfullscreen="" loading="lazy"></iframe></div>
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-system-light text-[#007AFF] text-[10px]">NODE_02</span>
+                                <span class="status-tag font-system-light text-[8px] text-[#007AFF]/70">[ACTIVE]</span>
+                            </div>
+                            <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-2" style="transform: skewX(-3deg);">SIT24 Skärholmen</h4>
+                            <p class="text-[#94A3B8] text-sm mb-4">Oxholmsgränd 4<br>127 48 Skärholmen</p>
+                            <a href="https://www.google.com/maps/dir//Oxholmsgr%C3%A4nd+4,+127+48+Sk%C3%A4rholmen" target="_blank" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Vägbeskrivning &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="mt-12 pt-8 border-t border-[#E2E8F0]/5">
-                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // QUOTE_TERMINAL — Formulär redo</p>
+                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // CONTACT_MODULE — 2 noder aktiva</p>
             </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-3xl mx-auto text-center reveal">
+            <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase mb-6" style="transform: skewX(-3deg);">Boka tid direkt</h3>
+            <p class="text-[#94A3B8]/60 text-sm mb-10 max-w-md mx-auto">Använd vårt digitala bokningssystem för snabb och enkel tidsbokning.</p>
+            <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[11px] text-[#007AFF] no-underline px-14 py-5">Boka Tid</a>
         </div>
     </section>
 
@@ -169,12 +191,10 @@
         window.addEventListener('load', () => { const tl = gsap.timeline({ delay: 0.3 }); tl.to("#page-label", { opacity: 1, y: -10, duration: 1, ease: "expo.out" }).to("#page-title", { opacity: 1, y: -20, duration: 1.5, ease: "expo.out" }, "-=0.6"); });
         function toggleMenu() { const overlay = document.getElementById('menu-overlay'); const btn = document.getElementById('menu-btn'); if (overlay.classList.contains('active')) { gsap.to('.menu-link', { opacity: 0, x: -20, duration: 0.3, stagger: 0.04, ease: "power2.in", onComplete: () => overlay.classList.remove('active') }); btn.style.opacity = '1'; } else { overlay.classList.add('active'); btn.style.opacity = '0.3'; gsap.fromTo('.menu-link', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.08, ease: "expo.out", delay: 0.2 }); } }
         gsap.utils.toArray(".reveal").forEach(el => { gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } }); });
-        function submitQuote(e) {
-            e.preventDefault(); const btn = document.getElementById('submit-btn'); const successDiv = document.getElementById('quote-success');
-            btn.disabled = true; btn.textContent = 'SKICKAR FÖRFRÅGAN...'; btn.classList.add('secure-pulse');
-            setTimeout(() => { btn.classList.remove('secure-pulse'); btn.textContent = 'FÖRFRÅGAN SKICKAD ✓'; btn.style.borderColor = '#007AFF'; btn.style.background = 'rgba(0,122,255,0.1)';
-                setTimeout(() => { successDiv.classList.remove('hidden'); successDiv.innerHTML = '&#10003; OFFERTFÖRFRÅGAN REGISTRERAD — Vi återkommer med en detaljerad offert inom 24 timmar.'; gsap.from(successDiv, { opacity: 0, y: 10, duration: 0.6 }); }, 800);
-            }, 2000);
+        function submitContact(e) {
+            e.preventDefault(); const btn = document.getElementById('contact-btn'); const successDiv = document.getElementById('contact-success');
+            btn.disabled = true; btn.textContent = 'SKICKAR...';
+            setTimeout(() => { btn.textContent = 'SKICKAT ✓'; btn.style.borderColor = '#007AFF'; btn.style.background = 'rgba(0,122,255,0.1)'; successDiv.classList.remove('hidden'); successDiv.textContent = '✓ Tack för ditt meddelande! Vi återkommer inom 24 timmar.'; gsap.from(successDiv, { opacity: 0, y: 10, duration: 0.6 }); }, 1500);
         }
         document.querySelectorAll('.liquid-glass').forEach(card => { const highlight = card.querySelector('.specular-highlight'); const sweep = card.querySelector('.edge-sweep'); if (!highlight) return; card.addEventListener('mousemove', e => { const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top; highlight.style.background = `radial-gradient(circle 200px at ${x}px ${y}px, rgba(255,255,255,0.1) 0%, transparent 70%)`; if (sweep) sweep.style.left = `${x - 40}px`; }); });
     </script>

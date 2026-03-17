@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIT24 // Verkstadsoffert</title>
+    <title>SIT24 // Erbjudanden</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -15,7 +15,7 @@
         .font-system-light { font-family: 'Outfit', sans-serif; font-weight: 100; text-transform: uppercase; letter-spacing: 0.1em; }
         .font-system-semi { font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
         .film-grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
-        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 28px; position: relative; overflow: hidden; }
+        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 28px; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.22,1,0.36,1); }
         .liquid-glass .specular-highlight { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(circle 200px at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%); transition: opacity 0.3s ease; }
         .liquid-glass:hover .specular-highlight { opacity: 1; }
         .liquid-glass .edge-sweep { position: absolute; top: 0; left: 0; width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); z-index: 2; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
@@ -30,12 +30,6 @@
         .terminal-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #007AFF; margin-left: 2px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .accent-line { border-left: 1px solid #007AFF; padding-left: 12px; }
-        .video-overlay-cin { background: linear-gradient(to bottom, rgba(26,28,30,0.6) 0%, transparent 35%, transparent 65%, rgba(26,28,30,1) 100%); }
-        .hero-video { filter: grayscale(1) brightness(0.75); object-fit: cover; }
-        .booking-glow { box-shadow: 0 0 80px rgba(0,122,255,0.06), 0 0 160px rgba(0,122,255,0.03); }
-        .secure-pulse { animation: securePulse 1s ease-in-out infinite; }
-        @keyframes securePulse { 0%, 100% { border-color: rgba(0,122,255,0.3); } 50% { border-color: rgba(0,122,255,1); } }
-        input:focus, textarea:focus, select:focus { border-color: #007AFF !important; outline: none; }
     </style>
 </head>
 <body>
@@ -71,7 +65,7 @@
                 <a href="tjanster.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Tjänster</a>
                 <a href="blogg.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Blogg</a>
                 <a href="faq.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">FAQ</a>
-                <a href="erbjudanden.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Erbjudanden</a>
+                <a href="erbjudanden.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Erbjudanden</a>
                 <a href="kontakt.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Kontakta Oss</a>
                 <a href="index.html#booking-section" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Boka Tid</a>
             </nav>
@@ -80,73 +74,101 @@
 
     <!-- HERO -->
     <section class="relative h-[60vh] flex items-end pb-20 px-8 md:px-20 overflow-hidden">
-        <div class="absolute inset-0 z-0"><video autoplay muted loop playsinline class="hero-video absolute inset-0 w-full h-full"><source src="12698098_4070_2160_24fps.mp4" type="video/mp4"></video></div>
-        <div class="absolute inset-0 z-[1] video-overlay-cin"></div>
+        <div class="absolute inset-0 z-0" style="background: radial-gradient(ellipse at 30% 50%, rgba(0,122,255,0.03) 0%, transparent 60%), #1A1C1E;"></div>
         <div class="relative z-10 max-w-6xl mx-auto w-full">
-            <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-4 opacity-0" id="page-label">Verkstadsoffert</p>
-            <h1 class="font-display-black text-[12vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" id="page-title" style="transform: skewX(-3deg);">Begär offert.</h1>
+            <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-4 opacity-0" id="page-label">Erbjudanden</p>
+            <h1 class="font-display-black text-[12vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" id="page-title" style="transform: skewX(-3deg);">Aktuella erbjudanden.</h1>
         </div>
     </section>
 
-    <!-- QUOTE FORM -->
+    <!-- OFFERS -->
     <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
-        <div class="max-w-4xl mx-auto booking-glow">
-            <div class="grid md:grid-cols-3 gap-4 mb-16 reveal">
-                <div class="liquid-glass p-6"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#10003;</span><span class="text-[#E2E8F0]/80 text-sm">Utbildade fordonsmekaniker</span></div></div>
-                <div class="liquid-glass p-6"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#10003;</span><span class="text-[#E2E8F0]/80 text-sm">3 års garanti på alla delar</span></div></div>
-                <div class="liquid-glass p-6"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#10003;</span><span class="text-[#E2E8F0]/80 text-sm">Upp till 24 mån räntefritt</span></div></div>
+        <div class="max-w-6xl mx-auto">
+            <div class="reveal mb-16">
+                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Aktuella kampanjer</p>
+                <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Just nu</h3>
             </div>
 
-            <div class="liquid-glass p-12 reveal">
-                <div class="specular-highlight"></div><div class="edge-sweep"></div>
-                <div class="relative z-10">
-                    <h4 class="font-system-light text-[10px] text-[#94A3B8]/50 mb-8">Offertförfrågan</h4>
-                    <form id="quote-form" onsubmit="submitQuote(event)">
-                        <div class="mb-10">
-                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Fordonsinformation</h5>
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Registreringsnummer</label><input type="text" placeholder="T.EX. ABC 123" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm uppercase text-[#E2E8F0] transition-all"></div>
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Bilmärke & Modell</label><input type="text" placeholder="T.EX. BMW M3" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Årsmodell</label><input type="text" placeholder="T.EX. 2023" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Miltal</label><input type="text" placeholder="T.EX. 45 000 KM" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                            </div>
-                        </div>
-                        <div class="mb-10">
-                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Typ av tjänst</h5>
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Service & Reparation</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Bromsservice</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Plåt & Lackskador</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Däckservice</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Diagnos</span></div></label>
-                                <label class="liquid-glass p-5 flex items-center gap-4 cursor-pointer"><div class="specular-highlight"></div><div class="relative z-10 flex items-center gap-4"><input type="checkbox" class="w-4 h-4 accent-[#007AFF]"><span class="text-[#E2E8F0] text-sm">Bilvård & Rekond</span></div></label>
-                            </div>
-                        </div>
-                        <div class="mb-10">
-                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Beskrivning</h5>
-                            <textarea rows="4" placeholder="Beskriv vad du behöver hjälp med..." class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-body text-sm text-[#E2E8F0] transition-all resize-none"></textarea>
-                        </div>
-                        <div class="mb-10">
-                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Kontaktuppgifter</h5>
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Namn</label><input type="text" placeholder="DITT NAMN" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Telefon</label><input type="tel" placeholder="070-XXX XX XX" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                                <div class="md:col-span-2"><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">E-post</label><input type="email" placeholder="DIN@EMAIL.SE" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
-                            </div>
-                        </div>
-                        <button type="submit" id="submit-btn" class="w-full py-6 ghost-btn font-system-semi text-[11px] text-[#007AFF] border-[#007AFF]/50">Skicka Offertförfrågan</button>
-                        <div id="quote-success" class="hidden mt-6 p-6 liquid-glass text-center font-system-light text-sm text-[#007AFF]"></div>
-                    </form>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_01</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Vintercheck</h4>
+                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Komplett vinterkontroll av bil — bromsar, däck, batteri, belysning och vätskor. Allt för att du ska köra tryggt i vinter.</p>
+                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">595 kr</span></div>
+                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
+                    </div>
+                </div>
+
+                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_02</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Stort Service-paket</h4>
+                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Oljebyte, filterbyte, bromskontroll och 25-punkters inspektion. Komplett service för din bil.</p>
+                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">fr. 2 995 kr</span></div>
+                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
+                    </div>
+                </div>
+
+                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_03</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bilvård Premium</h4>
+                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Handtvätt, invändig städning, polering och vaxning. Din bil som ny igen.</p>
+                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">1 495 kr</span></div>
+                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
+                    </div>
+                </div>
+
+                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_04</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Däckbyte + Förvaring</h4>
+                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Säsongens däckbyte med balansering + 6 månaders förvaring hos oss.</p>
+                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">895 kr</span></div>
+                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
+                    </div>
+                </div>
+
+                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_05</span>
+                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Glasreparation</h4>
+                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Stenskottslagning medan du väntar. Ofta helt gratis via din försäkring.</p>
+                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">Ofta 0 kr</span><span class="font-system-light text-[9px] text-[#94A3B8]/50">via försäkring</span></div>
+                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="mt-12 grid md:grid-cols-2 gap-6 reveal">
-                <div class="liquid-glass p-8 text-center"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#007AFF] text-[10px] block mb-3">Ring oss</span><span class="font-display-black text-xl text-[#E2E8F0]">08-257 221</span></div></div>
-                <div class="liquid-glass p-8 text-center"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#007AFF] text-[10px] block mb-3">Maila oss</span><span class="font-display-black text-xl text-[#E2E8F0]">service@sit24.se</span></div></div>
+    <!-- TERMS -->
+    <section class="py-20 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-4xl mx-auto">
+            <div class="liquid-glass p-10 reveal"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                <div class="relative z-10">
+                    <h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-4" style="transform: skewX(-3deg);">Villkor</h4>
+                    <ul class="text-[#94A3B8]/60 text-sm space-y-2">
+                        <li>Erbjudanden gäller t.o.m. 2026-06-30 om inget annat anges.</li>
+                        <li>Erbjudanden kan ej kombineras med andra rabatter.</li>
+                        <li>Priserna avser standardfordon. Tillägg kan förekomma för specialfordon.</li>
+                        <li>Bokning krävs — drop-in efter tillgänglighet.</li>
+                    </ul>
+                </div>
             </div>
             <div class="mt-12 pt-8 border-t border-[#E2E8F0]/5">
-                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // QUOTE_TERMINAL — Formulär redo</p>
+                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // OFFERS_MODULE — 5 aktiva erbjudanden</p>
             </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-3xl mx-auto text-center reveal">
+            <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase mb-6" style="transform: skewX(-3deg);">Boka med erbjudande</h3>
+            <p class="text-[#94A3B8]/60 text-sm mb-10 max-w-md mx-auto">Nämn erbjudandet vid bokning så fixar vi resten.</p>
+            <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[11px] text-[#007AFF] no-underline px-14 py-5">Boka Tid</a>
         </div>
     </section>
 
@@ -169,13 +191,7 @@
         window.addEventListener('load', () => { const tl = gsap.timeline({ delay: 0.3 }); tl.to("#page-label", { opacity: 1, y: -10, duration: 1, ease: "expo.out" }).to("#page-title", { opacity: 1, y: -20, duration: 1.5, ease: "expo.out" }, "-=0.6"); });
         function toggleMenu() { const overlay = document.getElementById('menu-overlay'); const btn = document.getElementById('menu-btn'); if (overlay.classList.contains('active')) { gsap.to('.menu-link', { opacity: 0, x: -20, duration: 0.3, stagger: 0.04, ease: "power2.in", onComplete: () => overlay.classList.remove('active') }); btn.style.opacity = '1'; } else { overlay.classList.add('active'); btn.style.opacity = '0.3'; gsap.fromTo('.menu-link', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.08, ease: "expo.out", delay: 0.2 }); } }
         gsap.utils.toArray(".reveal").forEach(el => { gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } }); });
-        function submitQuote(e) {
-            e.preventDefault(); const btn = document.getElementById('submit-btn'); const successDiv = document.getElementById('quote-success');
-            btn.disabled = true; btn.textContent = 'SKICKAR FÖRFRÅGAN...'; btn.classList.add('secure-pulse');
-            setTimeout(() => { btn.classList.remove('secure-pulse'); btn.textContent = 'FÖRFRÅGAN SKICKAD ✓'; btn.style.borderColor = '#007AFF'; btn.style.background = 'rgba(0,122,255,0.1)';
-                setTimeout(() => { successDiv.classList.remove('hidden'); successDiv.innerHTML = '&#10003; OFFERTFÖRFRÅGAN REGISTRERAD — Vi återkommer med en detaljerad offert inom 24 timmar.'; gsap.from(successDiv, { opacity: 0, y: 10, duration: 0.6 }); }, 800);
-            }, 2000);
-        }
+        gsap.utils.toArray(".offer-card").forEach((card, i) => { gsap.from(card, { opacity: 0, y: 40, rotationX: 8, duration: 1, delay: i * 0.2, ease: "power2.out", transformOrigin: "bottom center", scrollTrigger: { trigger: card, start: "top 88%", once: true } }); });
         document.querySelectorAll('.liquid-glass').forEach(card => { const highlight = card.querySelector('.specular-highlight'); const sweep = card.querySelector('.edge-sweep'); if (!highlight) return; card.addEventListener('mousemove', e => { const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top; highlight.style.background = `radial-gradient(circle 200px at ${x}px ${y}px, rgba(255,255,255,0.1) 0%, transparent 70%)`; if (sweep) sweep.style.left = `${x - 40}px`; }); });
     </script>
     <a href="index.html#booking-section" class="fixed bottom-8 right-8 z-[450] ghost-btn font-system-semi text-[11px] text-[#007AFF] no-underline px-6 py-4 shadow-lg">Boka Tjänst</a>
