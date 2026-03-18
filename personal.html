@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIT24 // Personal</title>
+    <title>Personal — SIT24 | Vårt Team i Stockholm</title>
+    <meta name="description" content="Möt teamet bakom SIT24. Certifierade tekniker och specialister inom bilservice, bilvård och karosseri i Stockholm.">
+    <meta name="keywords" content="SIT24 personal, biltekniker stockholm, verkstadspersonal, certifierade mekaniker">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Personal — SIT24 Bilverkstad">
+    <meta property="og:description" content="Möt vårt team av certifierade tekniker och specialister.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="sv_SE">
+    <link rel="canonical" href="https://sit24.se/personal.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -16,7 +24,7 @@
         .font-system-semi { font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
         .font-mono { font-family: 'Outfit', sans-serif; font-weight: 300; }
         .film-grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
-        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 28px; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), backdrop-filter 0.5s ease; }
+        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02); border-radius: 28px; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), backdrop-filter 0.5s ease; }
         .liquid-glass .specular-highlight { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(circle 200px at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%); transition: opacity 0.3s ease; }
         .liquid-glass:hover .specular-highlight { opacity: 1; }
         .liquid-glass .edge-sweep { position: absolute; top: 0; left: 0; width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); z-index: 2; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
@@ -87,7 +95,7 @@
     <section class="relative h-[70vh] flex items-end pb-20 px-8 md:px-20 overflow-hidden">
         <div class="absolute inset-0 z-0">
             <video autoplay muted loop playsinline class="hero-video absolute inset-0 w-full h-full">
-                <source src="6157968-hd_1920_1080_30fps.mp4" type="video/mp4">
+                <source src="stock video/mechanic 3_compressed.mp4" type="video/mp4">
             </video>
         </div>
         <div class="absolute inset-0 z-[1] video-overlay-cin"></div>
@@ -117,14 +125,6 @@
                     <div class="specular-highlight"></div><div class="edge-sweep"></div>
                     <div class="relative z-10">
                         <span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-6">02</span>
-                        <h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Amir Bashi</h4>
-                        <span class="font-system-light text-[#007AFF] text-[10px]">Verksamhetschef</span>
-                    </div>
-                </div>
-                <div class="team-card liquid-glass p-10">
-                    <div class="specular-highlight"></div><div class="edge-sweep"></div>
-                    <div class="relative z-10">
-                        <span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-6">03</span>
                         <h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Karolina Pettersson</h4>
                         <span class="font-system-light text-[#007AFF] text-[10px]">Miljö-, Kvalitets- & Ekonomiansvarig</span>
                     </div>
@@ -141,25 +141,12 @@
                 <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Serviceverkstad</h3>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="team-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-6">04</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Evgueni Pokuliti</h4><span class="font-system-light text-[#007AFF] text-[10px]">Förman</span></div></div>
-                <div class="team-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-6">05</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Alsadek Bashi</h4><span class="font-system-light text-[#007AFF] text-[10px]">Tekniker</span></div></div>
+                <div class="team-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-6">03</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Evgueni Pokuliti</h4><span class="font-system-light text-[#007AFF] text-[10px]">Förman</span></div></div>
+                <div class="team-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-6">04</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Alsadek Bashi</h4><span class="font-system-light text-[#007AFF] text-[10px]">Tekniker</span></div></div>
             </div>
         </div>
     </section>
 
-    <!-- DAMAGE WORKSHOP -->
-    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
-        <div class="max-w-6xl mx-auto">
-            <div class="reveal mb-16">
-                <p class="accent-line font-system-light text-[#E30613] text-[10px] mb-2">Skadeverkstad</p>
-                <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Skadeverkstad</h3>
-            </div>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="team-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-6">06</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Roid Kemal</h4><span class="font-system-light text-[#E30613] text-[10px]">Skadetekniker</span></div></div>
-                <div class="team-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-6">07</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Jasem Bashi</h4><span class="font-system-light text-[#E30613] text-[10px]">Biltransportör</span></div></div>
-            </div>
-        </div>
-    </section>
 
     <!-- CAR CARE — SKÄRHOLMEN -->
     <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
@@ -169,41 +156,24 @@
                 <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Bilvård Skärholmen</h3>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">08</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Ismil Aasem</h4><span class="font-system-light text-[#007AFF] text-[10px]">Förman</span></div></div>
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">09</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Hussain Imran</h4><span class="font-system-light text-[#94A3B8]/50 text-[10px]">Bilvårdsspecialist</span></div></div>
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">10</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Jonas Aynanshe</h4><span class="font-system-light text-[#94A3B8]/50 text-[10px]">Bilvårdsspecialist</span></div></div>
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">11</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Enalb Gega</h4><span class="font-system-light text-[#94A3B8]/50 text-[10px]">Bilvårdsspecialist</span></div></div>
+                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">05</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Ismil Aasem</h4><span class="font-system-light text-[#007AFF] text-[10px]">Förman</span></div></div>
+                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">06</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Hussain Imran</h4><span class="font-system-light text-[#007AFF] text-[10px]">Bilvårdsspecialist</span></div></div>
+                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">07</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Jonas Aynanshe</h4><span class="font-system-light text-[#007AFF] text-[10px]">Bilvårdsspecialist</span></div></div>
+                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">08</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Nasser Mekhal</h4><span class="font-system-light text-[#007AFF] text-[10px]">Förman</span></div></div>
+                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">09</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Qamar Zaman</h4><span class="font-system-light text-[#007AFF] text-[10px]">Bilvårdsspecialist</span></div></div>
             </div>
         </div>
     </section>
 
-    <!-- CAR CARE — KISTA -->
+    <!-- CAR CARE — SMISTA -->
     <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="reveal mb-16">
-                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Bilvård — Kista</p>
-                <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Bilvård Kista</h3>
+                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Bilvård — Smista</p>
+                <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Bilvård Smista</h3>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">12</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Nasser Mekhal</h4><span class="font-system-light text-[#007AFF] text-[10px]">Förman</span></div></div>
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">13</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Christian Hanna</h4><span class="font-system-light text-[#94A3B8]/50 text-[10px]">Bilvårdsspecialist</span></div></div>
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">14</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Azan Qaisar</h4><span class="font-system-light text-[#94A3B8]/50 text-[10px]">Bilvårdsspecialist</span></div></div>
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">15</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Qamar Zaman</h4><span class="font-system-light text-[#94A3B8]/50 text-[10px]">Bilvårdsspecialist</span></div></div>
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">16</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Sandy Nabati</h4><span class="font-system-light text-[#94A3B8]/50 text-[10px]">Bilvårdsspecialist</span></div></div>
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">17</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Kashmyr Wafa</h4><span class="font-system-light text-[#94A3B8]/50 text-[10px]">Bilvårdsspecialist</span></div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CAR CARE — LÄNNA -->
-    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
-        <div class="max-w-6xl mx-auto">
-            <div class="reveal mb-16">
-                <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Bilvård — Länna</p>
-                <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Bilvård Länna</h3>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">18</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Hussein Bashi</h4><span class="font-system-light text-[#007AFF] text-[10px]">Förman</span></div></div>
+                <div class="team-card liquid-glass p-8"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">10</span><h4 class="font-display-black text-base text-[#E2E8F0] uppercase mb-1" style="transform: skewX(-3deg);">Christian Hanna</h4><span class="font-system-light text-[#007AFF] text-[10px]">Bilvårdsspecialist</span></div></div>
             </div>
         </div>
     </section>
@@ -222,7 +192,7 @@
                 <div class="liquid-glass p-8 flex flex-col items-center justify-center"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 text-center"><span class="font-display-black text-sm text-[#E2E8F0] mb-2 block uppercase">Fleet</span><span class="font-system-light text-[#007AFF] text-[10px]">Autoexperten</span><span class="font-system-light text-[#94A3B8]/40 text-[9px] mt-2 block">Certifierad</span></div></div>
             </div>
             <div class="mt-12 pt-8 border-t border-[#E2E8F0]/5">
-                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // TEAM_ROSTER — 18 operatörer aktiva</p>
+                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // TEAM_ROSTER — 10 operatörer aktiva</p>
             </div>
         </div>
     </section>

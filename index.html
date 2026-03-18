@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIT24 // Bilverkstad Stockholm</title>
+    <title>SIT24 — Bilverkstad Stockholm | Service, Reparation & Bilvård</title>
+    <meta name="description" content="SIT24 är en auktoriserad bilverkstad i Stockholm med verkstäder i Bromma och Skärholmen. Service, reparation, bilvård, plåt & lack. ISO-certifierad med 3 års garanti.">
+    <meta name="keywords" content="bilverkstad stockholm, bilservice bromma, bilreparation skärholmen, bilvård, plåt och lack, däckbyte, SIT24, autoexperten">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="SIT24">
+    <meta property="og:title" content="SIT24 — Bilverkstad Stockholm">
+    <meta property="og:description" content="Auktoriserad bilverkstad i Stockholm. Service, reparation, bilvård och karosseriarbeten med 3 års garanti.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="sv_SE">
+    <link rel="canonical" href="https://sit24.se">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -51,8 +60,8 @@
             -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%);
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             border-left: 1px solid rgba(255, 255, 255, 0.1);
-            border-right: 1px solid rgba(255, 255, 255, 0.04);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-right: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             border-radius: 28px;
             position: relative;
             overflow: hidden;
@@ -159,8 +168,8 @@
             -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%);
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             border-left: 1px solid rgba(255, 255, 255, 0.1);
-            border-right: 1px solid rgba(255, 255, 255, 0.04);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-right: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             border-radius: 28px;
             position: relative;
             overflow: hidden;
@@ -335,14 +344,14 @@
         <div class="h-full flex items-center justify-between px-8 md:px-20">
             <!-- Left: Large italic nav links -->
             <nav class="flex flex-col gap-6">
+                <a href="#booking-section" onclick="toggleMenu()" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Boka Tid</a>
+                <a href="tjanster.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Tjänster</a>
                 <a href="about.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Om Oss</a>
                 <a href="personal.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Personal</a>
-                <a href="tjanster.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Tjänster</a>
                 <a href="blogg.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Blogg</a>
                 <a href="faq.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">FAQ</a>
                 <a href="erbjudanden.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Erbjudanden</a>
                 <a href="kontakt.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Kontakta Oss</a>
-                <a href="#booking-section" onclick="toggleMenu()" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Boka Tid</a>
             </nav>
 
         </div>
@@ -355,7 +364,7 @@
         <!-- Background video -->
         <div id="hero-video-wrapper" class="absolute inset-0 z-0">
             <video id="hero-vid" autoplay muted loop playsinline class="hero-video absolute inset-0 w-full h-full">
-                <source src="12698098_4070_2160_24fps.mp4" type="video/mp4">
+                <source src="stock video/car_compressed.mp4" type="video/mp4">
             </video>
         </div>
         <!-- Gradient overlay -->
@@ -392,8 +401,8 @@
                     </p>
                 </div>
                 <div class="glass-cin aspect-video overflow-hidden group">
-                    <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-all duration-1000">
-                        <source src="6157968-hd_1920_1080_30fps.mp4" type="video/mp4">
+                    <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-all duration-1000" preload="none">
+                        <source src="stock video/mechanic 4_compressed.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
@@ -444,6 +453,12 @@
                     <h2 class="accent-line text-[#007AFF] font-system-light text-[10px]">// Aktiva Moduler</h2>
                 </div>
                 <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Aktuella Erbjudanden</h3>
+            </div>
+
+            <div class="glass-cin aspect-[21/9] overflow-hidden group mb-16 reveal">
+                <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-all duration-1000" preload="none">
+                    <source src="stock video/cleaning 4_compressed.mp4" type="video/mp4">
+                </video>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
@@ -562,78 +577,21 @@
     </section>
 
     <!-- BOOKING TERMINAL -->
-    <section id="booking-section" class="bg-[#1A1C1E] py-40 px-8 md:px-20 border-t border-[#E2E8F0]/5">
-        <div class="max-w-4xl mx-auto booking-glow">
+    <section id="booking-section" class="relative bg-[#1A1C1E] py-40 px-8 md:px-20 border-t border-[#E2E8F0]/5 overflow-hidden">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover grayscale opacity-[0.08]" preload="none">
+            <source src="stock video/mechanic 3_compressed.mp4" type="video/mp4">
+        </video>
+        <div class="relative z-10 max-w-5xl mx-auto booking-glow">
             <div class="text-center mb-24 reveal">
-                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-4">// SIT24 / LOGIC_CORE</h2>
+                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-4">// SIT24 / Autoexperten</h2>
                 <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Boka Tid</h3>
             </div>
 
-            <div class="space-y-6">
-                <!-- Step 1: Vehicle ID -->
-                <div id="step-1" class="liquid-glass p-12 transition-all duration-500">
-                    <div class="specular-highlight"></div>
-                    <div class="edge-sweep"></div>
-                    <div class="relative z-10">
-                        <h4 class="font-system-light text-[10px] text-[#94A3B8]/50 mb-6">Step_01 // Fordon</h4>
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <div class="relative flex-1">
-                                <input type="text" id="reg-input" placeholder="REGNR (T.EX. XYZ 123)" class="w-full bg-black/20 border border-[#E2E8F0]/10 rounded-2xl p-6 font-mono text-2xl uppercase focus:border-[#007AFF] outline-none text-[#E2E8F0] transition-all">
-                                <div id="scan-line" class="scan-line hidden"></div>
-                            </div>
-                            <button id="scan-btn" onclick="startScan()" class="ghost-btn bg-[#E2E8F0] !border-transparent text-[#1A1C1E] px-12 font-display font-bold text-[11px] uppercase tracking-widest hover:bg-[#007AFF] hover:text-white transition-all cursor-pointer !rounded-2xl">Identifiera</button>
-                        </div>
-                        <div id="scan-result" class="hidden mt-6 p-4 rounded-xl border border-[#007AFF]/30 bg-[#007AFF]/5 font-mono text-sm text-[#007AFF] tracking-wider"></div>
-                    </div>
-                </div>
-
-                <!-- Step 2: Services -->
-                <div id="step-2" class="liquid-glass p-12 step-inactive">
-                    <div class="specular-highlight"></div>
-                    <div class="edge-sweep"></div>
-                    <div class="relative z-10">
-                        <h4 class="font-system-light text-[10px] text-[#94A3B8]/50 mb-6">Step_02 // Tjänster</h4>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div onclick="selectService(this)" class="p-8 rounded-2xl border border-[#E2E8F0]/8 hover:border-[#007AFF]/40 cursor-pointer transition-all bg-white/[0.02] group">
-                                <span class="block text-[#E2E8F0] font-display-black text-sm mb-2 uppercase">The Studio</span>
-                                <span class="text-[10px] text-[#E2E8F0]/30 font-mono uppercase group-hover:text-[#007AFF]">Estetisk korrigering</span>
-                                <p class="text-[11px] text-[#94A3B8]/50 mt-3">Lackskydd, keramisk coating, detailing & ytrestaurering</p>
-                            </div>
-                            <div onclick="selectService(this)" class="p-8 rounded-2xl border border-[#E2E8F0]/8 hover:border-[#E30613]/40 cursor-pointer transition-all bg-white/[0.02] group">
-                                <span class="block text-[#E2E8F0] font-display-black text-sm mb-2 uppercase">The Lab</span>
-                                <span class="text-[10px] text-[#E2E8F0]/30 font-mono uppercase group-hover:text-[#E30613]">Mekanisk optimering</span>
-                                <p class="text-[11px] text-[#94A3B8]/50 mt-3">Service, diagnostik, prestanda & motoroptimering</p>
-                                <div class="flex gap-3 mt-4">
-                                    <span class="status-tag text-[9px] font-mono text-[#007AFF]">&#10003; Certifierad</span>
-                                    <span class="status-tag text-[9px] font-mono text-[#007AFF]">&#10003; Garantibevarande</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button onclick="nextStep(3)" class="ghost-btn mt-8 w-full py-4 font-display font-bold text-[11px] uppercase tracking-[0.3em] text-[#E2E8F0]/60 hover:text-[#E2E8F0] cursor-pointer">Gå vidare</button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Info + Submit -->
-                <div id="step-3" class="liquid-glass p-12 step-inactive">
-                    <div class="specular-highlight"></div>
-                    <div class="edge-sweep"></div>
-                    <div class="relative z-10">
-                        <h4 class="font-system-light text-[10px] text-[#94A3B8]/50 mb-6">Step_03 // Information</h4>
-
-                        <div class="mb-8 p-4 rounded-xl border border-[#007AFF]/20 bg-[#007AFF]/5 flex items-center gap-3">
-                            <span class="text-[#007AFF] text-lg">&#9432;</span>
-                            <p class="text-sm text-[#94A3B8]">Fullständig digital dokumentation ingår i varje service.</p>
-                        </div>
-
-                        <div class="grid md:grid-cols-2 gap-6 mb-8">
-                            <input type="text" placeholder="NAMN" class="bg-transparent border-b border-[#E2E8F0]/10 py-4 font-mono text-xs outline-none focus:border-[#007AFF] text-[#E2E8F0] transition-colors">
-                            <input type="email" placeholder="E-POST" class="bg-transparent border-b border-[#E2E8F0]/10 py-4 font-mono text-xs outline-none focus:border-[#007AFF] text-[#E2E8F0] transition-colors">
-                        </div>
-                        <button id="submit-btn" onclick="finishBooking()" class="w-full py-6 bg-[#E30613] text-white font-display font-bold text-[11px] uppercase tracking-[0.4em] hover:bg-[#c7050f] shadow-2xl transition-all border-2 border-transparent cursor-pointer rounded-2xl">
-                            Slutför Bokning
-                        </button>
-                        <div id="booking-success" class="hidden mt-6 p-6 rounded-xl border border-[#007AFF]/30 bg-[#007AFF]/5 text-center font-mono text-sm text-[#007AFF] tracking-wider"></div>
-                    </div>
+            <div class="liquid-glass p-6 md:p-10">
+                <div class="specular-highlight"></div>
+                <div class="edge-sweep"></div>
+                <div class="relative z-10 rounded-2xl overflow-hidden">
+                    <iframe src="https://www.autoexperten.se/bilservice/iframe?workshop=15851" width="100%" height="750px" frameborder="0" style="border: none; border-radius: 16px; background: #fff;"></iframe>
                 </div>
             </div>
         </div>

@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIT24 // Tjänster</title>
+    <title>Tjänster — SIT24 | Service, Reparation, Bilvård & Karosseri</title>
+    <meta name="description" content="Alla tjänster hos SIT24: bilservice, bromsservice, diagnos, däckbyte, plåt & lack, bilvård och rekond. Certifierade tekniker med 3 års garanti på alla delar.">
+    <meta name="keywords" content="bilservice stockholm, bromsservice, bildiagnos, däckbyte, bilvård, rekond, plåt och lack, karosseri, SIT24">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Tjänster — SIT24 Bilverkstad">
+    <meta property="og:description" content="Komplett utbud av biltjänster: service, reparation, bilvård, karosseri och däck. 3 års garanti.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="sv_SE">
+    <link rel="canonical" href="https://sit24.se/tjanster.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -16,7 +24,7 @@
         .font-system-semi { font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
         .font-mono { font-family: 'Outfit', sans-serif; font-weight: 300; }
         .film-grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
-        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 28px; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), backdrop-filter 0.5s ease; }
+        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02); border-radius: 28px; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), backdrop-filter 0.5s ease; }
         .liquid-glass .specular-highlight { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(circle 200px at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%); transition: opacity 0.3s ease; }
         .liquid-glass:hover .specular-highlight { opacity: 1; }
         .liquid-glass .edge-sweep { position: absolute; top: 0; left: 0; width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); z-index: 2; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
@@ -34,6 +42,7 @@
         .accent-line-red { border-left: 1px solid #E30613; padding-left: 12px; }
         .video-overlay-cin { background: linear-gradient(to bottom, rgba(26,28,30,0.6) 0%, transparent 35%, transparent 65%, rgba(26,28,30,1) 100%); }
         .hero-video { filter: grayscale(1) brightness(0.75); object-fit: cover; }
+        .glass-cin { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 28px; position: relative; overflow: hidden; }
     </style>
 </head>
 <body>
@@ -88,7 +97,7 @@
     <section class="relative h-[70vh] flex items-end pb-20 px-8 md:px-20 overflow-hidden">
         <div class="absolute inset-0 z-0">
             <video autoplay muted loop playsinline class="hero-video absolute inset-0 w-full h-full">
-                <source src="6159204-hd_1920_1080_30fps.mp4" type="video/mp4">
+                <source src="stock video/mechanic 2_compressed.mp4" type="video/mp4">
             </video>
         </div>
         <div class="absolute inset-0 z-[1] video-overlay-cin"></div>
@@ -105,6 +114,11 @@
                 <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Verkstadstjänster</p>
                 <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Verkstad</h3>
                 <p class="text-[#94A3B8]/60 text-sm mt-4 max-w-xl">Komplett mekanisk service utförd av certifierade tekniker med 3 års garanti på alla delar.</p>
+            </div>
+            <div class="glass-cin aspect-video overflow-hidden group mb-16 reveal">
+                <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-all duration-1000" preload="none">
+                    <source src="stock video/mechanic_compressed.mp4" type="video/mp4">
+                </video>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bilservice & Reparation</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Fullständig service och reparation av alla bilmärken. Originaldelar och certifierade metoder.</p></div></div>
@@ -124,6 +138,11 @@
                 <p class="accent-line-red font-system-light text-[#E30613] text-[10px] mb-2">Karosseriarbeten</p>
                 <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Karosseri</h3>
                 <p class="text-[#94A3B8]/60 text-sm mt-4 max-w-xl">Professionell reparation av skador, plåt, lack och bilglas.</p>
+            </div>
+            <div class="glass-cin aspect-video overflow-hidden group mb-16 reveal">
+                <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-all duration-1000" preload="none">
+                    <source src="stock video/mechanic 2_compressed.mp4" type="video/mp4">
+                </video>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">KRS_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Plåt & Lackskador</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Reparation av plåt- och lackskador. Från mindre bucklor till fullständiga karosseriarbeten med fabrikskvalitet.</p></div></div>
@@ -152,6 +171,11 @@
             <div class="reveal mb-16">
                 <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Bilvård</p>
                 <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Tvätt & Rekond</h3>
+            </div>
+            <div class="glass-cin aspect-video overflow-hidden group mb-16 reveal">
+                <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-all duration-1000" preload="none">
+                    <source src="stock video/cleaning 3_compressed.mp4" type="video/mp4">
+                </video>
             </div>
             <div class="grid md:grid-cols-1 gap-6">
                 <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">BLV_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Biltvätt & Rekond</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Komplett bilvård från handtvätt till fullständig rekonditionering. Invändig och utvändig behandling med premiumprodukter.</p></div></div>
