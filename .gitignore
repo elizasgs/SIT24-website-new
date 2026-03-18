@@ -1,2 +1,3 @@
 *.mp4
+!*_compressed.mp4
 .claude/
