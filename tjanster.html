@@ -49,7 +49,7 @@
     <div class="film-grain"></div>
 
     <!-- HEADER -->
-    <header class="fixed top-0 w-full z-[400] px-6 md:px-12 py-4 md:py-6" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-bottom: 1px solid rgba(255,255,255,0.06);">
+    <header class="fixed top-0 w-full z-[400] px-4 md:px-6 lg:px-12 py-3 md:py-4 lg:py-6" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-bottom: 1px solid rgba(255,255,255,0.06);">
         <div class="flex justify-between items-start">
             <div class="flex flex-col items-start gap-3">
                 <a href="index.html"><img src="sit24_logo.png" alt="SIT24" class="h-14 md:h-16 w-auto"></a>
@@ -79,7 +79,7 @@
     <!-- MENU OVERLAY -->
     <div id="menu-overlay" class="menu-overlay">
         <button onclick="toggleMenu()" class="absolute top-8 right-8 md:right-12 font-system-semi text-lg text-[#E2E8F0] hover:text-[#007AFF] transition cursor-pointer z-[510]">Stäng</button>
-        <div class="h-full flex items-center justify-between px-8 md:px-20">
+        <div class="h-full flex items-center justify-between px-5 md:px-8 lg:px-20">
             <nav class="flex flex-col gap-6">
                 <a href="about.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Om Oss</a>
                 <a href="personal.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Personal</a>
@@ -94,7 +94,7 @@
     </div>
 
     <!-- HERO -->
-    <section class="relative h-[70vh] flex items-end pb-20 px-8 md:px-20 overflow-hidden">
+    <section class="relative h-[70vh] flex items-end pb-20 px-5 md:px-8 lg:px-20 overflow-hidden">
         <div class="absolute inset-0 z-0">
             <video autoplay muted loop playsinline class="hero-video absolute inset-0 w-full h-full">
                 <source src="stock video/mechanic 2_compressed.mp4" type="video/mp4">
@@ -108,7 +108,7 @@
     </section>
 
     <!-- VERKSTADSTJÄNSTER -->
-    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+    <section class="py-16 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="reveal mb-16">
                 <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Verkstadstjänster</p>
@@ -121,18 +121,18 @@
                 </video>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bilservice & Reparation</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Fullständig service och reparation av alla bilmärken. Originaldelar och certifierade metoder.</p></div></div>
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_02</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bromsservice</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Inspektion, reparation och byte av bromskomponenter. Säkerhet utan kompromisser.</p></div></div>
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_03</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Diagnos</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Avancerad datordiagnostik för att identifiera och åtgärda felkoder och prestandaproblem.</p></div></div>
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_04</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Avgassystem</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Service och reparation av avgassystem. Inspektion, byte av katalysator och ljuddämpare.</p></div></div>
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_05</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Dieselservice</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Specialiserad service för dieselmotorer. Bränslesystem, injektorer och turbo.</p></div></div>
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_06</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Reservdelar</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Original- och kvalitetsdelar med 3 års garanti via Autoexperten.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bilservice & Reparation</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Fullständig service och reparation av alla bilmärken. Originaldelar och certifierade metoder.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_02</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bromsservice</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Inspektion, reparation och byte av bromskomponenter. Säkerhet utan kompromisser.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_03</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Diagnos</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Avancerad datordiagnostik för att identifiera och åtgärda felkoder och prestandaproblem.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_04</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Avgassystem</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Service och reparation av avgassystem. Inspektion, byte av katalysator och ljuddämpare.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_05</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Dieselservice</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Specialiserad service för dieselmotorer. Bränslesystem, injektorer och turbo.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">SVC_06</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Reservdelar</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Original- och kvalitetsdelar med 3 års garanti via Autoexperten.</p></div></div>
             </div>
         </div>
     </section>
 
     <!-- KAROSSERI -->
-    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+    <section class="py-16 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="reveal mb-16">
                 <p class="accent-line-red font-system-light text-[#E30613] text-[10px] mb-2">Karosseriarbeten</p>
@@ -145,28 +145,28 @@
                 </video>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">KRS_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Plåt & Lackskador</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Reparation av plåt- och lackskador. Från mindre bucklor till fullständiga karosseriarbeten med fabrikskvalitet.</p></div></div>
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">KRS_02</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bilglas</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Byte och reparation av vindrutor och bilglas. Snabb service med försäkringshantering.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">KRS_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Plåt & Lackskador</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Reparation av plåt- och lackskador. Från mindre bucklor till fullständiga karosseriarbeten med fabrikskvalitet.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">KRS_02</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bilglas</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Byte och reparation av vindrutor och bilglas. Snabb service med försäkringshantering.</p></div></div>
             </div>
         </div>
     </section>
 
     <!-- DÄCK -->
-    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+    <section class="py-16 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="reveal mb-16">
                 <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Däckservice</p>
                 <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Däck & Fälg</h3>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">DCK_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Däckservice</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Däckbyte, balansering, däckhotell och säsongsbyte. Snabbt och professionellt.</p></div></div>
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">DCK_02</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Fälgreparation</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Professionell reparation av skadade fälgar. Återställning till nyskick.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">DCK_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Däckservice</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Däckbyte, balansering, däckhotell och säsongsbyte. Snabbt och professionellt.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">DCK_02</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Fälgreparation</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Professionell reparation av skadade fälgar. Återställning till nyskick.</p></div></div>
             </div>
         </div>
     </section>
 
     <!-- BILVÅRD -->
-    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+    <section class="py-16 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="reveal mb-16">
                 <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Bilvård</p>
@@ -178,27 +178,27 @@
                 </video>
             </div>
             <div class="grid md:grid-cols-1 gap-6">
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">BLV_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Biltvätt & Rekond</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Komplett bilvård från handtvätt till fullständig rekonditionering. Invändig och utvändig behandling med premiumprodukter.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">BLV_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Biltvätt & Rekond</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Komplett bilvård från handtvätt till fullständig rekonditionering. Invändig och utvändig behandling med premiumprodukter.</p></div></div>
             </div>
         </div>
     </section>
 
     <!-- KUNDSERVICE -->
-    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+    <section class="py-16 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="reveal mb-16">
                 <p class="accent-line font-system-light text-[#007AFF] text-[10px] mb-2">Kundservice</p>
                 <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Extra Tjänster</h3>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">KND_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Hämta & Lämna</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Vi hämtar och lämnar ditt fordon så du slipper ta dig till verkstaden. Smidigt och tidsbesparande.</p></div></div>
-                <div class="service-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">KND_02</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Ersättningsbil</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Behöver du en bil medan din är hos oss? Vi ordnar ersättningsbil så att din vardag inte stannar upp.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">KND_01</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Hämta & Lämna</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Vi hämtar och lämnar ditt fordon så du slipper ta dig till verkstaden. Smidigt och tidsbesparande.</p></div></div>
+                <div class="service-card liquid-glass p-6 md:p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#94A3B8]/40 text-[10px] block mb-4">KND_02</span><h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Ersättningsbil</h4><p class="text-[#94A3B8] text-sm leading-relaxed">Behöver du en bil medan din är hos oss? Vi ordnar ersättningsbil så att din vardag inte stannar upp.</p></div></div>
             </div>
         </div>
     </section>
 
     <!-- GUARANTEE -->
-    <section class="py-20 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+    <section class="py-20 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-4xl mx-auto">
             <div class="liquid-glass p-12 grid md:grid-cols-3 gap-8 text-center reveal">
                 <div class="specular-highlight"></div><div class="edge-sweep"></div>
@@ -213,7 +213,7 @@
     </section>
 
     <!-- CTA -->
-    <section class="py-32 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+    <section class="py-16 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-3xl mx-auto text-center reveal">
             <h3 class="font-display-black text-4xl md:text-5xl text-[#E2E8F0] uppercase mb-6" style="transform: skewX(-3deg);">Boka din service</h3>
             <p class="text-[#94A3B8]/60 text-sm mb-10 max-w-md mx-auto">Välj tjänst och boka direkt via vårt digitala system.</p>
@@ -225,10 +225,10 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="relative py-24 px-8 md:px-20 border-t border-[#E2E8F0]/5">
+    <footer class="relative py-24 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
-            <div class="liquid-glass p-12 md:p-16 mb-16"><div class="specular-highlight"></div><div class="edge-sweep"></div>
-                <div class="relative z-10 grid md:grid-cols-4 gap-12">
+            <div class="liquid-glass p-6 md:p-12 lg:p-16 mb-16"><div class="specular-highlight"></div><div class="edge-sweep"></div>
+                <div class="relative z-10 grid md:grid-cols-4 gap-6 md:gap-12">
                     <div class="col-span-1 md:col-span-2"><div class="font-display-black text-xl text-[#E2E8F0] mb-6 uppercase" style="transform: skewX(-3deg);">SIT24</div><p class="text-[#94A3B8]/50 text-[11px]">Systemet är öppet dygnet runt för digital bokning.<br>Fysisk anläggning: Industrivägen 12, STHLM.</p></div>
                     <div><h5 class="text-[#E2E8F0] font-system-semi text-[11px] mb-6">Kontakt</h5><ul class="text-[#94A3B8] text-[11px] space-y-2"><li>08-123 45 67</li><li>info@sit24.se</li></ul></div>
                     <div><h5 class="text-[#E2E8F0] font-system-semi text-[11px] mb-6">Socialt</h5><ul class="text-[#94A3B8] text-[11px] space-y-2"><li><a href="#" class="hover:text-[#007AFF] transition">Instagram</a></li><li><a href="#" class="hover:text-[#007AFF] transition">YouTube</a></li></ul></div>
