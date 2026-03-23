@@ -44,6 +44,63 @@
         .status-tag { display: inline-block; padding: 3px 10px; border-radius: 8px; border: 1px solid rgba(0,122,255,0.2); background: rgba(0,122,255,0.06); }
         input:focus, textarea:focus { border-color: #007AFF !important; outline: none; }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Kontakta Oss — SIT24",
+      "description": "Kontakta SIT24 bilverkstad i Stockholm. Verkstäder i Bromma och Skärholmen.",
+      "url": "https://sit24.se/kontakt.html",
+      "mainEntity": {
+        "@type": "AutoRepair",
+        "name": "SIT24",
+        "url": "https://sit24.se",
+        "logo": "https://sit24-stockholm.netlify.app/sit24_logo.png",
+        "telephone": "08-257 221",
+        "email": "service@sit24.se",
+        "areaServed": {
+          "@type": "City",
+          "name": "Stockholm"
+        },
+        "department": [
+          {
+            "@type": "AutoRepair",
+            "name": "SIT24 Bromma",
+            "telephone": "08-257 221",
+            "email": "service@sit24.se",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Ranhammarsvägen 18E",
+              "addressLocality": "Bromma",
+              "postalCode": "168 67",
+              "addressCountry": "SE"
+            },
+            "openingHoursSpecification": [
+              {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "07:00", "closes": "17:00"},
+              {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:00", "closes": "13:00"}
+            ]
+          },
+          {
+            "@type": "AutoRepair",
+            "name": "SIT24 Skärholmen",
+            "telephone": "08-257 221",
+            "email": "service@sit24.se",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Oxholmsgränd 4",
+              "addressLocality": "Skärholmen",
+              "postalCode": "127 48",
+              "addressCountry": "SE"
+            },
+            "openingHoursSpecification": [
+              {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "07:00", "closes": "18:00"},
+              {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:00", "closes": "17:00"}
+            ]
+          }
+        ]
+      }
+    }
+    </script>
 </head>
 <body>
     <div class="film-grain"></div>
