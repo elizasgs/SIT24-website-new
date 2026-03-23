@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sit24-stockholm.netlify.app/sitemap.xml
+
+# Block preview/backup files
+Disallow: /index-cinematic-preview.html
+Disallow: /index-light-preview.html
+Disallow: /index-lighter-preview.html
+Disallow: /index-old-backup.html
+Disallow: /login.html
