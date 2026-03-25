@@ -415,7 +415,7 @@
         <div class="h-full flex items-center justify-between px-5 md:px-8 lg:px-20">
             <!-- Left: Large italic nav links -->
             <nav class="flex flex-col gap-6">
-                <a href="#booking-section" onclick="toggleMenu()" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Boka Tid</a>
+                <a href="#booking-section" onclick="toggleMenu()" class="menu-link font-display-black text-2xl md:text-4xl text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Boka Tjänst</a>
                 <a href="tjanster.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Tjänster</a>
                 <a href="about.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Om Oss</a>
                 <a href="personal.html" class="menu-link font-display-black text-2xl md:text-4xl text-[#E2E8F0] hover:text-[#007AFF] leading-none" style="transform: skewX(-3deg);">Personal</a>
@@ -465,7 +465,6 @@
         <div class="max-w-6xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-10 md:gap-20 items-center mb-32">
                 <div class="reveal space-y-8">
-                    <h2 class="accent-line text-[#007AFF] font-system-light text-[10px]">// Om Oss</h2>
                     <h3 class="font-display-black text-5xl text-[#E2E8F0] leading-tight uppercase" style="transform: skewX(-3deg);">Din bil.<br>Vårt ansvar.</h3>
                     <p class="text-[#94A3B8] text-[15px] leading-relaxed border-l-2 border-[#E2E8F0]/10 pl-6">
                         SIT24 är en auktoriserad verkstad med två anläggningar i Stockholm. Vi utför allt från service och reparationer till besiktningsförberedelser och detailing — alltid med certifierade tekniker och originaldelar.
@@ -480,7 +479,6 @@
 
             <!-- Brand Pillars -->
             <div class="reveal mb-16">
-                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-2">// Brandgrund</h2>
                 <h3 class="font-display-black text-4xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Vad vi står för</h3>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
@@ -519,10 +517,6 @@
     <section id="offers-section" class="bg-[#1A1C1E] py-20 md:py-40 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-12 md:mb-24 reveal">
-                <div class="flex items-center justify-center gap-3 mb-4">
-                    <span class="rec-dot"></span>
-                    <h2 class="accent-line text-[#007AFF] font-system-light text-[10px]">// Aktiva Moduler</h2>
-                </div>
                 <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Aktuella Erbjudanden</h3>
             </div>
 
@@ -607,7 +601,6 @@
     <section id="absolute-limits" class="bg-[#1A1C1E] py-20 md:py-40 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-3xl mx-auto">
             <div class="text-center mb-12 md:mb-24 reveal">
-                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-4">// Serviceprotokoll</h2>
                 <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Våra löften</h3>
             </div>
             <div class="space-y-4">
@@ -652,17 +645,43 @@
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover grayscale opacity-[0.08]" preload="none">
             <source src="stock video/mechanic 3_compressed.mp4" type="video/mp4">
         </video>
-        <div class="relative z-10 max-w-5xl mx-auto booking-glow">
+        <div class="relative z-10 max-w-7xl mx-auto booking-glow">
             <div class="text-center mb-12 md:mb-24 reveal">
-                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-4">// SIT24 / Autoexperten</h2>
-                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Boka Tid</h3>
+                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Boka Tjänst</h3>
             </div>
 
-            <div class="liquid-glass p-4 md:p-6 lg:p-10">
-                <div class="specular-highlight"></div>
-                <div class="edge-sweep"></div>
-                <div class="relative z-10 rounded-2xl overflow-hidden">
-                    <iframe src="https://www.autoexperten.se/bilservice/iframe?workshop=15851" width="100%" height="750px" frameborder="0" style="border: none; border-radius: 16px; background: #fff;"></iframe>
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6 items-start">
+                <!-- Booking iframe -->
+                <div class="liquid-glass p-4 md:p-6 lg:p-10">
+                    <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
+                    <div class="relative z-10 rounded-2xl overflow-hidden">
+                        <iframe src="https://www.autoexperten.se/bilservice/iframe?workshop=15851" width="100%" height="600px" frameborder="0" style="border: none; border-radius: 16px; background: #fff;"></iframe>
+                    </div>
+                </div>
+
+                <!-- Contact bubble -->
+                <div class="liquid-glass p-6 lg:sticky lg:top-32">
+                    <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <h4 class="font-display-black text-lg text-[#E2E8F0] uppercase mb-6" style="transform: skewX(-3deg);">Kontakta Oss</h4>
+
+                        <!-- Phone -->
+                        <div class="mb-5">
+                            <span class="font-system-light text-[#007AFF] text-[9px] uppercase tracking-widest block mb-1">Telefon</span>
+                            <a href="tel:08-25722" class="text-[#E2E8F0] font-system-semi text-sm hover:text-[#007AFF] transition no-underline">08-257 221</a>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-5">
+                            <span class="font-system-light text-[#007AFF] text-[9px] uppercase tracking-widest block mb-1">E-post</span>
+                            <a href="mailto:service@sit24.se" class="text-[#E2E8F0] font-system-semi text-sm hover:text-[#007AFF] transition no-underline">service@sit24.se</a>
+                        </div>
+
+                        <!-- CTA -->
+                        <a href="kontakt.html" class="ghost-btn block text-center font-system-semi text-[10px] text-[#007AFF] no-underline mt-2 py-2">Kontaktsida &rarr;</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -672,7 +691,6 @@
     <section id="locations-section" class="bg-[#1A1C1E] py-20 md:py-40 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-12 md:mb-24 reveal">
-                <h2 class="accent-line text-[#007AFF] font-system-light text-[10px] mb-4">// Våra Anläggningar</h2>
                 <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Hitta Till Oss</h3>
             </div>
 
