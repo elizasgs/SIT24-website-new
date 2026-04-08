@@ -923,6 +923,21 @@
         }
 
 
+        // ── 4b. HEADER2 PADDING ON SCROLL ──
+        (function() {
+            const header1 = document.getElementById('header1');
+            const header2 = document.getElementById('header2');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > header1.offsetHeight) {
+                    header2.style.paddingTop = '0.75rem';
+                    header2.style.paddingBottom = '0.75rem';
+                } else {
+                    header2.style.paddingTop = '0.25rem';
+                    header2.style.paddingBottom = '0.25rem';
+                }
+            });
+        })();
+
         // ── 5. SCROLL REVEALS ──
         gsap.utils.toArray(".reveal").forEach(el => {
             gsap.from(el, {
