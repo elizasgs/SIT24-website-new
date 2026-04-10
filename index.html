@@ -2,6 +2,8 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIT24 — Bilverkstad Stockholm | Service, Reparation & Bilvård</title>
     <meta name="description" content="SIT24 är en auktoriserad bilverkstad i Stockholm med verkstäder i Bromma och Skärholmen. Service, reparation, bilvård, plåt & lack. ISO-certifierad med 3 års garanti.">
@@ -351,21 +353,31 @@
     <!-- HEADER 1 — Logos (scrolls away with page)              -->
     <!-- ═══════════════════════════════════════════════════════ -->
     <header id="header1" class="relative w-full z-[399] px-4 md:px-6 lg:px-12 pt-3 md:pt-4 lg:pt-6 pb-1" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%);">
-        <div class="flex justify-between items-center">
-            <!-- LEFT: SIT24 logo -->
+        <!-- Mobile: logos stacked -->
+        <div class="flex flex-col md:hidden gap-2">
+            <div class="flex justify-between items-center">
+                <a href="index.html">
+                    <img src="sit24_logo.png" alt="SIT24" class="h-12 w-auto" loading="lazy">
+                </a>
+                <img src="autoexperten_logo2.png" alt="Autoexperten" class="h-10 w-auto" loading="lazy">
+            </div>
+            <div class="flex justify-center items-center gap-3">
+                <img src="SCAB_ISO_9001_Eng_RGB.png" alt="ISO 9001" class="h-10 w-auto" loading="lazy">
+                <img src="SCAB_ISO_14001_Eng_RGB.png" alt="ISO 14001" class="h-10 w-auto" loading="lazy">
+                <img src="godkand-bilverkstad.svg" alt="Godkänd Bilverkstad" class="h-10 w-auto" loading="lazy">
+            </div>
+        </div>
+        <!-- Desktop: all 5 logos -->
+        <div class="hidden md:flex justify-between items-center">
             <a href="index.html">
-                <img src="sit24_logo.png" alt="SIT24" class="h-20 md:h-24 w-auto" loading="lazy">
+                <img src="sit24_logo.png" alt="SIT24" class="h-24 w-auto" loading="lazy">
             </a>
-
-            <!-- CENTER: ISO badges + Godkänd Bilverkstad -->
-            <div class="hidden md:flex items-center gap-4">
+            <div class="flex items-center gap-4">
                 <img src="SCAB_ISO_9001_Eng_RGB.png" alt="ISO 9001" class="h-24 w-auto" loading="lazy">
                 <img src="SCAB_ISO_14001_Eng_RGB.png" alt="ISO 14001" class="h-24 w-auto" loading="lazy">
                 <img src="godkand-bilverkstad.svg" alt="Godkänd Bilverkstad" class="h-24 w-auto" loading="lazy">
             </div>
-
-            <!-- RIGHT: Autoexperten logo -->
-            <img src="autoexperten_logo2.png" alt="Autoexperten" class="h-16 md:h-20 w-auto" loading="lazy">
+            <img src="autoexperten_logo2.png" alt="Autoexperten" class="h-20 w-auto" loading="lazy">
         </div>
     </header>
 
@@ -438,7 +450,7 @@
     <!-- ═══════════════════════════════════════════════════════ -->
     <!-- HERO — "Viceversa" full-viewport cinematic entrance    -->
     <!-- ═══════════════════════════════════════════════════════ -->
-    <section id="hero" class="relative h-screen w-screen flex items-center justify-center overflow-hidden bg-[#1A1C1E]">
+    <section id="hero" class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#1A1C1E]">
         <!-- Background video -->
         <div id="hero-video-wrapper" class="absolute inset-0 z-0">
             <video id="hero-vid" autoplay muted loop playsinline class="hero-video absolute inset-0 w-full h-full">
@@ -464,7 +476,7 @@
         <div class="max-w-6xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-10 md:gap-20 items-center mb-32">
                 <div class="reveal space-y-8">
-                    <h3 class="font-display-black text-5xl text-[#E2E8F0] leading-tight uppercase" style="transform: skewX(-3deg);">Din bil.<br>Vårt ansvar.</h3>
+                    <h3 class="font-display-black text-3xl md:text-5xl text-[#E2E8F0] leading-tight uppercase" style="transform: skewX(-3deg);">Din bil.<br>Vårt ansvar.</h3>
                     <p class="text-[#94A3B8] text-[15px] leading-relaxed border-l-2 border-[#E2E8F0]/10 pl-6">
                         SIT24 är en auktoriserad autoexperten verkstad med två anläggningar i Stockholm. Vi utför allt från service och reparationer till besiktningsförberedelser och detailing — alltid med certifierade tekniker och originaldelar.
                     </p>
@@ -546,7 +558,7 @@
     <section id="offers-section" class="bg-[#1A1C1E] py-20 md:py-40 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5" hidden>
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-12 md:mb-24 reveal">
-                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Aktuella Erbjudanden</h3>
+                <h3 class="font-display-black text-3xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Aktuella Erbjudanden</h3>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
@@ -630,7 +642,7 @@
     <section id="absolute-limits" class="bg-[#1A1C1E] py-20 md:py-40 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-3xl mx-auto">
             <div class="text-center mb-12 md:mb-24 reveal">
-                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Våra löften</h3>
+                <h3 class="font-display-black text-3xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Våra löften</h3>
             </div>
             <div class="space-y-4">
                 <div class="limit-item limit-glass p-8 md:p-10">
@@ -676,14 +688,14 @@
         </video>
         <div class="relative z-10 max-w-7xl mx-auto booking-glow">
             <div class="text-center mb-12 md:mb-24 reveal">
-                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Boka Tjänst</h3>
+                <h3 class="font-display-black text-3xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Boka Tjänst</h3>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6 items-start">
                 <!-- Booking iframe -->
                 <div class="p-4 md:p-6 lg:p-10 rounded-[28px]" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02);">
                     <div class="rounded-2xl overflow-hidden">
-                        <iframe src="https://www.autoexperten.se/bilservice/iframe?workshop=15851" width="100%" height="750px" frameborder="0" style="border: none; border-radius: 16px; background: #fff;"></iframe>
+                        <iframe src="https://www.autoexperten.se/bilservice/iframe?workshop=15851" width="100%" frameborder="0" class="h-[500px] md:h-[750px]" style="border: none; border-radius: 16px; background: #fff;"></iframe>
                     </div>
                 </div>
 
@@ -718,14 +730,14 @@
     <section id="locations-section" class="bg-[#1A1C1E] py-20 md:py-40 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-12 md:mb-24 reveal">
-                <h3 class="font-display-black text-5xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Hitta Till Oss</h3>
+                <h3 class="font-display-black text-3xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Hitta Till Oss</h3>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Location 1: Bromma -->
                 <div class="p-0 overflow-hidden rounded-[28px]" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02);">
                     <div>
-                        <div class="h-[300px] w-full">
+                        <div class="h-[200px] md:h-[300px] w-full">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2033.5!2d17.9444!3d59.3444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d000b7e9b93%3A0x0!2sRanhammarsv%C3%A4gen%2018E%2C%20168%2067%20Bromma!5e0!3m2!1ssv!2sse!4v1" width="100%" height="100%" style="border:0; filter: grayscale(0.3) brightness(0.85) contrast(1.05);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         <div class="p-8">
@@ -747,7 +759,7 @@
                 <!-- Location 2: Skärholmen -->
                 <div class="p-0 overflow-hidden rounded-[28px]" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02);">
                     <div>
-                        <div class="h-[300px] w-full">
+                        <div class="h-[200px] md:h-[300px] w-full">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2037.5!2d17.9233!3d59.2767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f7600b0b0b0b1%3A0x0!2sOxholmsgr%C3%A4nd%204%2C%20127%2048%20Sk%C3%A4rholmen!5e0!3m2!1ssv!2sse!4v1" width="100%" height="100%" style="border:0; filter: grayscale(0.3) brightness(0.85) contrast(1.05);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         <div class="p-8">
@@ -775,7 +787,7 @@
             <div class="liquid-glass p-4 md:p-6 lg:p-8 mb-4">
                 <div class="specular-highlight"></div>
                 <div class="edge-sweep"></div>
-                <div class="relative z-10 grid md:grid-cols-4 gap-6 md:gap-8">
+                <div class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
 
                     <!-- Bromma -->
                     <div>
