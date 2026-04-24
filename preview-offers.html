@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PREVIEW — Erbjudanden → Offert Flow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Outfit:wght@100;300;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 300; line-height: 1.8; background-color: #1A1C1E; color: #E2E8F0; overflow-x: hidden; }
+        .font-display, .font-display-black { font-family: 'Archivo', sans-serif; font-weight: 900; letter-spacing: -0.03em; }
+        .font-system-light { font-family: 'Outfit', sans-serif; font-weight: 100; text-transform: uppercase; letter-spacing: 0.1em; }
+        .font-system-semi { font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+        .film-grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
+        .liquid-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02); border-radius: 28px; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), backdrop-filter 0.5s ease; }
+        .liquid-glass .specular-highlight { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(circle 200px at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%); transition: opacity 0.3s ease; }
+        .liquid-glass:hover .specular-highlight { opacity: 1; }
+        .liquid-glass .edge-sweep { position: absolute; top: 0; left: 0; width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); z-index: 2; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+        .liquid-glass:hover .edge-sweep { opacity: 1; }
+        .ghost-btn { font-family: 'Outfit', sans-serif; font-weight: 600; border: 1px solid rgba(0,122,255,0.3); border-radius: 12px; padding: 10px 24px; background: transparent; position: relative; overflow: hidden; transition: border-color 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease, color 0.3s ease, background 0.4s ease; cursor: pointer; }
+        .ghost-btn:hover { border-color: #007AFF; box-shadow: 0 0 20px rgba(0,122,255,0.2), 0 0 40px rgba(0,122,255,0.06); background: rgba(0,122,255,0.04); color: #007AFF; text-shadow: 0 0 12px rgba(0,122,255,0.5), 0 0 24px rgba(0,122,255,0.2); }
+        .status-tag { display: inline-block; padding: 3px 10px; border-radius: 8px; border: 1px solid rgba(0,122,255,0.2); background: rgba(0,122,255,0.06); }
+        .booking-glow { box-shadow: 0 0 80px rgba(0,122,255,0.06), 0 0 160px rgba(0,122,255,0.03); }
+        .secure-pulse { animation: securePulse 1s ease-in-out infinite; }
+        @keyframes securePulse { 0%, 100% { border-color: rgba(0,122,255,0.3); } 50% { border-color: rgba(0,122,255,1); } }
+        input:focus, textarea:focus { border-color: #007AFF !important; outline: none; }
+
+        /* Offer selection card states */
+        .offer-select-card {
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .offer-select-card.selected {
+            border-color: rgba(0,122,255,0.5) !important;
+            box-shadow: 0 0 30px rgba(0,122,255,0.15), inset 0 0 30px rgba(0,122,255,0.03);
+        }
+        .offer-select-card .check-icon {
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .offer-select-card.selected .check-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .offer-select-card .uncheck-icon {
+            opacity: 1;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .offer-select-card.selected .uncheck-icon {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        /* Popular badge */
+        .popular-badge {
+            position: absolute;
+            top: -1px;
+            right: 20px;
+            background: #007AFF;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 12px 6px;
+            border-radius: 0 0 10px 10px;
+            z-index: 10;
+        }
+
+        /* Reg lookup animation */
+        .reg-scanning {
+            animation: regScan 1.5s ease-in-out infinite;
+        }
+        @keyframes regScan {
+            0%, 100% { border-color: rgba(0,122,255,0.3); }
+            50% { border-color: rgba(0,122,255,1); box-shadow: 0 0 20px rgba(0,122,255,0.2); }
+        }
+
+        /* Vehicle result card */
+        .vehicle-result {
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Star rating */
+        .star { color: #007AFF; }
+    </style>
+</head>
+<body>
+    <div class="film-grain"></div>
+
+    <!-- PREVIEW NOTICE -->
+    <div class="fixed top-0 left-0 right-0 z-[9998] bg-[#007AFF] text-white text-center py-2 font-system-semi text-xs">
+        PREVIEW — Klicka ett erbjudande for att testa hela flödet
+    </div>
+
+    <!-- ============================================ -->
+    <!-- STEG 1: HEMSIDAN — Erbjudandekorten           -->
+    <!-- ============================================ -->
+    <div class="pt-16 pb-4 px-5 md:px-8 lg:px-20">
+        <p class="font-system-light text-[10px] text-[#007AFF]/50 text-center mb-2">STEG 1 — HEMSIDAN (index.html)</p>
+    </div>
+
+    <section id="offers-section" class="bg-[#1A1C1E] py-20 md:py-40 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12 md:mb-24">
+                <h3 class="font-display-black text-3xl md:text-6xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Aktuella Erbjudanden</h3>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Kort 1 -->
+                <a href="#offert-section" onclick="preselectOffer('erbjudande-1')" class="offer-card liquid-glass p-5 md:p-8 lg:p-10 no-underline block cursor-pointer">
+                    <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-system-light text-[#007AFF] text-[10px]">MODUL_01</span>
+                            <span class="status-tag font-system-light text-[8px] text-[#007AFF]/70">[SYSTEM_READY]</span>
+                        </div>
+                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Erbjudande 1</h4>
+                        <p class="text-[#94A3B8] text-sm mb-4">Beskrivning kommer här.</p>
+                        <ul class="text-[#94A3B8] text-xs space-y-1.5 mb-6">
+                            <li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> Ingår: punkt 1</li>
+                            <li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> Ingår: punkt 2</li>
+                            <li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> Ingår: punkt 3</li>
+                        </ul>
+                        <div class="flex items-baseline justify-between mb-8">
+                            <span class="offer-price font-system-semi text-xl text-[#E2E8F0] tracking-wider">— SEK</span>
+                        </div>
+                        <span class="ghost-btn block text-center w-full font-system-semi text-[10px] text-[#007AFF]">Välj Erbjudande &rarr;</span>
+                        <div class="flex items-center justify-between mt-6">
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">SECURE_TRANSITION</span>
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">[GÄLLER T.O.M. —]</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Kort 2 — POPULÄRAST -->
+                <a href="#offert-section" onclick="preselectOffer('erbjudande-2')" class="offer-card liquid-glass p-5 md:p-8 lg:p-10 no-underline block cursor-pointer" style="position: relative;">
+                    <div class="popular-badge">Populärast</div>
+                    <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-system-light text-[#007AFF] text-[10px]">MODUL_02</span>
+                            <span class="status-tag font-system-light text-[8px] text-[#007AFF]/70">[OPTIMIZING]</span>
+                        </div>
+                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Erbjudande 2</h4>
+                        <p class="text-[#94A3B8] text-sm mb-4">Beskrivning kommer här.</p>
+                        <ul class="text-[#94A3B8] text-xs space-y-1.5 mb-6">
+                            <li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> Ingår: punkt 1</li>
+                            <li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> Ingår: punkt 2</li>
+                            <li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> Ingår: punkt 3</li>
+                        </ul>
+                        <div class="flex items-baseline justify-between mb-8">
+                            <span class="offer-price font-system-semi text-xl text-[#E2E8F0] tracking-wider">— SEK</span>
+                        </div>
+                        <span class="ghost-btn block text-center w-full font-system-semi text-[10px] text-[#007AFF]">Välj Erbjudande &rarr;</span>
+                        <div class="flex items-center justify-between mt-6">
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">VERIFIED_MODULE</span>
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">[GÄLLER T.O.M. —]</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Kort 3 -->
+                <a href="#offert-section" onclick="preselectOffer('erbjudande-3')" class="offer-card liquid-glass p-5 md:p-8 lg:p-10 no-underline block cursor-pointer">
+                    <div class="specular-highlight"></div>
+                    <div class="edge-sweep"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-system-light text-[#007AFF] text-[10px]">MODUL_03</span>
+                            <span class="status-tag font-system-light text-[8px] text-[#E30613]/70 border-[#E30613]/20 bg-[#E30613]/6">[PRIORITY]</span>
+                        </div>
+                        <h4 class="font-display-black text-2xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Erbjudande 3</h4>
+                        <p class="text-[#94A3B8] text-sm mb-4">Beskrivning kommer här.</p>
+                        <ul class="text-[#94A3B8] text-xs space-y-1.5 mb-6">
+                            <li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> Ingår: punkt 1</li>
+                            <li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> Ingår: punkt 2</li>
+                            <li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> Ingår: punkt 3</li>
+                        </ul>
+                        <div class="flex items-baseline justify-between mb-8">
+                            <span class="offer-price font-system-semi text-xl text-[#E2E8F0] tracking-wider">— SEK</span>
+                        </div>
+                        <span class="ghost-btn block text-center w-full font-system-semi text-[10px] text-[#007AFF]">Välj Erbjudande &rarr;</span>
+                        <div class="flex items-center justify-between mt-6">
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">PRIORITY_ACCESS</span>
+                            <span class="font-system-light text-[7px] text-[#94A3B8]/25">[GÄLLER T.O.M. —]</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- DIVIDER                                       -->
+    <!-- ============================================ -->
+    <div class="py-8 px-5 md:px-8 lg:px-20 border-t-2 border-dashed border-[#007AFF]/20">
+        <p class="font-system-light text-[10px] text-[#007AFF]/50 text-center">STEG 2 — OFFERTSIDAN (offert.html) — Erbjudandet förvalt + regnummer-uppslag</p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- STEG 2: OFFERTSIDAN                           -->
+    <!-- ============================================ -->
+    <section id="offert-section" class="py-16 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-4xl mx-auto booking-glow">
+
+            <div class="mb-12">
+                <h2 class="font-display-black text-3xl md:text-5xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Begär Offert</h2>
+            </div>
+
+            <!-- Trust badges -->
+            <div class="grid md:grid-cols-3 gap-4 mb-16">
+                <div class="liquid-glass p-6"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#10003;</span><span class="text-[#E2E8F0]/80 text-sm">Utbildade fordonsmekaniker</span></div></div>
+                <div class="liquid-glass p-6"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#10003;</span><span class="text-[#E2E8F0]/80 text-sm">3 års garanti på alla delar</span></div></div>
+                <div class="liquid-glass p-6"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10 flex items-center gap-4"><span class="text-[#007AFF] text-lg">&#10003;</span><span class="text-[#E2E8F0]/80 text-sm">Upp till 24 mån räntefritt</span></div></div>
+            </div>
+
+            <div class="liquid-glass p-8 md:p-12">
+                <div class="specular-highlight"></div><div class="edge-sweep"></div>
+                <div class="relative z-10">
+                    <h4 class="font-system-light text-[10px] text-[#94A3B8]/50 mb-8">Offertförfrågan</h4>
+                    <form id="quote-form" onsubmit="submitQuote(event)">
+
+                        <!-- ERBJUDANDEN — selectable cards -->
+                        <div class="mb-10">
+                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-2">Välj erbjudanden</h5>
+                            <p class="text-[#94A3B8]/50 text-xs mb-6">Ditt valda erbjudande är markerat. Du kan lägga till fler.</p>
+                            <div class="grid md:grid-cols-2 gap-4">
+
+                                <div class="offer-select-card liquid-glass p-5" data-offer="erbjudande-1" onclick="toggleOffer(this)">
+                                    <div class="specular-highlight"></div>
+                                    <div class="relative z-10 flex items-start gap-4 w-full">
+                                        <div class="flex-shrink-0 w-6 h-6 mt-0.5 relative">
+                                            <div class="check-icon absolute inset-0 rounded-full bg-[#007AFF] flex items-center justify-center">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                            </div>
+                                            <div class="uncheck-icon absolute inset-0 rounded-full border-2 border-[#E2E8F0]/20"></div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <span class="font-display-black text-sm text-[#E2E8F0] uppercase block" style="transform: skewX(-3deg);">Erbjudande 1</span>
+                                            <span class="text-[#94A3B8] text-xs block mt-1">Beskrivning kommer här</span>
+                                            <span class="font-system-semi text-[#007AFF] text-xs block mt-2">— SEK</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="offer-select-card liquid-glass p-5" data-offer="erbjudande-2" onclick="toggleOffer(this)" style="position: relative;">
+                                    <div class="popular-badge">Populärast</div>
+                                    <div class="specular-highlight"></div>
+                                    <div class="relative z-10 flex items-start gap-4 w-full">
+                                        <div class="flex-shrink-0 w-6 h-6 mt-0.5 relative">
+                                            <div class="check-icon absolute inset-0 rounded-full bg-[#007AFF] flex items-center justify-center">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                            </div>
+                                            <div class="uncheck-icon absolute inset-0 rounded-full border-2 border-[#E2E8F0]/20"></div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <span class="font-display-black text-sm text-[#E2E8F0] uppercase block" style="transform: skewX(-3deg);">Erbjudande 2</span>
+                                            <span class="text-[#94A3B8] text-xs block mt-1">Beskrivning kommer här</span>
+                                            <span class="font-system-semi text-[#007AFF] text-xs block mt-2">— SEK</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="offer-select-card liquid-glass p-5" data-offer="erbjudande-3" onclick="toggleOffer(this)">
+                                    <div class="specular-highlight"></div>
+                                    <div class="relative z-10 flex items-start gap-4 w-full">
+                                        <div class="flex-shrink-0 w-6 h-6 mt-0.5 relative">
+                                            <div class="check-icon absolute inset-0 rounded-full bg-[#007AFF] flex items-center justify-center">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                            </div>
+                                            <div class="uncheck-icon absolute inset-0 rounded-full border-2 border-[#E2E8F0]/20"></div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <span class="font-display-black text-sm text-[#E2E8F0] uppercase block" style="transform: skewX(-3deg);">Erbjudande 3</span>
+                                            <span class="text-[#94A3B8] text-xs block mt-1">Beskrivning kommer här</span>
+                                            <span class="font-system-semi text-[#007AFF] text-xs block mt-2">— SEK</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- REGNUMMER-UPPSLAG -->
+                        <div class="mb-10">
+                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Din bil</h5>
+                            <div class="flex gap-4 items-end mb-4">
+                                <div class="flex-1">
+                                    <label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Registreringsnummer</label>
+                                    <input type="text" id="reg-input" placeholder="T.EX. ABC 123" maxlength="7" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-semi text-lg uppercase text-[#E2E8F0] transition-all tracking-widest text-center">
+                                </div>
+                                <button type="button" id="reg-lookup-btn" onclick="lookupReg()" class="ghost-btn font-system-semi text-[10px] text-[#007AFF] px-6 py-4 whitespace-nowrap">Sök Fordon</button>
+                            </div>
+
+                            <!-- Vehicle result (hidden until lookup) -->
+                            <div id="vehicle-result" class="hidden vehicle-result liquid-glass p-6 mt-4">
+                                <div class="specular-highlight"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span class="text-[#007AFF] text-lg">&#10003;</span>
+                                        <span class="font-system-semi text-[10px] text-[#007AFF]">Fordon identifierat</span>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-4">
+                                        <div>
+                                            <span class="font-system-light text-[8px] text-[#94A3B8]/50 block">Märke</span>
+                                            <span class="text-[#E2E8F0] font-system-semi text-sm" id="car-make">—</span>
+                                        </div>
+                                        <div>
+                                            <span class="font-system-light text-[8px] text-[#94A3B8]/50 block">Modell</span>
+                                            <span class="text-[#E2E8F0] font-system-semi text-sm" id="car-model">—</span>
+                                        </div>
+                                        <div>
+                                            <span class="font-system-light text-[8px] text-[#94A3B8]/50 block">Årsmodell</span>
+                                            <span class="text-[#E2E8F0] font-system-semi text-sm" id="car-year">—</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Error message -->
+                            <div id="vehicle-error" class="hidden mt-4 p-4 rounded-xl border border-[#E30613]/20 bg-[#E30613]/5">
+                                <span class="text-[#E30613] text-sm">Kunde inte hitta fordonet. Kontrollera registreringsnumret.</span>
+                            </div>
+                        </div>
+
+                        <!-- Beskrivning -->
+                        <div class="mb-10">
+                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Beskrivning</h5>
+                            <textarea rows="4" placeholder="Beskriv vad du behöver hjälp med..." class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 text-sm text-[#E2E8F0] transition-all resize-none"></textarea>
+                        </div>
+
+                        <!-- Kontaktuppgifter -->
+                        <div class="mb-10">
+                            <h5 class="font-display-black text-sm text-[#E2E8F0] uppercase mb-6">Kontaktuppgifter</h5>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Namn</label><input type="text" placeholder="DITT NAMN" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
+                                <div><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">Telefon</label><input type="tel" placeholder="070-XXX XX XX" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
+                                <div class="md:col-span-2"><label class="font-system-light text-[9px] text-[#94A3B8]/50 block mb-2">E-post</label><input type="email" placeholder="DIN@EMAIL.SE" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-4 font-system-light text-sm text-[#E2E8F0] transition-all"></div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submit-btn" class="w-full py-6 ghost-btn font-system-semi text-[11px] text-[#007AFF] border-[#007AFF]/50">Skicka Offertförfrågan</button>
+                        <div id="quote-success" class="hidden mt-6 p-6 liquid-glass text-center"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Social proof / Reviews -->
+            <div class="mt-12 liquid-glass p-8">
+                <div class="specular-highlight"></div><div class="edge-sweep"></div>
+                <div class="relative z-10 text-center">
+                    <div class="flex items-center justify-center gap-1 mb-3">
+                        <span class="star text-lg">&#9733;</span>
+                        <span class="star text-lg">&#9733;</span>
+                        <span class="star text-lg">&#9733;</span>
+                        <span class="star text-lg">&#9733;</span>
+                        <span class="star text-lg">&#9733;</span>
+                    </div>
+                    <p class="font-display-black text-lg text-[#E2E8F0]">4.8 / 5</p>
+                    <p class="text-[#94A3B8]/50 text-xs mt-1">Baserat på 120+ kundrecensioner</p>
+                </div>
+            </div>
+
+            <!-- Contact info -->
+            <div class="mt-6 grid md:grid-cols-2 gap-6">
+                <div class="liquid-glass p-8 text-center"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#007AFF] text-[10px] block mb-3">Ring oss</span><span class="font-display-black text-xl text-[#E2E8F0]">08-257 221</span></div></div>
+                <div class="liquid-glass p-8 text-center"><div class="specular-highlight"></div><div class="edge-sweep"></div><div class="relative z-10"><span class="font-system-light text-[#007AFF] text-[10px] block mb-3">Maila oss</span><span class="font-display-black text-xl text-[#E2E8F0]">service@sit24.se</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ── TOGGLE OFFER SELECTION ──
+        function toggleOffer(card) {
+            card.classList.toggle('selected');
+            gsap.to(card, { scale: 1.02, duration: 0.15, yoyo: true, repeat: 1, ease: "power2.out" });
+        }
+
+        // ── PRESELECT FROM HOMEPAGE ──
+        function preselectOffer(offerId) {
+            document.querySelectorAll('.offer-select-card').forEach(c => c.classList.remove('selected'));
+            const target = document.querySelector(`.offer-select-card[data-offer="${offerId}"]`);
+            if (target) {
+                target.classList.add('selected');
+                gsap.from(target, { scale: 0.95, duration: 0.4, ease: "elastic.out(1, 0.5)" });
+            }
+            setTimeout(() => {
+                document.getElementById('offert-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        // ── URL PARAMS (for real offert.html) ──
+        const params = new URLSearchParams(window.location.search);
+        const offerParam = params.get('offer');
+        if (offerParam) {
+            preselectOffer(offerParam);
+        }
+
+        // ── REGNUMMER LOOKUP ──
+        // Uses the free Swedish vehicle API (biluppgifter/fordon.info)
+        async function lookupReg() {
+            const input = document.getElementById('reg-input');
+            const btn = document.getElementById('reg-lookup-btn');
+            const resultDiv = document.getElementById('vehicle-result');
+            const errorDiv = document.getElementById('vehicle-error');
+            const regNr = input.value.replace(/\s/g, '').toUpperCase();
+
+            if (regNr.length < 6) {
+                input.focus();
+                gsap.to(input, { x: -5, duration: 0.05, repeat: 5, yoyo: true });
+                return;
+            }
+
+            // Start scanning animation
+            btn.textContent = 'SÖKER...';
+            btn.disabled = true;
+            input.classList.add('reg-scanning');
+            resultDiv.classList.add('hidden');
+            errorDiv.classList.add('hidden');
+
+            try {
+                // Call the Swedish vehicle registry API
+                const response = await fetch(`https://api.fordon.info/api/v1/vehicle/${regNr}`);
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Fill in vehicle data
+                    document.getElementById('car-make').textContent = data.make || data.manufacturer || '—';
+                    document.getElementById('car-model').textContent = data.model || '—';
+                    document.getElementById('car-year').textContent = data.year || data.modelYear || '—';
+
+                    // Show result
+                    resultDiv.classList.remove('hidden');
+                    gsap.from(resultDiv, { opacity: 0, y: 10, duration: 0.6, ease: "expo.out" });
+
+                    btn.textContent = 'IDENTIFIERAD';
+                    btn.style.borderColor = '#007AFF';
+                    btn.style.background = 'rgba(0,122,255,0.1)';
+                } else {
+                    throw new Error('Not found');
+                }
+            } catch (err) {
+                // DEMO FALLBACK — simulates a successful lookup for preview
+                // In production, this would show the error
+                setTimeout(() => {
+                    document.getElementById('car-make').textContent = 'VOLVO';
+                    document.getElementById('car-model').textContent = 'XC60';
+                    document.getElementById('car-year').textContent = '2022';
+                    resultDiv.classList.remove('hidden');
+                    gsap.from(resultDiv, { opacity: 0, y: 10, duration: 0.6, ease: "expo.out" });
+                    btn.textContent = 'IDENTIFIERAD (DEMO)';
+                    btn.style.borderColor = '#007AFF';
+                    btn.style.background = 'rgba(0,122,255,0.1)';
+                }, 1500);
+            }
+
+            input.classList.remove('reg-scanning');
+            setTimeout(() => { btn.disabled = false; }, 2000);
+        }
+
+        // Allow Enter key in reg input
+        document.getElementById('reg-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); lookupReg(); }
+        });
+
+        // ── FORM SUBMIT ──
+        function submitQuote(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const successDiv = document.getElementById('quote-success');
+
+            // Collect selected offers
+            const selected = [];
+            document.querySelectorAll('.offer-select-card.selected').forEach(card => {
+                const name = card.querySelector('.font-display-black').textContent;
+                selected.push(name);
+            });
+
+            btn.disabled = true;
+            btn.textContent = 'SKICKAR FÖRFRÅGAN...';
+            btn.classList.add('secure-pulse');
+
+            setTimeout(() => {
+                btn.classList.remove('secure-pulse');
+                btn.textContent = 'FÖRFRÅGAN SKICKAD';
+                btn.style.borderColor = '#007AFF';
+                btn.style.background = 'rgba(0,122,255,0.1)';
+
+                setTimeout(() => {
+                    successDiv.classList.remove('hidden');
+                    successDiv.innerHTML = `
+                        <div class="relative z-10">
+                            <div class="text-[#007AFF] text-2xl mb-3">&#10003;</div>
+                            <p class="font-display-black text-lg text-[#E2E8F0] uppercase mb-2">Tack för din förfrågan!</p>
+                            <p class="text-[#94A3B8] text-sm mb-4">Vi har tagit emot din offertförfrågan${selected.length ? ' för <strong class="text-[#E2E8F0]">' + selected.join(', ') + '</strong>' : ''}.</p>
+                            <p class="text-[#94A3B8] text-sm">En bekräftelse har skickats till din e-post. Vi återkommer med en detaljerad offert.</p>
+                        </div>
+                    `;
+                    gsap.from(successDiv, { opacity: 0, y: 10, duration: 0.6 });
+                }, 800);
+            }, 2000);
+        }
+
+        // ── LIQUID GLASS HOVER ──
+        document.querySelectorAll('.liquid-glass').forEach(card => {
+            const highlight = card.querySelector('.specular-highlight');
+            const sweep = card.querySelector('.edge-sweep');
+            if (!highlight) return;
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                highlight.style.background = `radial-gradient(circle 200px at ${x}px ${y}px, rgba(255,255,255,0.1) 0%, transparent 70%)`;
+                if (sweep) sweep.style.left = `${x - 40}px`;
+            });
+        });
+
+        // ── OFFER CARD ANIMATIONS ──
+        gsap.utils.toArray(".offer-card").forEach((card, i) => {
+            gsap.from(card, {
+                opacity: 0, y: 40, rotationX: 8, duration: 1, delay: i * 0.2,
+                ease: "power2.out", transformOrigin: "bottom center",
+                scrollTrigger: { trigger: card, start: "top 88%", once: true }
+            });
+        });
+
+        document.querySelectorAll('.offer-card').forEach(card => {
+            const priceEl = card.querySelector('.offer-price');
+            if (!priceEl) return;
+            card.addEventListener('mouseenter', () => {
+                gsap.to(priceEl, { textShadow: '1px 0 0 rgba(255,0,0,0.4), -1px 0 0 rgba(0,100,255,0.4)', duration: 0.15 });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(priceEl, { textShadow: '0 0 0 transparent', duration: 0.6, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+    </script>
+</body>
+</html>
