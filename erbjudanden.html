@@ -18,6 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="bookings-data.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Outfit:wght@100;300;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -43,6 +44,100 @@
         .terminal-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #007AFF; margin-left: 2px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .accent-line { border-left: 1px solid #007AFF; padding-left: 12px; }
+        /* Toggleable offer cards (multi-select) */
+        .offer-toggle { background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02); border-radius: 24px; cursor: pointer; transition: all 0.4s cubic-bezier(0.22,1,0.36,1); position: relative; overflow: hidden; text-align: left; width: 100%; }
+        .offer-toggle:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,122,255,0.08); }
+        .offer-toggle.selected { border-color: rgba(0,122,255,0.5); background: rgba(0,122,255,0.04); box-shadow: 0 0 40px rgba(0,122,255,0.18), inset 0 0 30px rgba(0,122,255,0.04); }
+        .offer-toggle .check-circle { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgba(226,232,240,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s ease; }
+        .offer-toggle.selected .check-circle { background: #007AFF; border-color: #007AFF; }
+        .offer-toggle .check-icon { opacity: 0; transition: opacity 0.2s ease; }
+        .offer-toggle.selected .check-icon { opacity: 1; }
+        /* Selected chip (in form) */
+        .selected-chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 6px 6px 14px; border-radius: 999px; background: rgba(0,122,255,0.12); border: 1px solid rgba(0,122,255,0.3); color: #E2E8F0; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .selected-chip button { width: 20px; height: 20px; border-radius: 50%; background: rgba(0,122,255,0.2); border: none; color: #E2E8F0; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; font-size: 14px; transition: background 0.2s ease; }
+        .selected-chip button:hover { background: rgba(227,6,19,0.4); }
+        /* ====== Collapse-sektion: VÄLJ DATUM & TID ====== */
+        .dt-section { background: rgba(0,0,0,0.3); border: 1px solid rgba(226,232,240,0.1); border-radius: 14px; overflow: hidden; transition: border-color 0.3s ease; }
+        .dt-section:hover { border-color: rgba(0,122,255,0.3); }
+        .dt-section.is-open { border-color: rgba(0,122,255,0.5); }
+        .dt-section-header { width: 100%; background: transparent; border: none; padding: 14px 18px; color: #E2E8F0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Plus Jakarta Sans', sans-serif; text-align: left; }
+        .dt-section-label { flex: 1; min-width: 0; }
+        .dt-chevron { transition: transform 0.3s ease; color: #007AFF; flex-shrink: 0; margin-left: 12px; }
+        .dt-section.is-open .dt-chevron { transform: rotate(180deg); }
+        .dt-body { padding: 0 14px 14px; }
+        .dt-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 768px) { .dt-grid { grid-template-columns: 1fr 1fr; gap: 16px; } }
+
+        /* ====== Vit kalender ====== */
+        .dt-cal-wrap { background: #ffffff; border-radius: 12px; padding: 14px; color: #1A1C1E; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .dt-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .dt-cal-month { font-weight: 600; font-size: 13px; color: #1A1C1E; letter-spacing: 0.02em; }
+        .dt-cal-nav { width: 28px; height: 28px; border-radius: 50%; background: transparent; border: none; color: #1A1C1E; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease; }
+        .dt-cal-nav:hover:not(:disabled) { background: rgba(0,122,255,0.1); color: #007AFF; }
+        .dt-cal-nav:disabled { opacity: 0.25; cursor: not-allowed; }
+        .dt-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+        .dt-cal-dow-row { margin-bottom: 4px; }
+        .dt-cal-dow { text-align: center; font-size: 10px; font-weight: 500; color: #64748B; padding: 4px 0; text-transform: capitalize; }
+        .dt-cal-day { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; border-radius: 50%; font-size: 12px; font-weight: 500; transition: all 0.15s ease; border: none; background: transparent; cursor: default; color: #CBD5E1; position: relative; padding: 0; }
+        .dt-cal-day.available { color: #007AFF; cursor: pointer; }
+        .dt-cal-day.available:hover { background: rgba(0,122,255,0.08); }
+        .dt-cal-day.available .dt-cal-dot { width: 3px; height: 3px; border-radius: 50%; background: #007AFF; }
+        .dt-cal-day.selected { background: #007AFF; color: white; }
+        .dt-cal-day.selected .dt-cal-dot { background: white; }
+        .dt-cal-day-empty { aspect-ratio: 1; }
+
+        /* ====== Tid-kolumn ====== */
+        .dt-time-wrap { padding: 14px 4px 4px; }
+        .dt-time-header { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 14px; color: #E2E8F0; margin-bottom: 12px; }
+        .dt-time-header.is-empty { color: rgba(226,232,240,0.5); font-weight: 300; }
+        .dt-time-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .dt-time-slot { padding: 12px 6px; border: 1px solid rgba(226,232,240,0.15); border-radius: 10px; background: rgba(255,255,255,0.04); color: #E2E8F0; cursor: pointer; transition: all 0.15s ease; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 13px; }
+        .dt-time-slot:hover { border-color: rgba(0,122,255,0.4); background: rgba(0,122,255,0.06); }
+        .dt-time-slot.selected { border-color: #007AFF; background: rgba(0,122,255,0.15); color: #fff; box-shadow: 0 0 0 1px #007AFF inset; }
+        .dt-time-empty { padding: 24px 12px; text-align: center; color: rgba(226,232,240,0.4); font-size: 12px; border: 1px dashed rgba(226,232,240,0.1); border-radius: 10px; }
+
+        /* (Kvar för bakåtkompatibilitet, ej använd nu) */
+        .popover-wrap { position: relative; }
+        .popover-trigger { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(226,232,240,0.1); border-radius: 12px; padding: 14px 16px; color: #E2E8F0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; transition: border-color 0.3s ease; }
+        .popover-trigger:hover:not(:disabled) { border-color: rgba(0,122,255,0.4); }
+        .popover-trigger:disabled { opacity: 0.5; cursor: not-allowed; }
+        .popover-trigger:focus { outline: none; border-color: #007AFF; }
+        .popover-panel { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .popover-content { width: 100%; max-width: 360px; position: relative; }
+        .popover-close { position: absolute; top: -10px; right: -10px; width: 32px; height: 32px; border-radius: 50%; background: #1A1C1E; border: 1px solid rgba(255,255,255,0.15); color: #E2E8F0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; z-index: 2; font-size: 18px; line-height: 1; }
+        .popover-close:hover { background: #007AFF; border-color: #007AFF; }
+        /* Kalender — kompakt, ljusare yta */
+        .calendar { background: rgba(255,255,255,0.04); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 10px; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 0 4px; }
+        .calendar-nav-btn { width: 26px; height: 26px; border-radius: 7px; background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #E2E8F0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .calendar-nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); }
+        .calendar-nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+        .calendar-month { font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; color: #E2E8F0; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+        .calendar-dow { text-align: center; font-family: 'Outfit', sans-serif; font-weight: 300; text-transform: uppercase; letter-spacing: 0.08em; font-size: 9px; color: rgba(226,232,240,0.5); padding: 4px 0; }
+        .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s ease; border: none; background: transparent; cursor: default; color: rgba(226,232,240,0.3); position: relative; }
+        .calendar-day.available { background: rgba(255,255,255,0.05); color: #E2E8F0; cursor: pointer; }
+        .calendar-day.available:hover { background: rgba(255,255,255,0.15); color: #fff; }
+        .calendar-day.selected { background: #007AFF; color: white; font-weight: 600; box-shadow: 0 0 16px rgba(0,122,255,0.4); }
+        .calendar-day.today::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 3px; height: 3px; border-radius: 50%; background: #007AFF; }
+        .calendar-day.today.selected::after { background: white; }
+        .calendar-day-empty { aspect-ratio: 1; }
+        /* Tid-slots — kompakt, matchar kalendern */
+        .time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .time-slot { padding: 8px 4px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.04); color: #E2E8F0; cursor: pointer; transition: all 0.15s ease; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.03em; }
+        .time-slot:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); }
+        .time-slot.selected { background: #007AFF; border-color: #007AFF; color: white; box-shadow: 0 0 16px rgba(0,122,255,0.35); }
+        .time-grid-empty { padding: 14px; text-align: center; color: rgba(226,232,240,0.4); font-size: 10px; font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; border: 1px dashed rgba(255,255,255,0.08); border-radius: 10px; }
+        /* (Kvar för bakåtkompatibilitet, ej använd nu) */
+        .dropdown { position: relative; }
+        .dropdown-trigger { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(226,232,240,0.1); border-radius: 12px; padding: 14px 16px; color: #E2E8F0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; transition: border-color 0.3s ease; }
+        .dropdown-trigger:hover:not(:disabled) { border-color: rgba(0,122,255,0.4); }
+        .dropdown-trigger:disabled { opacity: 0.5; cursor: not-allowed; }
+        .dropdown-trigger:focus { outline: none; border-color: #007AFF; }
+        .dropdown-menu { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: rgba(26,28,30,0.97); backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%); border: 1px solid rgba(0,122,255,0.25); border-radius: 12px; z-index: 50; max-height: 280px; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .dropdown-item { width: 100%; padding: 12px 16px; text-align: left; background: transparent; border: none; color: #E2E8F0; cursor: pointer; transition: background 0.2s ease; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; border-bottom: 1px solid rgba(226,232,240,0.04); display: block; }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background: rgba(0,122,255,0.12); color: #007AFF; }
     </style>
     <script type="application/ld+json">
     {
@@ -141,25 +236,48 @@
 <body>
     <div class="film-grain"></div>
 
-    <!-- HEADER -->
-    <header class="fixed top-0 w-full z-[400] px-4 md:px-6 lg:px-12 py-3 md:py-4 lg:py-6" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-bottom: 1px solid rgba(255,255,255,0.06);">
-        <div class="flex justify-between items-start">
-            <div class="flex flex-col items-start gap-3">
-                <a href="index.html"><img src="sit24_logo.png" alt="SIT24" class="h-20 md:h-24 w-auto" loading="lazy"></a>
-                <button id="menu-btn" onclick="toggleMenu()" class="flex flex-col gap-[5px] group cursor-pointer" aria-label="Öppna meny"><span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span><span class="block w-5 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300 group-hover:w-7"></span><span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span></button>
+    <!-- HEADER 1 — Logos (scrolls away with page) -->
+    <header id="header1" class="relative w-full z-[399] px-4 md:px-6 lg:px-12 pt-3 md:pt-4 lg:pt-6 pb-1" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-bottom: 1px solid rgba(255,255,255,0.06);">
+        <!-- Mobile: logos stacked -->
+        <div class="flex flex-col md:hidden gap-2">
+            <div class="flex justify-between items-center">
+                <a href="index.html"><img src="sit24_logo.png" alt="SIT24" class="h-12 w-auto" loading="lazy"></a>
+                <img src="autoexperten_logo2.png" alt="Autoexperten" class="h-10 w-auto" loading="lazy">
             </div>
-            <div class="hidden md:flex items-center gap-4"><img src="SCAB_ISO_9001_Eng_RGB.png" alt="ISO 9001" class="h-24 w-auto" loading="lazy"><img src="SCAB_ISO_14001_Eng_RGB.png" alt="ISO 14001" class="h-24 w-auto" loading="lazy"><img src="godkand-bilverkstad.svg" alt="Godkänd Bilverkstad" class="h-24 w-auto" loading="lazy"></div>
-            <div class="flex flex-col items-end gap-3">
-                <img src="autoexperten_logo2.png" alt="Autoexperten" class="h-16 md:h-20 w-auto" loading="lazy">
-                <div class="flex items-center gap-4">
-                    <a href="https://www.instagram.com/sit24_autoexperten/" target="_blank" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
-                    <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-                    <a href="https://www.tiktok.com/@sit24_?is_from_webapp=1&amp;sender_device=pc" target="_blank" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="TikTok"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52V6.8a4.84 4.84 0 01-1-.11z"/></svg></a>
-                    <a href="https://workshop.sit24.se/logga-in" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Personalinloggning"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg></a>
-                </div>
+            <div class="flex justify-center items-center gap-3">
+                <img src="SCAB_ISO_9001_Eng_RGB.png" alt="ISO 9001" class="h-10 w-auto" loading="lazy">
+                <img src="SCAB_ISO_14001_Eng_RGB.png" alt="ISO 14001" class="h-10 w-auto" loading="lazy">
+                <img src="godkand-bilverkstad.svg" alt="Godkänd Bilverkstad" class="h-10 w-auto" loading="lazy">
             </div>
         </div>
+        <!-- Desktop: all 5 logos -->
+        <div class="hidden md:flex justify-between items-center">
+            <a href="index.html"><img src="sit24_logo.png" alt="SIT24" class="h-24 w-auto" loading="lazy"></a>
+            <div class="flex items-center gap-4">
+                <img src="SCAB_ISO_9001_Eng_RGB.png" alt="ISO 9001" class="h-24 w-auto" loading="lazy">
+                <img src="SCAB_ISO_14001_Eng_RGB.png" alt="ISO 14001" class="h-24 w-auto" loading="lazy">
+                <img src="godkand-bilverkstad.svg" alt="Godkänd Bilverkstad" class="h-24 w-auto" loading="lazy">
+            </div>
+            <img src="autoexperten_logo2.png" alt="Autoexperten" class="h-20 w-auto" loading="lazy">
+        </div>
     </header>
+
+    <!-- HEADER 2 — Menu + Social (sticky, follows scroll) -->
+    <nav id="header2" class="sticky top-0 w-full z-[400] px-4 md:px-6 lg:px-12 py-2" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(30px) saturate(180%) brightness(110%); -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(110%); border-bottom: 1px solid rgba(255,255,255,0.06);">
+        <div class="flex justify-between items-center">
+            <button id="menu-btn" onclick="toggleMenu()" class="flex flex-col gap-[5px] group cursor-pointer" aria-label="Öppna meny">
+                <span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span>
+                <span class="block w-5 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300 group-hover:w-7"></span>
+                <span class="block w-7 h-[2px] bg-[#E2E8F0] group-hover:bg-[#007AFF] transition-all duration-300"></span>
+            </button>
+            <div class="flex items-center gap-4">
+                <a href="https://www.instagram.com/sit24_autoexperten/" target="_blank" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+                <a href="#" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+                <a href="https://www.tiktok.com/@sit24_?is_from_webapp=1&amp;sender_device=pc" target="_blank" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="TikTok"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52V6.8a4.84 4.84 0 01-1-.11z"/></svg></a>
+                <a href="https://workshop.sit24.se/logga-in" class="text-[#E2E8F0]/40 hover:text-[#007AFF] transition" aria-label="Personalinloggning"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg></a>
+            </div>
+        </div>
+    </nav>
 
     <!-- MENU OVERLAY -->
     <div id="menu-overlay" class="menu-overlay">
@@ -179,71 +297,164 @@
     </div>
 
     <!-- HERO -->
-    <section class="relative h-[60vh] flex items-end pb-20 px-5 md:px-8 lg:px-20 overflow-hidden">
+    <section class="relative pt-10 md:pt-16 pb-8 md:pb-12 px-5 md:px-8 lg:px-20 overflow-hidden">
         <div class="absolute inset-0 z-0" style="background: radial-gradient(ellipse at 30% 50%, rgba(0,122,255,0.03) 0%, transparent 60%), #1A1C1E;"></div>
         <div class="relative z-10 max-w-6xl mx-auto w-full">
-
-            <h1 class="font-display-black text-[12vw] md:text-[7vw] leading-[0.95] text-[#E2E8F0] uppercase opacity-0" id="page-title" style="transform: skewX(-3deg);">Aktuella erbjudanden.</h1>
+            <h1 class="font-display-black text-3xl md:text-5xl leading-[0.95] text-[#E2E8F0] uppercase opacity-0" id="page-title" style="transform: skewX(-3deg);">Aktuella erbjudanden.</h1>
         </div>
     </section>
 
     <!-- OFFERS -->
-    <section class="py-16 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
+    <section class="pt-4 pb-10 md:pt-8 md:pb-24 px-5 md:px-8 lg:px-20">
         <div class="max-w-6xl mx-auto">
-            <div class="reveal mb-16">
 
-                <h3 class="font-display-black text-2xl md:text-5xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Just nu</h3>
+            <!-- ERBJUDANDEN — klick på kort växlar valt/ovalt. Innehåll renderas av JS från OFFERS längre ner. -->
+            <div id="offers-grid" class="grid md:grid-cols-3 gap-4 md:gap-6 reveal"></div>
+
+            <!-- CTA till formulär (visas när minst ett erbjudande är valt) -->
+            <div id="offers-cta" class="hidden mt-8 md:mt-10 text-center">
+                <button type="button" onclick="goToForm()" class="ghost-btn font-system-semi text-sm text-[#007AFF] cursor-pointer w-full sm:w-auto sm:px-10 py-4">
+                    Fortsätt till bokning &rarr;
+                </button>
+                <p id="offers-cta-summary" class="font-system-light text-[10px] text-[#94A3B8]/60 mt-3">—</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING FORM -->
+    <!-- För att skicka mejl när formuläret skickas: registrera dig på Formspree (gratis), lägg in din endpoint i `data-formspree-id` på <form>, och avkommentera fetch()-anropet i submitBooking(). Tills dess visas bara tack-fönstret utan att något mejl skickas. -->
+    <section id="booking-form-section" class="py-10 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
+        <div class="max-w-3xl mx-auto">
+
+            <div class="text-center mb-10 md:mb-12 reveal">
+                <span class="font-system-light text-[10px] text-[#007AFF] block mb-3">/02 — BEKRÄFTA DIN BOKNING</span>
+                <h3 class="font-display-black text-lg md:text-2xl text-[#E2E8F0] uppercase" style="transform: skewX(-3deg);">Boka tid</h3>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
-                    <div class="relative z-10">
-                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_01</span>
-                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Vintercheck</h4>
-                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Komplett vinterkontroll av bil — bromsar, däck, batteri, belysning och vätskor. Allt för att du ska köra tryggt i vinter.</p>
-                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">595 kr</span></div>
-                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
-                    </div>
-                </div>
+            <div class="liquid-glass p-6 md:p-10 reveal">
+                <div class="specular-highlight"></div><div class="edge-sweep"></div>
+                <div class="relative z-10">
 
-                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
-                    <div class="relative z-10">
-                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_02</span>
-                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Stort Service-paket</h4>
-                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Oljebyte, filterbyte, bromskontroll och 25-punkters inspektion. Komplett service för din bil.</p>
-                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">fr. 2 995 kr</span></div>
-                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
+                    <!-- Valda erbjudanden chips — "hänger med" från korten ovan -->
+                    <div id="selected-offer-display" class="mb-8 p-4 md:p-5 rounded-xl bg-[#007AFF]/5 border border-[#007AFF]/20">
+                        <div class="font-system-light text-[9px] text-[#94A3B8] mb-3">VALDA ERBJUDANDEN</div>
+                        <div id="selected-chips" class="flex flex-wrap gap-2"></div>
                     </div>
-                </div>
 
-                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
-                    <div class="relative z-10">
-                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_03</span>
-                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Bilvård Premium</h4>
-                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Handtvätt, invändig städning, polering och vaxning. Din bil som ny igen.</p>
-                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">1 495 kr</span></div>
-                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
-                    </div>
-                </div>
+                    <!-- Form (skickas till Web3Forms — mejl går till elizabeth.sgsconsultation@gmail.com) -->
+                    <form id="booking-form" onsubmit="submitBooking(event)">
+                        <!-- Web3Forms-konfig -->
+                        <input type="hidden" name="access_key" value="6a1b3140-3143-4b90-bdeb-370e930d0e53">
+                        <input type="hidden" name="from_name" value="SIT24 Bokning">
+                        <input type="hidden" name="subject" id="email-subject-input" value="Ny bokning från sit24.se">
+                        <!-- Honeypot mot spam-bots — bots fyller i allt, riktiga användare ser inte fältet -->
+                        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
-                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
-                    <div class="relative z-10">
-                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_04</span>
-                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Däckbyte + Förvaring</h4>
-                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Säsongens däckbyte med balansering + 6 månaders förvaring hos oss.</p>
-                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">895 kr</span></div>
-                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
-                    </div>
-                </div>
+                        <input type="hidden" name="offer-ids" id="offer-ids-input" value="">
+                        <input type="hidden" name="offer-names" id="offer-names-input" value="">
 
-                <div class="offer-card liquid-glass p-10"><div class="specular-highlight"></div><div class="edge-sweep"></div>
-                    <div class="relative z-10">
-                        <span class="font-system-light text-[#007AFF] text-[10px] block mb-4">ERB_05</span>
-                        <h4 class="font-display-black text-xl text-[#E2E8F0] uppercase mb-3" style="transform: skewX(-3deg);">Glasreparation</h4>
-                        <p class="text-[#94A3B8] text-sm leading-relaxed mb-6">Stenskottslagning medan du väntar. Ofta helt gratis via din försäkring.</p>
-                        <div class="flex items-baseline gap-2 mb-6"><span class="font-display-black text-2xl text-[#007AFF]">Ofta 0 kr</span><span class="font-system-light text-[9px] text-[#94A3B8]/50">via försäkring</span></div>
-                        <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[10px] text-[#007AFF] no-underline">Boka Nu</a>
+                        <div class="grid md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="font-system-light text-[9px] text-[#94A3B8] block mb-2">NAMN *</label>
+                                <input type="text" name="name" required autocomplete="name" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-3 text-[#E2E8F0] focus:border-[#007AFF] focus:outline-none transition">
+                            </div>
+                            <div>
+                                <label class="font-system-light text-[9px] text-[#94A3B8] block mb-2">TELEFON *</label>
+                                <input type="tel" name="phone" required autocomplete="tel" inputmode="tel" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-3 text-[#E2E8F0] focus:border-[#007AFF] focus:outline-none transition">
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="font-system-light text-[9px] text-[#94A3B8] block mb-2">E-POST *</label>
+                            <input type="email" name="email" required autocomplete="email" inputmode="email" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-3 text-[#E2E8F0] focus:border-[#007AFF] focus:outline-none transition">
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="font-system-light text-[9px] text-[#94A3B8] block mb-2">REGISTRERINGSNUMMER</label>
+                            <input type="text" name="reg" maxlength="7" placeholder="ABC 123" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-3 text-[#E2E8F0] uppercase tracking-widest focus:border-[#007AFF] focus:outline-none transition">
+                        </div>
+
+                        <!-- VÄLJ DATUM & TID — collapse-sektion. Klick på header vecklar ut kalender + tider. -->
+                        <div id="dt-section" class="dt-section mb-5">
+                            <button type="button" class="dt-section-header" onclick="toggleDateTimeSection()" aria-expanded="false" aria-controls="dt-body">
+                                <div class="dt-section-label">
+                                    <span class="font-system-light text-[9px] text-[#94A3B8] block mb-1">VÄLJ DATUM &amp; TID *</span>
+                                    <span id="dt-summary" class="font-system-semi text-[#E2E8F0]">Klicka för att öppna</span>
+                                </div>
+                                <svg id="dt-chevron" class="dt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div id="dt-body" class="dt-body" hidden>
+                                <div class="dt-grid">
+                                    <!-- VÄNSTER: Vit kalender -->
+                                    <div class="dt-cal-wrap">
+                                        <div class="dt-cal-header">
+                                            <button type="button" id="cal-prev" class="dt-cal-nav" onclick="navMonth(-1)" aria-label="Föregående månad">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                                            </button>
+                                            <span class="dt-cal-month" id="cal-month">—</span>
+                                            <button type="button" id="cal-next" class="dt-cal-nav" onclick="navMonth(1)" aria-label="Nästa månad">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                                            </button>
+                                        </div>
+                                        <div class="dt-cal-grid dt-cal-dow-row">
+                                            <div class="dt-cal-dow">Sön</div>
+                                            <div class="dt-cal-dow">Mån</div>
+                                            <div class="dt-cal-dow">Tis</div>
+                                            <div class="dt-cal-dow">Ons</div>
+                                            <div class="dt-cal-dow">Tor</div>
+                                            <div class="dt-cal-dow">Fre</div>
+                                            <div class="dt-cal-dow">Lör</div>
+                                        </div>
+                                        <div id="cal-days" class="dt-cal-grid"></div>
+                                    </div>
+
+                                    <!-- HÖGER: Tider -->
+                                    <div class="dt-time-wrap">
+                                        <div id="dt-time-header" class="dt-time-header">Välj datum först</div>
+                                        <div id="time-grid-container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="preferred-date" id="preferred-date-input" required>
+                            <input type="hidden" name="preferred-time" id="preferred-time-input" required>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="font-system-light text-[9px] text-[#94A3B8] block mb-2">MEDDELANDE (VALFRITT)</label>
+                            <textarea name="message" rows="3" placeholder="Beskriv eventuella problem eller önskemål" class="w-full bg-black/30 border border-[#E2E8F0]/10 rounded-xl p-3 text-[#E2E8F0] focus:border-[#007AFF] focus:outline-none transition resize-none"></textarea>
+                        </div>
+
+                        <div class="mb-8">
+                            <label class="font-system-light text-[9px] text-[#94A3B8] block mb-2">BIFOGA BILD (VALFRITT)</label>
+                            <input type="file" name="image" id="image-input" accept="image/*" class="hidden" onchange="handleImagePick(this)">
+                            <label for="image-input" id="image-pick-label" class="ghost-btn block text-center w-full font-system-semi text-[10px] text-[#007AFF] cursor-pointer py-3">+ Välj bild</label>
+                            <div id="image-preview" class="hidden mt-3 flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-[#E2E8F0]/10">
+                                <img id="image-preview-thumb" src="" alt="" class="w-16 h-16 object-cover rounded-lg">
+                                <div class="flex-1 min-w-0">
+                                    <div id="image-preview-name" class="text-[#E2E8F0] text-sm truncate">—</div>
+                                    <div id="image-preview-size" class="font-system-light text-[9px] text-[#94A3B8]">—</div>
+                                </div>
+                                <button type="button" onclick="clearImage()" class="font-system-semi text-[10px] text-[#94A3B8] hover:text-[#E30613] transition px-2 cursor-pointer">Ta bort</button>
+                            </div>
+                            <p class="font-system-light text-[9px] text-[#94A3B8]/40 mt-2">Max 5 MB. Hjälper oss att se problemet i förväg.</p>
+                        </div>
+
+                        <button type="submit" class="ghost-btn block w-full text-center font-system-semi text-sm text-[#007AFF] cursor-pointer py-4">Skicka Bokning &rarr;</button>
+
+                        <p class="font-system-light text-[9px] text-[#94A3B8]/50 text-center mt-5">Vi kontaktar dig inom 24 timmar för att bekräfta tiden.</p>
+                    </form>
+
+                    <!-- Thank-you panel (hidden until submit) -->
+                    <div id="booking-success" class="hidden text-center py-10">
+                        <div class="text-[#007AFF] text-6xl mb-6">&#10003;</div>
+                        <h4 class="font-display-black text-2xl md:text-3xl text-[#E2E8F0] uppercase mb-4" style="transform: skewX(-3deg);">Tack för din förfrågan!</h4>
+                        <p class="text-[#E2E8F0]/80 mb-3 max-w-md mx-auto">Vi har mottagit din bokningsförfrågan.</p>
+                        <p class="text-[#94A3B8] text-sm mb-8 max-w-md mx-auto">Vi kontaktar dig inom 24 timmar för att bekräfta tiden och boka in dig.</p>
+                        <div class="font-system-light text-[10px] text-[#94A3B8]/60">
+                            Vid frågor: <a href="tel:08-1234567" class="text-[#007AFF] hover:underline">08-123 45 67</a> · <a href="mailto:info@sit24.se" class="text-[#007AFF] hover:underline">info@sit24.se</a>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -264,17 +475,8 @@
                 </div>
             </div>
             <div class="mt-12 pt-8 border-t border-[#E2E8F0]/5">
-                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // OFFERS_MODULE — 5 aktiva erbjudanden</p>
+                <p class="font-system-light text-[10px] text-[#94A3B8]/30 text-center terminal-cursor">SIT24 // OFFERS_MODULE</p>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="py-16 md:py-32 px-5 md:px-8 lg:px-20 border-t border-[#E2E8F0]/5">
-        <div class="max-w-3xl mx-auto text-center reveal">
-            <h3 class="font-display-black text-2xl md:text-5xl text-[#E2E8F0] uppercase mb-6" style="transform: skewX(-3deg);">Boka med erbjudande</h3>
-            <p class="text-[#94A3B8]/60 text-sm mb-10 max-w-md mx-auto">Nämn erbjudandet vid bokning så fixar vi resten.</p>
-            <a href="index.html#booking-section" class="ghost-btn inline-block font-system-semi text-[11px] text-[#007AFF] no-underline px-14 py-5">Boka Tid</a>
         </div>
     </section>
 
@@ -356,8 +558,360 @@
         gsap.utils.toArray(".reveal").forEach(el => { gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } }); });
         gsap.utils.toArray(".offer-card").forEach((card, i) => { gsap.from(card, { opacity: 0, y: 40, rotationX: 8, duration: 1, delay: i * 0.2, ease: "power2.out", transformOrigin: "bottom center", scrollTrigger: { trigger: card, start: "top 88%", once: true } }); });
         document.querySelectorAll('.liquid-glass').forEach(card => { const highlight = card.querySelector('.specular-highlight'); const sweep = card.querySelector('.edge-sweep'); if (!highlight) return; card.addEventListener('mousemove', e => { const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top; highlight.style.background = `radial-gradient(circle 200px at ${x}px ${y}px, rgba(255,255,255,0.1) 0%, transparent 70%)`; if (sweep) sweep.style.left = `${x - 40}px`; }); });
+
+        // ============================================================
+        // OFFERS — SINGLE SOURCE OF TRUTH för innehåll på erbjudande-sidan.
+        // Edita värdena nedan när du har riktiga erbjudanden.
+        // (Hemsidans index.html har för tillfället egna kort — uppdatera dem separat.)
+        // ============================================================
+        const OFFERS = {
+            'erb-1': {
+                moduleLabel: 'MODUL_01',
+                statusTag: '[SYSTEM_READY]',
+                footerLabel: 'SECURE_TRANSITION',
+                title: 'Erbjudande',
+                shortDesc: 'Beskrivning kommer här.',
+                longDesc: 'Detaljerad beskrivning av erbjudandet kommer här. Beskriv vad som ingår, hur lång tid det tar, och varför det är värt det.',
+                bullets: ['Punkt 1 — fyll i', 'Punkt 2 — fyll i', 'Punkt 3 — fyll i'],
+                price: '— SEK',
+                validUntil: '—',
+            },
+            'erb-2': {
+                moduleLabel: 'MODUL_02',
+                statusTag: '[OPTIMIZING]',
+                footerLabel: 'VERIFIED_MODULE',
+                title: 'Erbjudande',
+                shortDesc: 'Beskrivning kommer här.',
+                longDesc: 'Detaljerad beskrivning av erbjudandet kommer här. Beskriv vad som ingår, hur lång tid det tar, och varför det är värt det.',
+                bullets: ['Punkt 1 — fyll i', 'Punkt 2 — fyll i', 'Punkt 3 — fyll i'],
+                price: '— SEK',
+                validUntil: '—',
+            },
+            'erb-3': {
+                moduleLabel: 'MODUL_03',
+                statusTag: '[PRIORITY]',
+                footerLabel: 'PRIORITY_ACCESS',
+                title: 'Erbjudande',
+                shortDesc: 'Beskrivning kommer här.',
+                longDesc: 'Detaljerad beskrivning av erbjudandet kommer här. Beskriv vad som ingår, hur lång tid det tar, och varför det är värt det.',
+                bullets: ['Punkt 1 — fyll i', 'Punkt 2 — fyll i', 'Punkt 3 — fyll i'],
+                price: '— SEK',
+                validUntil: '—',
+            },
+        };
+
+        // Set med valda erbjudande-ID:n (multi-select)
+        const selectedOffers = new Set();
+
+        // Rendera erbjudande-korten (klick = växla valt/ovalt)
+        function renderOfferCards() {
+            const container = document.getElementById('offers-grid');
+            container.innerHTML = Object.entries(OFFERS).map(([id, o]) => `
+                <button type="button" onclick="toggleOffer('${id}')" class="offer-toggle p-5 md:p-7" data-offer-id="${id}">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="font-system-light text-[#007AFF] text-[10px]">${o.moduleLabel}</span>
+                        <div class="check-circle">
+                            <svg class="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                    </div>
+                    <h3 class="font-display-black text-lg md:text-xl text-[#E2E8F0] uppercase mb-2" style="transform: skewX(-3deg);">${o.title}</h3>
+                    <p class="text-[#94A3B8] text-xs md:text-sm mb-4 leading-relaxed">${o.longDesc}</p>
+                    <ul class="text-[#94A3B8] text-xs space-y-1.5 mb-5">
+                        ${o.bullets.map(b => `<li class="flex items-start gap-2"><span class="text-[#007AFF]">&#10003;</span> <span>${b}</span></li>`).join('')}
+                    </ul>
+                    <div class="flex items-baseline justify-between pt-4 border-t border-[#E2E8F0]/5">
+                        <span class="font-system-semi text-base text-[#007AFF]">${o.price}</span>
+                        <span class="font-system-light text-[8px] text-[#94A3B8]/40">[GÄLLER T.O.M. ${o.validUntil}]</span>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        // Växla valt/ovalt för ett erbjudande. Uppdaterar kort, chips, hidden fields.
+        function toggleOffer(id) {
+            if (!OFFERS[id]) return;
+            if (selectedOffers.has(id)) {
+                selectedOffers.delete(id);
+            } else {
+                selectedOffers.add(id);
+            }
+            renderSelectedState();
+        }
+
+        // Uppdatera all UI som speglar valda erbjudanden:
+        // — kortens visuella state (.selected)
+        // — chips ovanför formuläret (med remove-knapp)
+        // — hidden fields i formuläret (för submit)
+        // — fortsätt-knappen ovanför formuläret
+        function renderSelectedState() {
+            // Korten
+            document.querySelectorAll('.offer-toggle').forEach(card => {
+                if (selectedOffers.has(card.dataset.offerId)) card.classList.add('selected');
+                else card.classList.remove('selected');
+            });
+
+            // Chips
+            const chipsEl = document.getElementById('selected-chips');
+            if (selectedOffers.size === 0) {
+                chipsEl.innerHTML = '<div class="text-[#94A3B8]/50 text-xs">Inga erbjudanden valda — välj ovan för att fortsätta.</div>';
+            } else {
+                chipsEl.innerHTML = Array.from(selectedOffers).map(id => {
+                    const o = OFFERS[id];
+                    return `<span class="selected-chip">${o.title}<button type="button" onclick="toggleOffer('${id}')" aria-label="Ta bort ${o.title}">×</button></span>`;
+                }).join('');
+            }
+
+            // Hidden fields (skickas med formuläret)
+            document.getElementById('offer-ids-input').value = Array.from(selectedOffers).join(',');
+            document.getElementById('offer-names-input').value = Array.from(selectedOffers).map(id => OFFERS[id].title).join(', ');
+
+            // Fortsätt-CTA + sammanfattning
+            const ctaWrapper = document.getElementById('offers-cta');
+            const summary = document.getElementById('offers-cta-summary');
+            if (selectedOffers.size > 0) {
+                ctaWrapper.classList.remove('hidden');
+                const n = selectedOffers.size;
+                summary.textContent = n + (n === 1 ? ' erbjudande valt' : ' erbjudanden valda');
+            } else {
+                ctaWrapper.classList.add('hidden');
+            }
+        }
+
+        // Scrolla ner till formuläret
+        function goToForm() {
+            document.getElementById('booking-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Hantera vald bild: visa förhandsvisning + filstorlek
+        function handleImagePick(input) {
+            const file = input.files && input.files[0];
+            if (!file) return;
+            const maxBytes = 5 * 1024 * 1024;
+            if (file.size > maxBytes) {
+                alert('Bilden är större än 5 MB. Välj en mindre bild.');
+                input.value = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('image-preview-thumb').src = e.target.result;
+                document.getElementById('image-preview-name').textContent = file.name;
+                document.getElementById('image-preview-size').textContent = (file.size / 1024).toFixed(0) + ' KB';
+                document.getElementById('image-preview').classList.remove('hidden');
+                document.getElementById('image-pick-label').classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearImage() {
+            document.getElementById('image-input').value = '';
+            document.getElementById('image-preview').classList.add('hidden');
+            document.getElementById('image-pick-label').classList.remove('hidden');
+        }
+
+        // Vid sidladdning: rendera korten + förvälj från ?valda=erb-1,erb-2 (kommaseparerat)
+        (function initOffers() {
+            renderOfferCards();
+            const params = new URLSearchParams(window.location.search);
+            const valdaParam = params.get('valda');
+            if (valdaParam) {
+                valdaParam.split(',').forEach(id => {
+                    const trimmed = id.trim();
+                    if (OFFERS[trimmed]) selectedOffers.add(trimmed);
+                });
+            }
+            renderSelectedState();
+        })();
+
+        // ============================================================
+        // KALENDER + TID-SLOTS
+        // Konfig läses från bookings-data.js (window.bookingsData)
+        // ============================================================
+        const BD = window.bookingsData;
+        const BOOKABLE_WEEKDAYS = BD.bookableWeekdays;
+        // Generera tid-slots från öppettiderna. End räknas som "stänger" — sista slot blir end-1.
+        const TIME_SLOTS = (() => {
+            const slots = [];
+            const slotHours = BD.slotMinutes / 60;
+            for (let h = BD.bookingHours.start; h + slotHours <= BD.bookingHours.end; h += slotHours) {
+                slots.push(String(Math.floor(h)).padStart(2, '0') + ':' + String((h % 1) * 60).padStart(2, '0'));
+            }
+            return slots;
+        })();
+
+        const MONTH_NAMES = ['Januari','Februari','Mars','April','Maj','Juni','Juli','Augusti','September','Oktober','November','December'];
+        const DAY_NAMES = ['Söndag','Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag'];
+
+        // Vilken månad kalendern visar just nu (alltid första dagen i månaden)
+        let calMonth = (() => {
+            const d = new Date(); d.setDate(1); d.setHours(0,0,0,0); return d;
+        })();
+
+        function navMonth(delta) {
+            const next = new Date(calMonth);
+            next.setMonth(next.getMonth() + delta);
+            calMonth = next;
+            renderCalendar();
+        }
+
+        function formatDateLabel(d) {
+            return DAY_NAMES[d.getDay()] + ' ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()].toLowerCase();
+        }
+
+        function isoFromDate(d) {
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+
+        function renderCalendar() {
+            // Etikett för nuvarande månad
+            document.getElementById('cal-month').textContent = MONTH_NAMES[calMonth.getMonth()] + ' ' + calMonth.getFullYear();
+
+            // Aktivera/inaktivera bakåt-pilen (kan inte gå tillbaka i tiden)
+            const today = new Date(); today.setDate(1); today.setHours(0,0,0,0);
+            document.getElementById('cal-prev').disabled = (calMonth.getTime() <= today.getTime());
+
+            // Generera dagsceller. Söndag=första kolumn (0).
+            const todayCheck = new Date(); todayCheck.setHours(0,0,0,0);
+            const firstWeekday = calMonth.getDay(); // 0=sön, 1=mån, ...
+            const daysInMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 0).getDate();
+            const selectedIso = document.getElementById('preferred-date-input').value;
+
+            let html = '';
+            for (let i = 0; i < firstWeekday; i++) html += '<div class="dt-cal-day-empty"></div>';
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(calMonth.getFullYear(), calMonth.getMonth(), day);
+                const isPast = date < todayCheck;
+                const isAvailable = !isPast && BOOKABLE_WEEKDAYS.includes(date.getDay());
+                const iso = isoFromDate(date);
+                const isSelected = (iso === selectedIso);
+                const classes = ['dt-cal-day'];
+                if (isAvailable) classes.push('available');
+                if (isSelected) classes.push('selected');
+                const onclick = isAvailable ? `onclick="selectDate('${iso}')"` : '';
+                const disabled = isAvailable ? '' : 'disabled';
+                const dot = isAvailable ? '<span class="dt-cal-dot"></span>' : '';
+                html += `<button type="button" class="${classes.join(' ')}" ${onclick} ${disabled}><span>${day}</span>${dot}</button>`;
+            }
+            document.getElementById('cal-days').innerHTML = html;
+        }
+
+        function selectDate(iso) {
+            document.getElementById('preferred-date-input').value = iso;
+            document.getElementById('preferred-time-input').value = '';
+            renderCalendar();
+            renderTimeGrid();
+            updateDateTimeSummary();
+        }
+
+        function selectTime(t) {
+            document.getElementById('preferred-time-input').value = t;
+            renderTimeGrid();
+            updateDateTimeSummary();
+        }
+
+        function renderTimeGrid() {
+            const container = document.getElementById('time-grid-container');
+            const header = document.getElementById('dt-time-header');
+            const dateIso = document.getElementById('preferred-date-input').value;
+            if (!dateIso) {
+                header.textContent = 'Välj datum först';
+                header.classList.add('is-empty');
+                container.innerHTML = '<div class="dt-time-empty">Tider visas här när datum är valt</div>';
+                return;
+            }
+            // Header: "Onsdag, 7 maj"
+            const [y, m, day] = dateIso.split('-').map(Number);
+            const d = new Date(y, m - 1, day);
+            header.textContent = DAY_NAMES[d.getDay()] + ', ' + day + ' ' + MONTH_NAMES[m - 1].toLowerCase();
+            header.classList.remove('is-empty');
+
+            const selectedTime = document.getElementById('preferred-time-input').value;
+            container.innerHTML = '<div class="dt-time-grid">' + TIME_SLOTS.map(t => {
+                const sel = selectedTime === t ? ' selected' : '';
+                return `<button type="button" class="dt-time-slot${sel}" onclick="selectTime('${t}')">${t}</button>`;
+            }).join('') + '</div>';
+        }
+
+        // Toggle collapse-sektion (klick på header)
+        function toggleDateTimeSection() {
+            const section = document.getElementById('dt-section');
+            const body = document.getElementById('dt-body');
+            const header = section.querySelector('.dt-section-header');
+            const isOpen = section.classList.toggle('is-open');
+            header.setAttribute('aria-expanded', String(isOpen));
+            body.hidden = !isOpen;
+        }
+
+        // Uppdatera kort sammanfattning i header ("Onsdag 7 maj kl 09:00" eller "Klicka för att öppna")
+        function updateDateTimeSummary() {
+            const summary = document.getElementById('dt-summary');
+            const dateIso = document.getElementById('preferred-date-input').value;
+            const time = document.getElementById('preferred-time-input').value;
+            if (dateIso && time) {
+                const [y, m, day] = dateIso.split('-').map(Number);
+                const d = new Date(y, m - 1, day);
+                summary.textContent = DAY_NAMES[d.getDay()] + ' ' + day + ' ' + MONTH_NAMES[m - 1].toLowerCase() + ' kl ' + time;
+                summary.style.color = '#007AFF';
+            } else if (dateIso) {
+                const [y, m, day] = dateIso.split('-').map(Number);
+                const d = new Date(y, m - 1, day);
+                summary.textContent = DAY_NAMES[d.getDay()] + ' ' + day + ' ' + MONTH_NAMES[m - 1].toLowerCase() + ' — välj tid';
+                summary.style.color = '#E2E8F0';
+            } else {
+                summary.textContent = 'Klicka för att öppna';
+                summary.style.color = '#E2E8F0';
+            }
+        }
+
+        renderCalendar();
+        renderTimeGrid();
+        updateDateTimeSummary();
+
+        // Skicka bokning till Web3Forms (skickar mejl + bilaga till SIT24:s inbox)
+        async function submitBooking(e) {
+            e.preventDefault();
+            if (selectedOffers.size === 0) {
+                alert('Välj minst ett erbjudande innan du skickar bokningen.');
+                document.getElementById('offers-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            const form = e.target;
+            const formData = new FormData(form);
+
+            // Bygg en tydlig ämnesrad från valda erbjudanden + kundens namn
+            const offerNames = Array.from(selectedOffers).map(id => OFFERS[id].title).join(' + ');
+            const customerName = (formData.get('name') || '').toString().trim();
+            formData.set('subject', 'Ny bokning från ' + (customerName || 'kund') + ' — ' + offerNames);
+            // Reply-to = kundens e-post, så svar går direkt till kunden
+            const customerEmail = (formData.get('email') || '').toString().trim();
+            if (customerEmail) formData.set('replyto', customerEmail);
+
+            // Loading-state på submit-knappen
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.6';
+            submitBtn.textContent = 'Skickar...';
+
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message || 'Mejlet kunde inte skickas');
+
+                // OK — visa tack-meddelandet
+                form.classList.add('hidden');
+                document.getElementById('selected-offer-display').classList.add('hidden');
+                document.getElementById('booking-success').classList.remove('hidden');
+                document.getElementById('booking-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (err) {
+                alert('Något gick fel: ' + err.message + '\n\nPröva igen eller kontakta oss direkt på 08-123 45 67.');
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.textContent = originalText;
+            }
+        }
     </script>
-    <a href="index.html#booking-section" class="fixed bottom-16 right-8 z-[450] font-system-semi text-sm text-white no-underline px-8 py-5 rounded-2xl shadow-lg boka-pulse" style="background: rgba(0,122,255,0.6); backdrop-filter: blur(30px) saturate(200%); -webkit-backdrop-filter: blur(30px) saturate(200%); border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px rgba(0,122,255,0.4), 0 0 30px rgba(0,122,255,0.25);">Boka Tjänst</a>
+    <a href="#booking-form-section" class="fixed bottom-16 right-8 z-[450] font-system-semi text-sm text-white no-underline px-8 py-5 rounded-2xl shadow-lg boka-pulse" style="background: rgba(0,122,255,0.6); backdrop-filter: blur(30px) saturate(200%); -webkit-backdrop-filter: blur(30px) saturate(200%); border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px rgba(0,122,255,0.4), 0 0 30px rgba(0,122,255,0.25);">Boka Tjänst</a>
     <style>.boka-pulse{animation:bokaPulse 2s ease-in-out infinite}@keyframes bokaPulse{0%,100%{box-shadow:0 8px 32px rgba(0,122,255,0.4),0 0 30px rgba(0,122,255,0.25);transform:scale(1)}50%{box-shadow:0 8px 40px rgba(0,122,255,0.6),0 0 50px rgba(0,122,255,0.4);transform:scale(1.05)}}</style>
 </body>
 </html>
