@@ -1,3 +1,10 @@
 *.mp4
 !*_compressed.mp4
 .claude/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
